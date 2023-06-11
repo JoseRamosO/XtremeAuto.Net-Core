@@ -13,9 +13,9 @@ namespace DAL.Implementations
     public class DALGenericoImpl<TEntity> : IDALGenerico<TEntity> where TEntity : class
     {
 
-        protected readonly NorthWindContext Context;
+        protected readonly XtremeAutoNetCoreContext Context;
 
-        public DALGenericoImpl(NorthWindContext context)
+        public DALGenericoImpl(XtremeAutoNetCoreContext context)
         {
             Context = context;
         }

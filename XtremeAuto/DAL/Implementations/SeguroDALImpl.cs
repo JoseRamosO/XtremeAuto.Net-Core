@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Implementations
 {
-    public class RolDALImpl : IRolDAL
+    public class SeguroDALImpl : ISeguroDAL
     {
         private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
-        private UnidadDeTrabajo<Rol> unidad;
+        private UnidadDeTrabajo<Seguro> unidad;
 
-        public bool Add(Rol entity)
+        public bool Add(Seguro entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
@@ -34,48 +34,48 @@ namespace DAL.Implementations
             }
         }
 
-        public void AddRange(IEnumerable<Rol> entities)
+        public void AddRange(IEnumerable<Seguro> entities)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Rol> Find(Expression<Func<Rol, bool>> predicate)
+        public IEnumerable<Seguro> Find(Expression<Func<Seguro, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Rol Get(int id)
+        public Seguro Get(int id)
         {
-            Rol rol = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            Seguro seguro = null;
+            using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
             {
-                rol = unidad.genericDAL.Get(id);
+                seguro = unidad.genericDAL.Get(id);
 
 
             }
 
-            return rol;
+            return seguro;
         }
 
-        public IEnumerable<Rol> GetAll()
+        public IEnumerable<Seguro> GetAll()
         {
-            IEnumerable<Rol> roles = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            IEnumerable<Seguro> seguros = null;
+            using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
             {
-                roles = unidad.genericDAL.GetAll();
+                seguros = unidad.genericDAL.GetAll();
 
 
             }
 
-            return roles;
+            return seguros;
 
         }
 
-        public bool Remove(Rol entity)
+        public bool Remove(Seguro entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
@@ -91,21 +91,21 @@ namespace DAL.Implementations
             }
         }
 
-        public void RemoveRange(IEnumerable<Rol> entities)
+        public void RemoveRange(IEnumerable<Seguro> entities)
         {
             throw new NotImplementedException();
         }
 
-        public Rol SingleOrDefault(Expression<Func<Rol, bool>> predicate)
+        public Seguro SingleOrDefault(Expression<Func<Seguro, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Rol entity)
+        public bool Update(Seguro entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Update(entity);
                     unidad.Complete();

@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Implementations
 {
-    public class RolDALImpl : IRolDAL
+    public class CarroVendidoDALImpl : ICarroVendidoDAL
     {
         private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
-        private UnidadDeTrabajo<Rol> unidad;
+        private UnidadDeTrabajo<CarroVendido> unidad;
 
-        public bool Add(Rol entity)
+        public bool Add(CarroVendido entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
@@ -34,48 +34,48 @@ namespace DAL.Implementations
             }
         }
 
-        public void AddRange(IEnumerable<Rol> entities)
+        public void AddRange(IEnumerable<CarroVendido> entities)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Rol> Find(Expression<Func<Rol, bool>> predicate)
+        public IEnumerable<CarroVendido> Find(Expression<Func<CarroVendido, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Rol Get(int id)
+        public CarroVendido Get(int id)
         {
-            Rol rol = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            CarroVendido carroVendido = null;
+            using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
             {
-                rol = unidad.genericDAL.Get(id);
+                carroVendido = unidad.genericDAL.Get(id);
 
 
             }
 
-            return rol;
+            return carroVendido;
         }
 
-        public IEnumerable<Rol> GetAll()
+        public IEnumerable<CarroVendido> GetAll()
         {
-            IEnumerable<Rol> roles = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            IEnumerable<CarroVendido> carrosVendido = null;
+            using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
             {
-                roles = unidad.genericDAL.GetAll();
+                carrosVendido = unidad.genericDAL.GetAll();
 
 
             }
 
-            return roles;
+            return carrosVendido;
 
         }
 
-        public bool Remove(Rol entity)
+        public bool Remove(CarroVendido entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
@@ -91,21 +91,21 @@ namespace DAL.Implementations
             }
         }
 
-        public void RemoveRange(IEnumerable<Rol> entities)
+        public void RemoveRange(IEnumerable<CarroVendido> entities)
         {
             throw new NotImplementedException();
         }
 
-        public Rol SingleOrDefault(Expression<Func<Rol, bool>> predicate)
+        public CarroVendido SingleOrDefault(Expression<Func<CarroVendido, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Rol entity)
+        public bool Update(CarroVendido entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Update(entity);
                     unidad.Complete();

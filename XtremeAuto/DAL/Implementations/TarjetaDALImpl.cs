@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Implementations
 {
-    public class RolDALImpl : IRolDAL
+    public class TarjetaDALImpl : ITarjetaDAL
     {
         private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
-        private UnidadDeTrabajo<Rol> unidad;
+        private UnidadDeTrabajo<Tarjetum> unidad;
 
-        public bool Add(Rol entity)
+        public bool Add(Tarjetum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
@@ -34,48 +34,48 @@ namespace DAL.Implementations
             }
         }
 
-        public void AddRange(IEnumerable<Rol> entities)
+        public void AddRange(IEnumerable<Tarjetum> entities)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Rol> Find(Expression<Func<Rol, bool>> predicate)
+        public IEnumerable<Tarjetum> Find(Expression<Func<Tarjetum, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Rol Get(int id)
+        public Tarjetum Get(int id)
         {
-            Rol rol = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            Tarjetum tarjeta = null;
+            using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
             {
-                rol = unidad.genericDAL.Get(id);
+                tarjeta = unidad.genericDAL.Get(id);
 
 
             }
 
-            return rol;
+            return tarjeta;
         }
 
-        public IEnumerable<Rol> GetAll()
+        public IEnumerable<Tarjetum> GetAll()
         {
-            IEnumerable<Rol> roles = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            IEnumerable<Tarjetum> tarjetas = null;
+            using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
             {
-                roles = unidad.genericDAL.GetAll();
+                tarjetas = unidad.genericDAL.GetAll();
 
 
             }
 
-            return roles;
+            return tarjetas;
 
         }
 
-        public bool Remove(Rol entity)
+        public bool Remove(Tarjetum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
@@ -91,21 +91,21 @@ namespace DAL.Implementations
             }
         }
 
-        public void RemoveRange(IEnumerable<Rol> entities)
+        public void RemoveRange(IEnumerable<Tarjetum> entities)
         {
             throw new NotImplementedException();
         }
 
-        public Rol SingleOrDefault(Expression<Func<Rol, bool>> predicate)
+        public Tarjetum SingleOrDefault(Expression<Func<Tarjetum, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Rol entity)
+        public bool Update(Tarjetum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Update(entity);
                     unidad.Complete();

@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Implementations
 {
-    public class RolDALImpl : IRolDAL
+    public class RuedaDALImpl : IRuedaDAL
     {
         private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
-        private UnidadDeTrabajo<Rol> unidad;
+        private UnidadDeTrabajo<Ruedum> unidad;
 
-        public bool Add(Rol entity)
+        public bool Add(Ruedum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
@@ -34,48 +34,48 @@ namespace DAL.Implementations
             }
         }
 
-        public void AddRange(IEnumerable<Rol> entities)
+        public void AddRange(IEnumerable<Ruedum> entities)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Rol> Find(Expression<Func<Rol, bool>> predicate)
+        public IEnumerable<Ruedum> Find(Expression<Func<Ruedum, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Rol Get(int id)
+        public Ruedum Get(int id)
         {
-            Rol rol = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            Ruedum rueda = null;
+            using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
             {
-                rol = unidad.genericDAL.Get(id);
+                rueda = unidad.genericDAL.Get(id);
 
 
             }
 
-            return rol;
+            return rueda;
         }
 
-        public IEnumerable<Rol> GetAll()
+        public IEnumerable<Ruedum> GetAll()
         {
-            IEnumerable<Rol> roles = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            IEnumerable<Ruedum> ruedas = null;
+            using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
             {
-                roles = unidad.genericDAL.GetAll();
+                ruedas = unidad.genericDAL.GetAll();
 
 
             }
 
-            return roles;
+            return ruedas;
 
         }
 
-        public bool Remove(Rol entity)
+        public bool Remove(Ruedum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
@@ -91,21 +91,21 @@ namespace DAL.Implementations
             }
         }
 
-        public void RemoveRange(IEnumerable<Rol> entities)
+        public void RemoveRange(IEnumerable<Ruedum> entities)
         {
             throw new NotImplementedException();
         }
 
-        public Rol SingleOrDefault(Expression<Func<Rol, bool>> predicate)
+        public Ruedum SingleOrDefault(Expression<Func<Ruedum, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Rol entity)
+        public bool Update(Ruedum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Update(entity);
                     unidad.Complete();

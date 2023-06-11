@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Implementations
 {
-    public class RolDALImpl : IRolDAL
+    public class TransaccionDALImpl : ITransaccionDAL
     {
         private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
-        private UnidadDeTrabajo<Rol> unidad;
+        private UnidadDeTrabajo<Transaccion> unidad;
 
-        public bool Add(Rol entity)
+        public bool Add(Transaccion entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
@@ -34,48 +34,48 @@ namespace DAL.Implementations
             }
         }
 
-        public void AddRange(IEnumerable<Rol> entities)
+        public void AddRange(IEnumerable<Transaccion> entities)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Rol> Find(Expression<Func<Rol, bool>> predicate)
+        public IEnumerable<Transaccion> Find(Expression<Func<Transaccion, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Rol Get(int id)
+        public Transaccion Get(int id)
         {
-            Rol rol = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            Transaccion transaccion = null;
+            using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
             {
-                rol = unidad.genericDAL.Get(id);
+                transaccion = unidad.genericDAL.Get(id);
 
 
             }
 
-            return rol;
+            return transaccion;
         }
 
-        public IEnumerable<Rol> GetAll()
+        public IEnumerable<Transaccion> GetAll()
         {
-            IEnumerable<Rol> roles = null;
-            using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+            IEnumerable<Transaccion> transacciones = null;
+            using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
             {
-                roles = unidad.genericDAL.GetAll();
+                transacciones = unidad.genericDAL.GetAll();
 
 
             }
 
-            return roles;
+            return transacciones;
 
         }
 
-        public bool Remove(Rol entity)
+        public bool Remove(Transaccion entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
@@ -91,21 +91,21 @@ namespace DAL.Implementations
             }
         }
 
-        public void RemoveRange(IEnumerable<Rol> entities)
+        public void RemoveRange(IEnumerable<Transaccion> entities)
         {
             throw new NotImplementedException();
         }
 
-        public Rol SingleOrDefault(Expression<Func<Rol, bool>> predicate)
+        public Transaccion SingleOrDefault(Expression<Func<Transaccion, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Rol entity)
+        public bool Update(Transaccion entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
                 {
                     unidad.genericDAL.Update(entity);
                     unidad.Complete();
