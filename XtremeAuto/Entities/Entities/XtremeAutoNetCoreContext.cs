@@ -177,7 +177,9 @@ namespace Entities.Entities
 
                 entity.Property(e => e.FechaCorte).HasColumnType("datetime");
 
-                entity.Property(e => e.FechaTransaccion).HasColumnType("datetime");
+                entity.Property(e => e.FechaTransaccion)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.InteresesMorosidad).HasColumnType("decimal(18, 2)");
 
@@ -190,13 +192,13 @@ namespace Entities.Entities
                 entity.HasOne(d => d.Tarjeta)
                     .WithMany(p => p.Transaccions)
                     .HasForeignKey(d => d.TarjetaId)
-                    .HasConstraintName("FK__Transacci__Tarje__4F7CD00D");
+                    .HasConstraintName("FK__Transacci__Tarje__5DCAEF64");
 
                 entity.HasOne(d => d.Venta)
                     .WithMany(p => p.Transaccions)
                     .HasForeignKey(d => d.VentaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Transacci__Venta__5070F446");
+                    .HasConstraintName("FK__Transacci__Venta__5EBF139D");
             });
 
             modelBuilder.Entity<Usuario>(entity =>
