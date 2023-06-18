@@ -94,7 +94,6 @@ UsuarioID int not null,
 Nombre nvarchar (60) not null,
 NumeroDeTarjeta nvarchar (30) not null,
 CVV nvarchar(10) not null,
-LockoutEnabled bit not null,
 FechaVencimiento datetime not null,
 primary key(TarjetaID),
 foreign key(UsuarioID) references Usuario(UsuarioID)
