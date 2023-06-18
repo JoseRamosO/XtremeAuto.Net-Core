@@ -10,37 +10,59 @@ namespace BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
 
-        private IRolDAL rolDAL;
+        private IUsuarioDAL usuarioDAL;
 
-        private RolModel Convertir(Rol rol)
+        private UsuarioModel Convertir(Usuario usuario)
         {
-            return new RolModel
+            return new UsuarioModel
             {
-                RolId = rol.RolId,
-                Nombre = rol.Nombre
+                UsuarioId = usuario.UsuarioId,
+                Nombre = usuario.Nombre,
+                Apellido = usuario.Apellido,
+                Salario = usuario.Salario,
+                Cedula = usuario.Cedula,
+                Email = usuario.Email,
+                PasswordHash = usuario.PasswordHash,
+                SecurityStamp = usuario.SecurityStamp,
+                Telefono = usuario.Telefono,
+                Username = usuario.Username,
+                RolId = usuario.RolId,
+                LockoutEnabled = usuario.LockoutEnabled,
+                FailedAttemptsCount = usuario.FailedAttemptsCount
             };
         }
 
 
 
-        private Rol Convertir(RolModel rol)
+        private Usuario Convertir(UsuarioModel usuario)
         {
-            return new Rol
+            return new Usuario
             {
-                RolId = rol.RolId,
-                Nombre = rol.Nombre
+                UsuarioId = usuario.UsuarioId,
+                Nombre = usuario.Nombre,
+                Apellido = usuario.Apellido,
+                Salario = usuario.Salario,
+                Cedula = usuario.Cedula,
+                Email = usuario.Email,
+                PasswordHash = usuario.PasswordHash,
+                SecurityStamp = usuario.SecurityStamp,
+                Telefono = usuario.Telefono,
+                Username = usuario.Username,
+                RolId = usuario.RolId,
+                LockoutEnabled = usuario.LockoutEnabled,
+                FailedAttemptsCount = usuario.FailedAttemptsCount
             };
         }
 
 
         #region Constructores
 
-        public RolController()
+        public UsuarioController()
         {
-            rolDAL = new RolDALImpl();
+            usuarioDAL = new UsuarioDALImpl();
 
         }
 
@@ -53,13 +75,13 @@ namespace BackEnd.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            IEnumerable<Rol> roles = rolDAL.GetAll();
-            List<RolModel> models = new List<RolModel>();
+            IEnumerable<Usuario> usuarios = usuarioDAL.GetAll();
+            List<UsuarioModel> models = new List<UsuarioModel>();
 
-            foreach (var rol in roles)
+            foreach (var usuario in usuarios)
             {
 
-                models.Add(Convertir(rol));
+                models.Add(Convertir(usuario));
 
             }
 
@@ -70,10 +92,10 @@ namespace BackEnd.Controllers
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
-            Rol rol = rolDAL.Get(id);
+            Usuario usuarios = usuarioDAL.Get(id);
 
 
-            return new JsonResult(Convertir(rol));
+            return new JsonResult(Convertir(usuarios));
         }
         #endregion
 
@@ -82,12 +104,13 @@ namespace BackEnd.Controllers
 
         // POST api/<RolController>
         [HttpPost]
-        public JsonResult Post([FromBody] RolModel rol)
+        public JsonResult Post([FromBody] UsuarioModel usuario)
         {
 
-            rolDAL.Add(Convertir(rol));
-            return new JsonResult(rol);
+            usuarioDAL.Add(Convertir(usuario));
+            return new JsonResult(usuarioDAL.Add(Convertir(usuario)));
         }
+
 
         #endregion
 
@@ -96,10 +119,10 @@ namespace BackEnd.Controllers
 
         // PUT api/<RolController>/5
         [HttpPut]
-        public JsonResult Put([FromBody] RolModel rol)
+        public JsonResult Put([FromBody] UsuarioModel usuarios)
         {
-            rolDAL.Update(Convertir(rol));
-            return new JsonResult(rol);
+            usuarioDAL.Update(Convertir(usuarios));
+            return new JsonResult(usuarios);
         }
         #endregion
 
@@ -109,12 +132,12 @@ namespace BackEnd.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            Rol rol = new Rol
+            Usuario usuario = new Usuario
             {
-                RolId = id
+                UsuarioId = id
             };
 
-            rolDAL.Remove(rol);
+            usuarioDAL.Remove(usuario);
 
         }
 
