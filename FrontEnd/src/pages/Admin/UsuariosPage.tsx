@@ -6,17 +6,16 @@ import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 
-interface ExampleObject {
-  id: number,
-  nombre: string,
-  email: string,
-  last_login: string,
-  rol: number,
+interface usuarioType {
+  cedula: number;
+  nombre : string;
+  apellido : string;
+  username : string;
+  salario: number; 
 }
 
-export const RegisterPage = () => {
+export const UsuariosPage = () => {
   const dispatch = useAppDispatch();
-
   const { users: data, loadingUsers } = useAppSelector( (state) => state.usuarios);
 
   useEffect(() => {
@@ -25,26 +24,29 @@ export const RegisterPage = () => {
     } 
   }, [data])
   
-  const columns: Column<ExampleObject>[] = useMemo(() => [
+  const columns: Column<usuarioType>[] = useMemo(() => [
     {
-      Header: 'ID',
-      accessor: "id" as keyof ExampleObject,
+      Header: 'Cedula',
+      accessor: "cedula" as keyof usuarioType,
     },
     {
         Header: 'Nombre',
-        accessor: "nombre" as keyof ExampleObject,
+        accessor: "nombre" as keyof usuarioType,
     },
     {
-        Header: 'Rol',
-        accessor: "rol" as keyof ExampleObject,
+        Header: 'Apellido',
+        accessor: "apellido" as keyof usuarioType,
     },
     {
-      Header: 'Ultimo Login',
-      accessor: "last_login" as keyof ExampleObject,
+      Header: 'Username',
+      accessor: "username" as keyof usuarioType,
+    },
+    {
+      Header: 'Salario',
+      accessor: "salario" as keyof usuarioType,
     }
   ], [])
 
-  
   const tableInstance = useTable({columns, data}, usePagination, useRowSelect)
   
   return (

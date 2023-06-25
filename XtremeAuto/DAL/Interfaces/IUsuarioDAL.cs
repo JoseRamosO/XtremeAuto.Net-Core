@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    internal interface IUsuarioDAL: IDALGenerico<Usuario>
+    public interface IUsuarioDAL: IDALGenerico<Usuario>
     {
     }
 }
