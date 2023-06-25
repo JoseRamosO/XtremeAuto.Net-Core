@@ -19,3 +19,10 @@
 .global-modal .modal-body {
     padding: 20px;
 }
+.global-loader {
+    width: 400px;
+    margin: 0 auto;
+}
+.global-loader p {
+    text-align: center;
+}
