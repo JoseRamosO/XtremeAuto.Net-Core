@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.global-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 10px;
+}
+.global-modal .modal-header {
+    background-color: #00ced1;
+    padding: 10px 20px;
+}
+.global-modal .modal-body {
+    padding: 20px;
+}

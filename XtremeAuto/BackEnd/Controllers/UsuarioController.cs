@@ -122,7 +122,7 @@ namespace BackEnd.Controllers
         public JsonResult Post([FromBody] UsuarioModel usuario)
         {
             usuario.PasswordHash = BcryptPasswordHelper.HashPassword(usuario.PasswordHash);
-            //usuarioDAL.Add(Convertir(usuario));
+            usuarioDAL.Add(Convertir(usuario));
             return new JsonResult(new { status = 200, message = "Nuevo usuario agregado correctamente" });
         }
 
