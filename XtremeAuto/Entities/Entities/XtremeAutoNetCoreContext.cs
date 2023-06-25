@@ -26,6 +26,16 @@ namespace Entities.Entities
         public virtual DbSet<Transaccion> Transaccions { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<Ventum> Venta { get; set; } = null!;
+        public virtual DbSet<sp_GetAllCarroModelos_Result> sp_GetAllCarroModelos_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllCarroVendidos_Result> sp_GetAllCarroVendidos_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllColores_Result> sp_GetAllColores_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllRoles_Result> sp_GetAllRoles_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllRuedas_Result> sp_GetAllRuedas_Results { get; set; } = null!; 
+        public virtual DbSet<sp_GetAllSeguros_Result> sp_GetAllSeguros_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllTarjetas_Result> sp_GetAllTarjetas_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllTransacciones_Result> sp_GetAllTransacciones_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllUsuarios_Result> sp_GetAllUsuarios_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllVentas_Result> sp_GetAllVentas_Results { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
