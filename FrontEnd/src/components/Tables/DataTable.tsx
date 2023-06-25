@@ -1,149 +1,124 @@
-// import { Button, Pagination, Table } from "flowbite-react";
-import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import { useAppDispatch } from "../../hooks/reduxHooks";
+import { Table, Button, TableCell, TableContainer, TableHead, TableRow, TableBody, TablePagination, TableFooter, Box} from '@mui/material';
 import { setToggleModal } from "../../store/slices/userInterface/userInterface";
+
+import IconButton from '@mui/material/IconButton';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export const DataTable = ({ tableInstance } ) => {
   const dispatch = useAppDispatch();
   const { getTableProps, 
     getTableBodyProps, 
     headerGroups, 
-    rows, 
     prepareRow,
+    onPageChange,
     page,
     canPreviousPage,
     canNextPage,
-    pageOptions,
     pageCount,
     gotoPage,
     nextPage,
     previousPage,
     setPageSize,
-    selectedFlatRows,
     toggleAllPageRowsSelected,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize },
   } = tableInstance;
   
+  const handleChangeRowsPerPage = (e) => {
+    setPageSize(parseInt(e.target.value, 10));
+    gotoPage(0)
+  };
+
+  const CustomPaginationActions = () =>  {
+    const handleFirstPageButtonClick = () => {
+      onPageChange(0);
+    };
+  
+    const handleBackButtonClick = () => {
+      previousPage();
+    };
+  
+    const handleNextButtonClick = () => {
+      nextPage();
+    };
+  
+    const handleLastPageButtonClick = () => {
+      gotoPage(pageCount - 1)
+    };
+  
+    return (
+      <Box sx={{ width: '250px' }}>
+        <IconButton onClick={ handleFirstPageButtonClick } disabled={ !canPreviousPage }><FirstPageIcon /></IconButton>
+        <IconButton onClick={ handleBackButtonClick } disabled={ !canPreviousPage }><KeyboardArrowLeft /></IconButton>
+        <IconButton onClick={ handleNextButtonClick } disabled={ !canNextPage }><KeyboardArrowRight /></IconButton>
+        <IconButton onClick={ handleLastPageButtonClick } disabled={ !canNextPage }><LastPageIcon /></IconButton>
+      </Box>
+    );
+  }
+
   return (
-    <>
-      <Button onClick={ () => {
-         toggleAllPageRowsSelected(false);
-        dispatch(setToggleModal());
-      }}>
-          Agregar Nuevo Usuario
-      </Button>
-    <Table {...getTableProps()} striped bordered hover>
-      {headerGroups.map(headerGroup => (
-        <thead {...headerGroup.getHeaderGroupProps()}>
-          {headerGroup.headers.map(column => (
-            <th {...column.getHeaderProps()}>
-              {column.render('Header')}
-            </th>
-          ))}
-          <th>
-            Opciones
-          </th>
-        </thead>
-      ))}
-
-      <tbody {...getTableBodyProps()}>
-        {page.map(row => {
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return (
-                  <td {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
-                )
-              })}
-              <td>
-                <button onClick={() => {
-                    toggleAllPageRowsSelected(false);
-                    row.toggleRowSelected();
-                    dispatch(setToggleModal())
-                  }} className="font-medium text-blue-600 hover:underline dark:text-blue-500">
-                  Edit
-                </button>
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </Table>
-
-      <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <span>
-          | Go to page:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0
-              gotoPage(page)
-            }}
-            style={{ width: '100px' }}
-          />
-        </span>{' '}
-        <select
-          value={pageSize}
-          onChange={e => {
-            setPageSize(Number(e.target.value))
-          }}
-        >
-          {[5, 10, 15].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
-      <table className="table-auto">
-  <thead>
-    <tr>
-      <th>Song</th>
-      <th>Artist</th>
-      <th>Year</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-      <td>Malcolm Lockyer</td>
-      <td>1961</td>
-    </tr>
-    <tr>
-      <td>Witchy Woman</td>
-      <td>The Eagles</td>
-      <td>1972</td>
-    </tr>
-    <tr>
-      <td>Shining Star</td>
-      <td>Earth, Wind, and Fire</td>
-      <td>1975</td>
-    </tr>
-  </tbody>
-</table>
-      </>
+    <TableContainer>
+      <Table {...getTableProps()}>
+        { headerGroups.map(headerGroup => (
+          <TableHead {...headerGroup.getHeaderGroupProps()}>
+            <TableRow>
+              {headerGroup.headers.map(column => (
+                <TableCell {...column.getHeaderProps()}>
+                  {column.render('Header')}
+                </TableCell>
+              ))}
+              <TableCell>
+                Opciones
+              </TableCell>
+            </TableRow>
+          </TableHead>
+        ))}
+        <TableBody {...getTableBodyProps()}>
+          { page.map(row => {
+            prepareRow(row)
+            return (
+              <TableRow {...row.getRowProps()}>
+                { row.cells.map(cell => {
+                    return (
+                      <TableCell {...cell.getCellProps()}>
+                        {cell.render('Cell')}
+                      </TableCell>
+                    )
+                })}
+                <TableCell>
+                  <Button sx={{ bgcolor: 'warning.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setToggleModal())} }>
+                    <EditIcon/>
+                  </Button>
+                  <Button sx={{ bgcolor: 'success.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setToggleModal())} }>
+                    <VisibilityIcon/>
+                  </Button>
+                  <Button sx={{ bgcolor: 'error.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setToggleModal())} }>
+                    <DeleteIcon/>
+                  </Button>
+                </TableCell>
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
+      <TablePagination
+        component='div'
+        count={pageCount}
+        page={pageIndex}
+        onPageChange={(newPage) => gotoPage(newPage)}
+        rowsPerPage={ pageSize }
+        rowsPerPageOptions={[5, 10, 15]}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        ActionsComponent={ CustomPaginationActions  }
+        nextIconButtonProps={{ disabled: canNextPage }}
+        backIconButtonProps={{ disabled: canPreviousPage }}
+      />
+    </TableContainer>
   )
 }

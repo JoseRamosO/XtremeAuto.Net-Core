@@ -8,12 +8,15 @@ import { setToggleModal } from "../../store/slices/userInterface/userInterface";
 import { Box } from '@mui/material';
 
 interface InitialValuesType {
-  nombre: string;
-  apellidos: string;
-  rol: number;
-  password: string;
-  confirmPassword: string;
-  email: string;
+  usuarioId: number;
+  nombre : string;
+  apellido : string;
+  cedula: number;
+  email : string;
+  rolId: number;
+  username : string;
+  telefono : number;
+  salario: number;   
 }
 
 export const UserModal = ({ tableInstance }) => {
@@ -22,12 +25,16 @@ export const UserModal = ({ tableInstance }) => {
   const { selectedFlatRows, data, setData, setIsOpenAddEditModal, isOpenAddEditModal } = tableInstance;
 
   const initFormValues: InitialValuesType = {
-    nombre: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
-    apellidos: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.apellidos : '',
-    email: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.email : '',
-    rol: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.rol : '',
-    password: '',
-    confirmPassword: ''
+    usuarioId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
+    nombre : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
+    apellido : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
+    cedula: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
+    email : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
+    rolId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
+    username : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
+    telefono : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
+    salario: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '', 
+    
   }
   const validationSchema = Yup.object().shape({
     nombre: Yup.string()
@@ -36,7 +43,7 @@ export const UserModal = ({ tableInstance }) => {
     .max(15, 'Nombre no debe tener mas de 15 caracteres')
     .matches(/^[a-zA-Z ]+$/, 'Nombre solo debe tener palabras y espacios'),
     
-    apellidos: Yup.string()
+    apellido: Yup.string()
     .required('Apellido es requerido')
     .min(2, 'Apellido debe tener al menos 2 caracteres')
     .max(15, 'Apellido no debe tener mas de 15 caracteres')
@@ -46,18 +53,18 @@ export const UserModal = ({ tableInstance }) => {
     .email('Dirección de email invalida')
     .required('Email es requerido'),
 
-    password: Yup.string()
-    .min(8, 'Contraseña debe de ser de al menos 8 caracteres de largo')
-    .max(15, 'Contraseña no debe ser mayor a 15 caracteres de largo')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-      'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.'
-    )
-    .required('Contraseña Requerida'),
+    // password: Yup.string()
+    // .min(8, 'Contraseña debe de ser de al menos 8 caracteres de largo')
+    // .max(15, 'Contraseña no debe ser mayor a 15 caracteres de largo')
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+    //   'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.'
+    // )
+    // .required('Contraseña Requerida'),
 
-    confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Contraseñas deben coincidir')
-    .required('Confirmar Contraseña es requerida')
+    // confirmPassword: Yup.string()
+    // .oneOf([Yup.ref('password')], 'Contraseñas deben coincidir')
+    // .required('Confirmar Contraseña es requerida')
   });
 
   return (
@@ -76,13 +83,17 @@ export const UserModal = ({ tableInstance }) => {
             enableReinitialize
             initialValues={ initFormValues }
             validationSchema={ validationSchema }
-            onSubmit={({ nombre, apellidos, rol, password, email }) => {
+            onSubmit={({ usuarioId, nombre, apellido, cedula, email, rolId, username, telefono, salario }) => {
               dispatch(registrarUsuario({
+                usuarioId,
                 nombre,
-                apellidos,
-                rol,
-                password,
-                email
+                apellido,
+                cedula,
+                email,
+                rolId,
+                username,
+                telefono,
+                salario  
               }))
             }}
           >
@@ -108,18 +119,18 @@ export const UserModal = ({ tableInstance }) => {
                         </div>
 
                         <div className="sm:col-span-3">
-                          <label htmlFor="last-name" className={ `block text-sm font-medium leading-6${ (errors.apellidos && touched.apellidos) ? ' text-red-600' : ' text-gray-900' }` }>
-                            Apellidos
+                          <label htmlFor="last-name" className={ `block text-sm font-medium leading-6${ (errors.apellido && touched.apellido) ? ' text-red-600' : ' text-gray-900' }` }>
+                            Apellido
                           </label>
                           <div className="mt-2">
                             <Field
                               type="text"
-                              name="apellidos"
-                              value={ values.apellidos || '' }
+                              name="apellido"
+                              value={ values.apellido || '' }
                               onChange={ handleChange }
-                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.apellidos && touched.apellidos) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.apellido && touched.apellido) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                             />
-                            { errors.apellidos && touched.apellidos && ( <span className="inline-flex text-sm text-red-700">{errors.apellidos}</span> ) }
+                            { errors.apellido && touched.apellido && ( <span className="inline-flex text-sm text-red-700">{errors.apellido}</span> ) }
                           </div>
                         </div>
 
@@ -137,43 +148,15 @@ export const UserModal = ({ tableInstance }) => {
                             { errors.email && touched.email && ( <span className="inline-flex text-sm text-red-700">{errors.email}</span> ) }
                           </div>
                         </div>
-                        <div className="sm:col-span-4">
-                          <label htmlFor="last-name" className={ `block text-sm font-medium leading-6${ (errors.password && touched.password) ? ' text-red-600' : ' text-gray-900' }` }>
-                            Contraseña
-                          </label>
-                          <div className="mt-2">
-                            <Field
-                              id="password"
-                              name="password"
-                              type="password"
-                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.password && touched.password) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                            />
-                            { errors.password && touched.password && ( <span className="inline-flex text-sm text-red-700">{errors.password}</span> ) }
-                          </div>
-                        </div>
-                        <div className="sm:col-span-4">
-                          <label htmlFor="last-name" className={ `block text-sm font-medium leading-6${ (errors.confirmPassword && touched.confirmPassword) ? ' text-red-600' : ' text-gray-900' }` }>
-                              Confirmar Contraseña
-                          </label>
-                          <div className="mt-2">
-                            <Field
-                              id="confirmPassword"
-                              name="confirmPassword"
-                              type="password"
-                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.confirmPassword && touched.confirmPassword) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                            />
-                            { errors.confirmPassword && touched.confirmPassword && ( <span className="inline-flex text-sm text-red-700">{errors.confirmPassword}</span> ) }
-                          </div>
-                        </div>
                         <div className="sm:col-span-3">
-                          <label htmlFor="rol" className="block text-sm font-medium leading-6 text-gray-900">
+                          <label htmlFor="rolId" className="block text-sm font-medium leading-6 text-gray-900">
                             Rol de usuario
                           </label>
                           <div className="mt-2">
                             <select
-                              id="rol"
-                              name="rol"
-                              defaultValue={ values.rol || 0}
+                              id="rolId"
+                              name="rolId"
+                              defaultValue={ values.rolId || 0}
                               onChange={handleChange}
                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                             >
