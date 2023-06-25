@@ -33,7 +33,10 @@ export const usuarioSlice = createSlice({
         state.users = action.payload;
         state.loadingUsers = false;
       },
+      setLoadingUsers(state) {
+        state.loadingUsers = true;
+      },
     },
 });
   
-export const { setCurrentUser, setUsers } = usuarioSlice.actions;
+export const { setCurrentUser, setUsers, setLoadingUsers } = usuarioSlice.actions;

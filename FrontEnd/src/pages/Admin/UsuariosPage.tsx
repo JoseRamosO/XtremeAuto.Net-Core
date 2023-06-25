@@ -5,6 +5,9 @@ import { Column, usePagination, useRowSelect, useTable } from 'react-table';
 import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
+import { Button } from "@mui/material";
+import { setToggleModal } from "../../store/slices/userInterface/userInterface";
+import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 
 interface usuarioType {
   cedula: number;
@@ -53,7 +56,13 @@ export const UsuariosPage = () => {
     <MainAdminLayout>
       <UserModal tableInstance={tableInstance}/>
       {
-        loadingUsers ? <p>Loading</p> : <DataTable tableInstance={tableInstance}/>
+        loadingUsers ? <GettingDataLoader/> : (
+          <>
+                <Button variant="contained" color="success" onClick={() => dispatch(setToggleModal())}>Agregar Nuevo Usuario</Button>
+                <DataTable tableInstance={tableInstance}/>
+          </>
+         
+        )
       }
     </MainAdminLayout>
   )
