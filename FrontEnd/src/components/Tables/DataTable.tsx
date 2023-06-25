@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { Table, Button, TableCell, TableContainer, TableHead, TableRow, TableBody, TablePagination, TableFooter, Box} from '@mui/material';
-import { setToggleModal } from "../../store/slices/userInterface/userInterface";
+import {  setModalDeleteOpen, setToggleModal } from "../../store/slices/userInterface/userInterface";
 
 import IconButton from '@mui/material/IconButton';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
@@ -98,7 +98,7 @@ export const DataTable = ({ tableInstance } ) => {
                   <Button sx={{ bgcolor: 'success.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setToggleModal())} }>
                     <VisibilityIcon/>
                   </Button>
-                  <Button sx={{ bgcolor: 'error.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setToggleModal())} }>
+                  <Button sx={{ bgcolor: 'error.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setModalDeleteOpen())} }>
                     <DeleteIcon/>
                   </Button>
                 </TableCell>

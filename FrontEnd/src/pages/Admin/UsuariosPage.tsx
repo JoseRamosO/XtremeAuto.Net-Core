@@ -8,6 +8,7 @@ import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { Button } from "@mui/material";
 import { setToggleModal } from "../../store/slices/userInterface/userInterface";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
+import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 
 interface usuarioType {
   cedula: number;
@@ -55,6 +56,7 @@ export const UsuariosPage = () => {
   return (
     <MainAdminLayout>
       <UserModal tableInstance={tableInstance}/>
+      <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingUsers ? <GettingDataLoader/> : (
           <>
