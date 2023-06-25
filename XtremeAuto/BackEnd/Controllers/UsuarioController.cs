@@ -3,17 +3,28 @@ using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
 using Microsoft.AspNetCore.Mvc;
+using BackEnd.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using BackEnd.Services;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BackEnd.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/usuario")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
 
         private IUsuarioDAL usuarioDAL;
+        private BcryptPasswordHelper BcryptPasswordHelper;
+        private readonly JWTServiceManage _jwttokenservice;
+        private readonly IConfiguration _configuration;
 
         private UsuarioModel Convertir(Usuario usuario)
         {
@@ -64,6 +75,8 @@ namespace BackEnd.Controllers
 
         public UsuarioController()
         {
+            BcryptPasswordHelper = new BcryptPasswordHelper();
+            _jwttokenservice = new JWTServiceManage(_configuration);
             usuarioDAL = new UsuarioDALImpl();
 
         }
@@ -108,9 +121,9 @@ namespace BackEnd.Controllers
         [HttpPost]
         public JsonResult Post([FromBody] UsuarioModel usuario)
         {
-
-            usuarioDAL.Add(Convertir(usuario));
-            return new JsonResult(usuario);
+            usuario.PasswordHash = BcryptPasswordHelper.HashPassword(usuario.PasswordHash);
+            //usuarioDAL.Add(Convertir(usuario));
+            return new JsonResult(new { status = 200, message = "Nuevo usuario agregado correctamente" });
         }
 
 
@@ -142,8 +155,22 @@ namespace BackEnd.Controllers
             usuarioDAL.Remove(usuario);
 
         }
-
         #endregion
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("login")]
+        public JsonResult Authenticate(UsuarioModel usuario)
+        {
+            JWTTokens token = _jwttokenservice.Authenticate(usuario);
+
+            if (token == null)
+            {
+                return new JsonResult(new { Message = "Correo Eléctronico o contraseña Incorrectos" });
+            }
+
+            return new JsonResult(token);
+        }
 
     }
 }
