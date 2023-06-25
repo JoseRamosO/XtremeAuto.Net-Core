@@ -3,7 +3,7 @@ import { setCurrentUser, setLoadingUsers, setUsers } from "./usuariosSlice";
 import { baseApi } from "../../../api/apiConfig";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { setToggleModal } from "../userInterface/userInterface";
+import { setModalDeleteOpen, setToggleModal } from "../userInterface/userInterface";
 
 
 interface usuarioType {
@@ -68,8 +68,21 @@ const registrarUsuario = (usuario: usuarioType) => {
         }
     };
 };
+
+const eliminarUsuario = (idUsuarioEliminar) => {
+    return async (dispatch: Dispatch) => {
+        await baseApi.delete(`/usuario/${ idUsuarioEliminar }`);
+        dispatch(setLoadingUsers());
+        const { data } = await baseApi.get('/usuario');
+        dispatch(setUsers(data));
+        toast.success('¡Usuario eliminado con éxito!');
+        dispatch(setModalDeleteOpen());
+    }
+};
+
 export {
     loginUsuario,
     registrarUsuario,
-    getAllUsers
+    getAllUsers,
+    eliminarUsuario
 }
