@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +19,76 @@ namespace DAL.Implementations
         public bool Add(CarroModelo entity)
         {
             try
+
             {
-                using (unidad = new UnidadDeTrabajo<CarroModelo>(new XtremeAutoNetCoreContext()))
-                {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
+                string sql = "exec [dbo].[sp_AddCarroModelo] @Disponible, @Tipo, @Marca, @Modelo, @Descripcion, @Precio, @Catidad";
+                var param = new SqlParameter[]
+
+                    {
+
+                          new SqlParameter()
+               {
+                   ParameterName = "@Disponible",
+                   SqlDbType = System.Data.SqlDbType.Bit,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Disponible
+               },
+
+
+                           new SqlParameter()
+               {
+                   ParameterName = "@Tipo",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Tipo
+               },
+
+                            new SqlParameter()
+               {
+                   ParameterName = "@Marca",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Marca
+               },
+
+                             new SqlParameter()
+               {
+                   ParameterName = "@Modelo",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Modelo
+               },
+
+                              new SqlParameter()
+               {
+                   ParameterName = "@Descripcion",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Descripcion
+               },
+
+                               new SqlParameter()
+               {
+                   ParameterName = "@Precio",
+                   SqlDbType = System.Data.SqlDbType.Decimal,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Precio
+               },
+
+                                new SqlParameter()
+               {
+                   ParameterName = "@Cantidad",
+                   SqlDbType = System.Data.SqlDbType.Int,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Cantidad
+               }
+
+
+                    };
+
+                XtremeAutoNetCoreContext XtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+
+                int resultado = XtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
 
 
                 return true;

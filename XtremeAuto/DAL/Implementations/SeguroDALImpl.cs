@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +19,43 @@ namespace DAL.Implementations
         public bool Add(Seguro entity)
         {
             try
+
             {
-                using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
-                {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
+                string sql = "exec [dbo].[sp_AddSeguro] @Nombre, @Plazo, @Precio";
+                var param = new SqlParameter[]
+
+                    {
+
+                          new SqlParameter()
+               {
+                   ParameterName = "@Nombre",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Nombre
+               },
+
+                           new SqlParameter()
+               {
+                   ParameterName = "@Plazo",
+                   SqlDbType = System.Data.SqlDbType.Int,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Plazo
+               },
+
+                new SqlParameter()
+               {
+                   ParameterName = "@Precio",
+                   SqlDbType = System.Data.SqlDbType.Decimal,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Precio
+               }
+
+
+                    };
+
+                XtremeAutoNetCoreContext XtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+
+                int resultado = XtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
 
 
                 return true;

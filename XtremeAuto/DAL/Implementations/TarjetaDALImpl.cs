@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +19,59 @@ namespace DAL.Implementations
         public bool Add(Tarjetum entity)
         {
             try
+
             {
-                using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
-                {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
+                string sql = "exec [dbo].[sp_AddTarjeta] @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento";
+                var param = new SqlParameter[]
+
+                    {
+
+                         new SqlParameter()
+               {
+                   ParameterName = "@UsuarioID",
+                   SqlDbType = System.Data.SqlDbType.Int,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.UsuarioId
+               },
+
+                        new SqlParameter()
+               {
+                   ParameterName = "@Nombre",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Nombre
+               },
+
+                           new SqlParameter()
+               {
+                   ParameterName = "@NumeroDeTarjeta",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.NumeroDeTarjeta
+               },
+
+                            new SqlParameter()
+               {
+                   ParameterName = "@CVV",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Cvv
+               },
+
+                new SqlParameter()
+               {
+                   ParameterName = "@FechaVencimiento",
+                   SqlDbType = System.Data.SqlDbType.DateTime,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.FechaVencimiento
+               }
+
+
+                    };
+
+                XtremeAutoNetCoreContext XtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+
+                int resultado = XtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
 
 
                 return true;

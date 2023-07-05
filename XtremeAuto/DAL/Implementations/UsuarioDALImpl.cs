@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +19,89 @@ namespace DAL.Implementations
         public bool Add(Usuario entity)
         {
             try
+
             {
-                using (unidad = new UnidadDeTrabajo<Usuario>(new XtremeAutoNetCoreContext()))
-                {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
+                string sql = "exec [dbo].[sp_AddUsuario] @Nombre, @Apellido, @Salario, @Cedula, @Email, @PasswordHash, @SecurityStamp, @Telefono, @Username";
+                var param = new SqlParameter[]
+
+                    {
+
+                         new SqlParameter()
+               {
+                   ParameterName = "@Nombre",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Nombre
+               },
+
+                        new SqlParameter()
+               {
+                   ParameterName = "@Apellido",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Apellido
+               },
+
+                           new SqlParameter()
+               {
+                   ParameterName = "@Salario",
+                   SqlDbType = System.Data.SqlDbType.Decimal,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Salario
+               },
+
+                            new SqlParameter()
+               {
+                   ParameterName = "@Cedula",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Cedula
+               },
+
+                new SqlParameter()
+               {
+                   ParameterName = "@Email",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Email
+               },
+
+                new SqlParameter()
+               {
+                   ParameterName = "@PasswordHash",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.PasswordHash
+               },
+                new SqlParameter()
+               {
+                   ParameterName = "@SecurityStamp",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.SecurityStamp
+               },
+
+                 new SqlParameter()
+               {
+                   ParameterName = "@Telefono",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Telefono
+               },
+
+                  new SqlParameter()
+               {
+                   ParameterName = "@Username",
+                   SqlDbType = System.Data.SqlDbType.VarChar,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = entity.Username
+               }
+
+                    };
+
+                XtremeAutoNetCoreContext XtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+
+                int resultado = XtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
 
 
                 return true;
