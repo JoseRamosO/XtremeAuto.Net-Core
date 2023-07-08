@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,13 +25,10 @@ namespace DAL.Implementations
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
                 }
-
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -50,10 +49,7 @@ namespace DAL.Implementations
             using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
             {
                 rol = unidad.genericDAL.Get(id);
-
-
             }
-
             return rol;
         }
 
@@ -63,12 +59,8 @@ namespace DAL.Implementations
             using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
             {
                 roles = unidad.genericDAL.GetAll();
-
-
             }
-
             return roles;
-
         }
 
         public bool Remove(Rol entity)
@@ -80,13 +72,10 @@ namespace DAL.Implementations
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
                 }
-
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -105,18 +94,30 @@ namespace DAL.Implementations
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Rol>(new XtremeAutoNetCoreContext()))
+                string sql = "EXEC [dbo].[sp_UpdateRol] @RolID, @Nombre";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Update(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@RolID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.RolId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Nombre",
+                        SqlDbType= System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Nombre
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }

@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,13 +25,10 @@ namespace DAL.Implementations
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
                 }
-
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -50,10 +49,7 @@ namespace DAL.Implementations
             using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
             {
                 tarjeta = unidad.genericDAL.Get(id);
-
-
             }
-
             return tarjeta;
         }
 
@@ -63,10 +59,7 @@ namespace DAL.Implementations
             using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
             {
                 tarjetas = unidad.genericDAL.GetAll();
-
-
             }
-
             return tarjetas;
 
         }
@@ -80,13 +73,10 @@ namespace DAL.Implementations
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
                 }
-
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -105,18 +95,58 @@ namespace DAL.Implementations
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
+                string sql = "EXEC [dbo].[sp_UpdateTarjeta] @TarjetaID, @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Update(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@TarjetaID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.TarjetaId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@UsuarioID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.UsuarioId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Nombre",
+                        SqlDbType= System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@NumeroDeTarjeta",
+                        SqlDbType= System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.NumeroDeTarjeta
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@CVV",
+                        SqlDbType= System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Cvv
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@FechaVencimiento",
+                        SqlDbType= System.Data.SqlDbType.DateTime,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.FechaVencimiento
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }

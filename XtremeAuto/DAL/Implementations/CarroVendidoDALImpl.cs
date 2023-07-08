@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,13 +25,10 @@ namespace DAL.Implementations
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
                 }
-
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -50,8 +49,6 @@ namespace DAL.Implementations
             using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
             {
                 carroVendido = unidad.genericDAL.Get(id);
-
-
             }
 
             return carroVendido;
@@ -63,10 +60,7 @@ namespace DAL.Implementations
             using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
             {
                 carrosVendido = unidad.genericDAL.GetAll();
-
-
             }
-
             return carrosVendido;
 
         }
@@ -80,13 +74,10 @@ namespace DAL.Implementations
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
                 }
-
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -105,18 +96,58 @@ namespace DAL.Implementations
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
+                string sql = "EXEC [dbo].[sp_UpdateCarroVendido] @CarroVendidoID, @RuedaID, @ColorID, @CarroModeloID, @SeguroID, @PrecioTotal";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Update(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@CarroVendidoID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.CarroVendidoId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@RuedaID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.RuedaId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@ColorID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.ColorId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@CarroModeloID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.CarroModeloId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@SeguroID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.SeguroId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@PrecioTotal",
+                        SqlDbType= System.Data.SqlDbType.Decimal,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.PrecioTotal
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
