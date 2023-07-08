@@ -103,7 +103,7 @@ create table Transaccion
 (TransaccionID int not null identity,
 VentaID int not null,
 TarjetaID int null,
-FechaTransaccion datetime not null,
+FechaTransaccion datetime null default (GETDATE()),
 FechaCorte datetime not null,
 InteresesMorosidad decimal (18,2) not null,
 Pagado bit not null,
