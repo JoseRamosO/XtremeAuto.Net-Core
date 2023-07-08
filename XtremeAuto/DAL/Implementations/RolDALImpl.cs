@@ -94,9 +94,16 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "EXEC [dbo].[sp_UpdateRol] @Nombre";
+                string sql = "EXEC [dbo].[sp_UpdateRol] @RolID, @Nombre";
                 var param = new SqlParameter[]
                 {
+                    new SqlParameter()
+                    {
+                        ParameterName = "@RolID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.RolId
+                    },
                     new SqlParameter()
                     {
                         ParameterName = "@Nombre",
@@ -106,7 +113,6 @@ namespace DAL.Implementations
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
-
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }

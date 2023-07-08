@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,13 +25,10 @@ namespace DAL.Implementations
                     unidad.genericDAL.Add(entity);
                     unidad.Complete();
                 }
-
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -50,10 +49,7 @@ namespace DAL.Implementations
             using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
             {
                 seguro = unidad.genericDAL.Get(id);
-
-
             }
-
             return seguro;
         }
 
@@ -63,10 +59,7 @@ namespace DAL.Implementations
             using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
             {
                 seguros = unidad.genericDAL.GetAll();
-
-
             }
-
             return seguros;
 
         }
@@ -80,13 +73,10 @@ namespace DAL.Implementations
                     unidad.genericDAL.Remove(entity);
                     unidad.Complete();
                 }
-
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -103,22 +93,7 @@ namespace DAL.Implementations
 
         public bool Update(Seguro entity)
         {
-            try
-            {
-                using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
-                {
-                    unidad.genericDAL.Update(entity);
-                    unidad.Complete();
-                }
-
-
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+            throw new NotImplementedException();
         }
     }
 }
