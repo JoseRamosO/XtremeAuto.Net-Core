@@ -44,31 +44,24 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Ruedum Get(int id)
+        public async Task<Ruedum> Get(int id)
         {
-            Ruedum rueda = null;
+            Ruedum product;
             using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
             {
-                rueda = unidad.genericDAL.Get(id);
-
-
+                product = await unidad.genericDAL.Get(id);
             }
-
-            return rueda;
+            return product;
         }
 
-        public IEnumerable<Ruedum> GetAll()
+        public async Task<IEnumerable<Ruedum>> GetAll()
         {
-            IEnumerable<Ruedum> ruedas = null;
+            IEnumerable<Ruedum> products;
             using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
             {
-                ruedas = unidad.genericDAL.GetAll();
-
-
+                products = await unidad.genericDAL.GetAll();
             }
-
-            return ruedas;
-
+            return products;
         }
 
         public bool Remove(Ruedum entity)
@@ -120,5 +113,7 @@ namespace DAL.Implementations
                 return false;
             }
         }
+
+         
     }
 }

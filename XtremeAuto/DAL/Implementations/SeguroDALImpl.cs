@@ -44,31 +44,24 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Seguro Get(int id)
+        public async Task<Seguro> Get(int id)
         {
-            Seguro seguro = null;
+            Seguro product;
             using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
             {
-                seguro = unidad.genericDAL.Get(id);
-
-
+                product = await unidad.genericDAL.Get(id);
             }
-
-            return seguro;
+            return product;
         }
 
-        public IEnumerable<Seguro> GetAll()
+        public async Task<IEnumerable<Seguro>> GetAll()
         {
-            IEnumerable<Seguro> seguros = null;
+            IEnumerable<Seguro> products;
             using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
             {
-                seguros = unidad.genericDAL.GetAll();
-
-
+                products = await unidad.genericDAL.GetAll();
             }
-
-            return seguros;
-
+            return products;
         }
 
         public bool Remove(Seguro entity)

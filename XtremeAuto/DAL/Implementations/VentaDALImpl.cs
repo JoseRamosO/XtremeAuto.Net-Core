@@ -44,32 +44,28 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Ventum Get(int id)
+      
+
+        public async Task<IEnumerable<Ventum>> GetAll()
         {
-            Ventum venta = null;
+            IEnumerable<Ventum> products;
             using (unidad = new UnidadDeTrabajo<Ventum>(new XtremeAutoNetCoreContext()))
             {
-                venta = unidad.genericDAL.Get(id);
-
-
+                products = await unidad.genericDAL.GetAll();
             }
-
-            return venta;
+            return products;
         }
-
-        public IEnumerable<Ventum> GetAll()
+        public async Task<Ventum> Get(int id)
         {
-            IEnumerable<Ventum> ventas = null;
+            Ventum product;
             using (unidad = new UnidadDeTrabajo<Ventum>(new XtremeAutoNetCoreContext()))
             {
-                ventas = unidad.genericDAL.GetAll();
-
-
+                product = await unidad.genericDAL.Get(id);
             }
-
-            return ventas;
-
+            return product;
         }
+
+      
 
         public bool Remove(Ventum entity)
         {

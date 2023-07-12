@@ -44,31 +44,24 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Transaccion Get(int id)
+        public async Task<Transaccion> Get(int id)
         {
-            Transaccion transaccion = null;
+            Transaccion product;
             using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
             {
-                transaccion = unidad.genericDAL.Get(id);
-
-
+                product = await unidad.genericDAL.Get(id);
             }
-
-            return transaccion;
+            return product;
         }
 
-        public IEnumerable<Transaccion> GetAll()
+        public async Task<IEnumerable<Transaccion>> GetAll()
         {
-            IEnumerable<Transaccion> transacciones = null;
+            IEnumerable<Transaccion> products;
             using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
             {
-                transacciones = unidad.genericDAL.GetAll();
-
-
+                products = await unidad.genericDAL.GetAll();
             }
-
-            return transacciones;
-
+            return products;
         }
 
         public bool Remove(Transaccion entity)

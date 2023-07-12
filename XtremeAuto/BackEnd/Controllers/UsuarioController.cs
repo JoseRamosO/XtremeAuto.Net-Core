@@ -73,9 +73,9 @@ namespace BackEnd.Controllers
 
         // GET: api/<RolController>
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> GetAsync()
         {
-            IEnumerable<Usuario> usuarios = usuarioDAL.GetAll();
+            IEnumerable<Usuario> usuarios = await usuarioDAL.GetAll();
             List<UsuarioModel> models = new List<UsuarioModel>();
 
             foreach (var usuario in usuarios)
@@ -87,15 +87,17 @@ namespace BackEnd.Controllers
 
             return new JsonResult(models);
         }
+       
 
         // GET api/<RolController>/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        
+        public async Task<JsonResult> Get(int id)
         {
-            Usuario usuarios = usuarioDAL.Get(id);
+            Usuario product = await usuarioDAL.Get(id);
 
+            return new JsonResult(product);
 
-            return new JsonResult(Convertir(usuarios));
         }
         #endregion
 

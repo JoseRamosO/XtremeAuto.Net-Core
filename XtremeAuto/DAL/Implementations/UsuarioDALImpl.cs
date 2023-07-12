@@ -44,30 +44,26 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Usuario Get(int id)
+        public async Task<Usuario> Get(int id)
         {
-            Usuario usuario = null;
+            Usuario product;
             using (unidad = new UnidadDeTrabajo<Usuario>(new XtremeAutoNetCoreContext()))
             {
-                usuario = unidad.genericDAL.Get(id);
-
-
+                product = await unidad.genericDAL.Get(id);
             }
-
-            return usuario;
+            return product;
         }
 
-        public IEnumerable<Usuario> GetAll()
+        
+
+        public async Task<IEnumerable<Usuario>> GetAll()
         {
-            IEnumerable<Usuario> usuarios = null;
+            IEnumerable<Usuario> products;
             using (unidad = new UnidadDeTrabajo<Usuario>(new XtremeAutoNetCoreContext()))
             {
-                usuarios = unidad.genericDAL.GetAll();
-
-
+                products = await unidad.genericDAL.GetAll();
             }
-
-            return usuarios;
+            return products;
 
         }
 

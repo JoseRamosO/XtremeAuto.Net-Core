@@ -44,31 +44,24 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Tarjetum Get(int id)
+        public async Task<Tarjetum> Get(int id)
         {
-            Tarjetum tarjeta = null;
+            Tarjetum product;
             using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
             {
-                tarjeta = unidad.genericDAL.Get(id);
-
-
+                product = await unidad.genericDAL.Get(id);
             }
-
-            return tarjeta;
+            return product;
         }
 
-        public IEnumerable<Tarjetum> GetAll()
+        public async Task<IEnumerable<Tarjetum>> GetAll()
         {
-            IEnumerable<Tarjetum> tarjetas = null;
+            IEnumerable<Tarjetum> products;
             using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
             {
-                tarjetas = unidad.genericDAL.GetAll();
-
-
+                products = await unidad.genericDAL.GetAll();
             }
-
-            return tarjetas;
-
+            return products;
         }
 
         public bool Remove(Tarjetum entity)
