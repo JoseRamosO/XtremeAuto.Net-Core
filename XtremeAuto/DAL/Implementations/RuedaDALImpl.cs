@@ -23,6 +23,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_AddRueda] @Nombre, @Precio, @Imagen";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@Nombre",
@@ -47,6 +48,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -70,7 +72,9 @@ namespace DAL.Implementations
             Ruedum rueda = null;
             using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
             {
+
                 rueda = await unidad.genericDAL.Get(id);
+
             }
             return rueda;
         }
@@ -87,6 +91,7 @@ namespace DAL.Implementations
                         .ToListAsync();
             foreach (var item in resultado)
             {
+
                 ruedas.Add(
                     new Ruedum
                     {
@@ -96,9 +101,9 @@ namespace DAL.Implementations
                         Imagen= item.Imagen
                     }
                     );
+
             }
             return ruedas;
-
         }
 
         public bool Remove(Ruedum entity)
@@ -108,6 +113,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_DeleteRueda] @RuedaID";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@RuedaID",
@@ -118,6 +124,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -140,7 +147,9 @@ namespace DAL.Implementations
         {
             try
             {
+
                 string sql = "exec [dbo].[sp_UpdateRueda] @RuedaID, @Nombre, @Precio, @Imagen";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -150,15 +159,18 @@ namespace DAL.Implementations
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.RuedaId
                     },
+
                      new SqlParameter()
                     {
                         ParameterName = "@Nombre",
                         SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Nombre
                     },
                     new SqlParameter()
                     {
+
                         ParameterName = "@Precio",
                         SqlDbType= System.Data.SqlDbType.Decimal,
                         Direction = System.Data.ParameterDirection.Input,
@@ -170,6 +182,7 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.Image,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Imagen
+
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();

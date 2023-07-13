@@ -23,6 +23,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_AddTarjeta] @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@UsuarioID",
@@ -61,6 +62,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -84,7 +86,9 @@ namespace DAL.Implementations
             Tarjetum tarjeta = null;
             using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
             {
+
                 tarjeta = await unidad.genericDAL.Get(id);
+
             }
             return tarjeta;
         }
@@ -101,6 +105,7 @@ namespace DAL.Implementations
                         .ToListAsync();
             foreach (var item in resultado)
             {
+
                 tarjetas.Add(
                     new Tarjetum
                     {
@@ -112,6 +117,7 @@ namespace DAL.Implementations
                         FechaVencimiento = item.FechaVencimiento
                     }
                     );
+
             }
             return tarjetas;
 
@@ -124,6 +130,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_DeleteTarjeta] @TarjetaID";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@TarjetaID",
@@ -134,6 +141,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -156,7 +164,9 @@ namespace DAL.Implementations
         {
             try
             {
+
                 string sql = "exec [dbo].[sp_UpdateTarjeta] @TarjetaID, @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -176,21 +186,27 @@ namespace DAL.Implementations
                     new SqlParameter()
                     {
                         ParameterName = "@Nombre",
+
                         SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Nombre
                     },
                     new SqlParameter()
                     {
                         ParameterName = "@NumeroDeTarjeta",
+
                         SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.NumeroDeTarjeta
                     },
                     new SqlParameter()
                     {
                         ParameterName = "@CVV",
+
                         SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Cvv
                     },

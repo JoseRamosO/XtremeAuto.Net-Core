@@ -23,6 +23,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_AddTransaccion] @VentaID, @TarjetaID, @FechaTransaccion, @FechaCorte, @InteresesMorosidad, @Pagado, @Precio";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@VentaID",
@@ -75,6 +76,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -98,7 +100,9 @@ namespace DAL.Implementations
             Transaccion transaccion = null;
             using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
             {
+
                 transaccion = await unidad.genericDAL.Get(id);
+
             }
             return transaccion;
         }
@@ -115,6 +119,7 @@ namespace DAL.Implementations
                         .ToListAsync();
             foreach (var item in resultado)
             {
+
                 transacciones.Add(
                     new Transaccion
                     {
@@ -128,6 +133,7 @@ namespace DAL.Implementations
                         Precio = item.Precio
                     }
                     );
+
             }
             return transacciones;
 
@@ -140,6 +146,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_DeleteTransaccion] @TransaccionID";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@TransaccionID",
@@ -150,6 +157,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -172,7 +180,9 @@ namespace DAL.Implementations
         {
             try
             {
+
                 string sql = "exec [dbo].[sp_UpdateTransaccion] @TransaccionID, @VentaID, @TarjetaID, @FechaTransaccion, @FechaCorte, @InteresesMorosidad, @Pagado, @Precio";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
