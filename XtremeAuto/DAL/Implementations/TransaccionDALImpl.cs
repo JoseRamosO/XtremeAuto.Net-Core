@@ -13,18 +13,70 @@ namespace DAL.Implementations
 {
     public class TransaccionDALImpl : ITransaccionDAL
     {
-        private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
+        private XtremeAutoNetCoreContext _xtremeAutoNetCoreContext;
         private UnidadDeTrabajo<Transaccion> unidad;
 
         public bool Add(Transaccion entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_AddTransaccion] @VentaID, @TarjetaID, @FechaTransaccion, @FechaCorte, @InteresesMorosidad, @Pagado, @Precio";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
+
+                    new SqlParameter()
+                    {
+                        ParameterName = "@VentaID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.VentaId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@TarjetaID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.TarjetaId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@FechaTransaccion",
+                        SqlDbType= System.Data.SqlDbType.DateTime,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.FechaTransaccion
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@FechaCorte",
+                        SqlDbType= System.Data.SqlDbType.DateTime,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.FechaCorte
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@InteresesMorosidad",
+                        SqlDbType= System.Data.SqlDbType.Decimal,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.InteresesMorosidad
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Pagado",
+                        SqlDbType= System.Data.SqlDbType.Bit,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Pagado
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Precio",
+                        SqlDbType= System.Data.SqlDbType.Decimal,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Precio
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -43,22 +95,45 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Transaccion Get(int id)
+        public async Task<Transaccion> Get(int id)
         {
             Transaccion transaccion = null;
             using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
             {
-                transaccion = unidad.genericDAL.Get(id);
+
+                transaccion = await unidad.genericDAL.Get(id);
+
             }
             return transaccion;
         }
 
-        public IEnumerable<Transaccion> GetAll()
+        public async Task<IEnumerable<Transaccion>> GetAll()
         {
-            IEnumerable<Transaccion> transacciones = null;
-            using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
+            List<Transaccion> transacciones = new List<Transaccion>();
+            List<sp_GetAllTransacciones_Result> resultado;
+
+            string sql = "[dbo].[sp_GetAllTransacciones]";
+            XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+            resultado = await xtremeAutoNetCoreContext.sp_GetAllTransacciones_Results
+                        .FromSqlRaw(sql)
+                        .ToListAsync();
+            foreach (var item in resultado)
             {
-                transacciones = unidad.genericDAL.GetAll();
+
+                transacciones.Add(
+                    new Transaccion
+                    {
+                        TransaccionId = item.TransaccionId,
+                        VentaId = item.VentaId,
+                        TarjetaId = item.TarjetaId,
+                        FechaTransaccion = item.FechaTransaccion,
+                        FechaCorte = item.FechaCorte,
+                        InteresesMorosidad = item.InteresesMorosidad,
+                        Pagado = item.Pagado,
+                        Precio = item.Precio
+                    }
+                    );
+
             }
             return transacciones;
 
@@ -68,11 +143,21 @@ namespace DAL.Implementations
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Transaccion>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_DeleteTransaccion] @TransaccionID";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Remove(entity);
-                    unidad.Complete();
-                }
+
+                    new SqlParameter()
+                    {
+                        ParameterName = "@TransaccionID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.TransaccionId
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -95,7 +180,9 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "EXEC [dbo].[sp_UpdateTransaccion] @TransaccionID, @VentaID, @TarjetaID, @FechaTransaccion, @FechaCorte, @InteresesMorosidad, @Pagado, @Precio";
+
+                string sql = "exec [dbo].[sp_UpdateTransaccion] @TransaccionID, @VentaID, @TarjetaID, @FechaTransaccion, @FechaCorte, @InteresesMorosidad, @Pagado, @Precio";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()

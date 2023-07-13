@@ -21,6 +21,7 @@ namespace BackEnd.Controllers
             {
                 RolId = rol.RolId,
                 Nombre = rol.Nombre
+
             };
         }
 
@@ -51,9 +52,9 @@ namespace BackEnd.Controllers
 
         // GET: api/<RolController>
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> Get()
         {
-            IEnumerable<Rol> roles = rolDAL.GetAll();
+            IEnumerable<Rol> roles = await rolDAL.GetAll();
             List<RolModel> models = new List<RolModel>();
 
             foreach (var rol in roles)
@@ -68,9 +69,9 @@ namespace BackEnd.Controllers
 
         // GET api/<RolController>/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<JsonResult> Get(int id)
         {
-            Rol rol = rolDAL.Get(id);
+            Rol rol = await rolDAL.Get(id);
 
 
             return new JsonResult(Convertir(rol));

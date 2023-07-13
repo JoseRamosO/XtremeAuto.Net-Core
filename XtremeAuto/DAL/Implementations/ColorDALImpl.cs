@@ -13,18 +13,35 @@ namespace DAL.Implementations
 {
     public class ColorDALImpl : IColorDAL
     {
-        private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
+        private XtremeAutoNetCoreContext _xtremeAutoNetCoreContext;
         private UnidadDeTrabajo<Color> unidad;
 
         public bool Add(Color entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Color>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_AddColor] @Nombre,@Imagen";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
+
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Nombre",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Imagen",
+                        SqlDbType= System.Data.SqlDbType.Image,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Imagen
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -43,22 +60,40 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Color Get(int id)
+        public async Task<Color> Get(int id)
         {
             Color color = null;
             using (unidad = new UnidadDeTrabajo<Color>(new XtremeAutoNetCoreContext()))
             {
-                color = unidad.genericDAL.Get(id);
+
+                color = await unidad.genericDAL.Get(id);
+
             }
             return color;
         }
 
-        public IEnumerable<Color> GetAll()
+        public async Task<IEnumerable<Color>> GetAll()
         {
-            IEnumerable<Color> colores = null;
-            using (unidad = new UnidadDeTrabajo<Color>(new XtremeAutoNetCoreContext()))
+            List<Color> colores = new List<Color>();
+            List<sp_GetAllColores_Result> resultado;
+
+            string sql = "[dbo].[sp_GetAllColores]";
+            XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+            resultado = await xtremeAutoNetCoreContext.sp_GetAllColores_Results
+                        .FromSqlRaw(sql)
+                        .ToListAsync();
+            foreach (var item in resultado)
             {
-                colores = unidad.genericDAL.GetAll();
+
+                colores.Add(
+                    new Color
+                    {
+                        ColorId = item.ColorId,
+                        Nombre = item.Nombre,
+                        Imagen= item.Imagen
+                    }
+                    );
+
             }
             return colores;
         }
@@ -67,11 +102,21 @@ namespace DAL.Implementations
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Color>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_DeleteColor] @ColorID";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Remove(entity);
-                    unidad.Complete();
-                }
+
+                    new SqlParameter()
+                    {
+                        ParameterName = "@ColorID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.ColorId
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -94,7 +139,9 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "EXEC [dbo].[sp_UpdateColor] @ColorID, @Nombre, @Imagen";
+
+                string sql = "exec [dbo].[sp_UpdateColor] @ColorID, @Nombre,@Imagen";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -104,10 +151,12 @@ namespace DAL.Implementations
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.ColorId
                     },
-                    new SqlParameter()
+
+                     new SqlParameter()
                     {
                         ParameterName = "@Nombre",
-                        SqlDbType= System.Data.SqlDbType.NVarChar,
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Nombre
                     },

@@ -88,9 +88,9 @@ namespace BackEnd.Controllers
 
         // GET: api/<RolController>
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> GetAsync()
         {
-            IEnumerable<Usuario> usuarios = usuarioDAL.GetAll();
+            IEnumerable<Usuario> usuarios = await usuarioDAL.GetAll();
             List<UsuarioModel> models = new List<UsuarioModel>();
 
             foreach (var usuario in usuarios)
@@ -102,15 +102,17 @@ namespace BackEnd.Controllers
 
             return new JsonResult(models);
         }
+       
 
         // GET api/<RolController>/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        
+        public async Task<JsonResult> Get(int id)
         {
-            Usuario usuarios = usuarioDAL.Get(id);
+            Usuario usuario = await usuarioDAL.Get(id);
 
+            return new JsonResult(usuario);
 
-            return new JsonResult(Convertir(usuarios));
         }
         #endregion
 
@@ -123,7 +125,7 @@ namespace BackEnd.Controllers
         {
             usuario.PasswordHash = BcryptPasswordHelper.HashPassword(usuario.PasswordHash);
             usuarioDAL.Add(Convertir(usuario));
-            return new JsonResult(new { status = 200, message = "Nuevo usuario agregado correctamente" });
+            return new JsonResult(usuario);
         }
 
 

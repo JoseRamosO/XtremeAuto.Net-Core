@@ -26,15 +26,29 @@ namespace Entities.Entities
         public virtual DbSet<Transaccion> Transaccions { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<Ventum> Venta { get; set; } = null!;
+        public virtual DbSet<sp_GetAllCarroModelos_Result> sp_GetAllCarroModelos_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllCarroVendidos_Result> sp_GetAllCarroVendidos_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllColores_Result> sp_GetAllColores_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllRoles_Result> sp_GetAllRoles_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllRuedas_Result> sp_GetAllRuedas_Results { get; set; } = null!; 
+        public virtual DbSet<sp_GetAllSeguros_Result> sp_GetAllSeguros_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllTarjetas_Result> sp_GetAllTarjetas_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllTransacciones_Result> sp_GetAllTransacciones_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllUsuarios_Result> sp_GetAllUsuarios_Results { get; set; } = null!;
+        public virtual DbSet<sp_GetAllVentas_Result> sp_GetAllVentas_Results { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+
+                optionsBuilder.UseSqlServer("Server=DESKTOP-FQEJS1P\\SQLEXPRESS;Database=XtremeAutoNetCore;Integrated Security=True;Trusted_Connection=True;");
+
                 //optionsBuilder.UseSqlServer("Server=DESKTOP-FQEJS1P\\SQLEXPRESS;Database=XtremeAutoNetCore;Integrated Security=True;Trusted_Connection=True;");
                 //optionsBuilder.UseSqlServer("Server=.;Database=XtremeAutoNetCore;User Id=SA;Password=Mg110101;");
-                optionsBuilder.UseSqlServer("Server=THE-DARKNIGHT\\SQLEXPRESS;Database=XtremeAutoNetCore;Integrated Security=True;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Server=THE-DARKNIGHT\\SQLEXPRESS;Database=XtremeAutoNetCore;Integrated Security=True;Trusted_Connection=True;");
+
             }
         }
 

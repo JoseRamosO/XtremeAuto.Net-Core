@@ -13,18 +13,42 @@ namespace DAL.Implementations
 {
     public class SeguroDALImpl : ISeguroDAL
     {
-        private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
+        private XtremeAutoNetCoreContext _xtremeAutoNetCoreContext;
         private UnidadDeTrabajo<Seguro> unidad;
 
         public bool Add(Seguro entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_AddSeguro] @Nombre, @Plazo, @Precio";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
+
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Nombre",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Plazo",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Plazo
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Precio",
+                        SqlDbType= System.Data.SqlDbType.Decimal,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Precio
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -43,22 +67,41 @@ namespace DAL.Implementations
             throw new NotImplementedException();
         }
 
-        public Seguro Get(int id)
+        public async Task<Seguro> Get(int id)
         {
             Seguro seguro = null;
             using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
             {
-                seguro = unidad.genericDAL.Get(id);
+
+                seguro = await unidad.genericDAL.Get(id);
+
             }
             return seguro;
         }
 
-        public IEnumerable<Seguro> GetAll()
+        public async Task<IEnumerable<Seguro>> GetAll()
         {
-            IEnumerable<Seguro> seguros = null;
-            using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
+            List<Seguro> seguros = new List<Seguro>();
+            List<sp_GetAllSeguros_Result> resultado;
+
+            string sql = "[dbo].[sp_GetAllSeguros]";
+            XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+            resultado = await xtremeAutoNetCoreContext.sp_GetAllSeguros_Results
+                        .FromSqlRaw(sql)
+                        .ToListAsync();
+            foreach (var item in resultado)
             {
-                seguros = unidad.genericDAL.GetAll();
+
+                seguros.Add(
+                    new Seguro
+                    {
+                        SeguroId = item.SeguroId,
+                        Nombre = item.Nombre,
+                        Precio = item.Precio,
+                        Plazo = item.Plazo
+                    }
+                    );
+
             }
             return seguros;
 
@@ -68,11 +111,21 @@ namespace DAL.Implementations
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_DeleteSeguro] @SeguroID";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Remove(entity);
-                    unidad.Complete();
-                }
+
+                    new SqlParameter()
+                    {
+                        ParameterName = "@SeguroID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.SeguroId
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -95,7 +148,9 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "EXEC [dbo].[sp_UpdateSeguro] @SeguroID, @Nombre, @Plazo, @Precio";
+
+                string sql = "exec [dbo].[sp_UpdateSeguro] @SeguroID, @Nombre, @Plazo, @Precio";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -108,7 +163,9 @@ namespace DAL.Implementations
                     new SqlParameter()
                     {
                         ParameterName = "@Nombre",
-                        SqlDbType= System.Data.SqlDbType.NVarChar,
+
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Nombre
                     },
