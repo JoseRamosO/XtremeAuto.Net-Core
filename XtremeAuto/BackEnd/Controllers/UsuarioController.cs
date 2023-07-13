@@ -31,7 +31,8 @@ namespace BackEnd.Controllers
                 Username = usuario.Username,
                 RolId = usuario.RolId,
                 LockoutEnabled = usuario.LockoutEnabled,
-                FailedAttemptsCount = usuario.FailedAttemptsCount
+                FailedAttemptsCount = usuario.FailedAttemptsCount,
+                LockoutEndDateUtc = usuario.LockoutEndDateUtc
             };
         }
 
@@ -53,7 +54,8 @@ namespace BackEnd.Controllers
                 Username = usuario.Username,
                 RolId = usuario.RolId,
                 LockoutEnabled = usuario.LockoutEnabled,
-                FailedAttemptsCount = usuario.FailedAttemptsCount
+                FailedAttemptsCount = usuario.FailedAttemptsCount,
+                LockoutEndDateUtc = usuario.LockoutEndDateUtc
             };
         }
 
@@ -94,9 +96,9 @@ namespace BackEnd.Controllers
         
         public async Task<JsonResult> Get(int id)
         {
-            Usuario product = await usuarioDAL.Get(id);
+            Usuario usuario = await usuarioDAL.Get(id);
 
-            return new JsonResult(product);
+            return new JsonResult(usuario);
 
         }
         #endregion
@@ -110,7 +112,7 @@ namespace BackEnd.Controllers
         {
 
             usuarioDAL.Add(Convertir(usuario));
-            return new JsonResult(usuarioDAL.Add(Convertir(usuario)));
+            return new JsonResult(usuario);
         }
 
 
@@ -121,10 +123,10 @@ namespace BackEnd.Controllers
 
         // PUT api/<RolController>/5
         [HttpPut]
-        public JsonResult Put([FromBody] UsuarioModel usuarios)
+        public JsonResult Put([FromBody] UsuarioModel usuario)
         {
-            usuarioDAL.Update(Convertir(usuarios));
-            return new JsonResult(usuarios);
+            usuarioDAL.Update(Convertir(usuario));
+            return new JsonResult(usuario);
         }
         #endregion
 

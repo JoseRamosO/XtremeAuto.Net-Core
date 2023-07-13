@@ -227,6 +227,13 @@ namespace DAL.Implementations
                 {
                     new SqlParameter()
                     {
+                        ParameterName = "@UsuarioID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.UsuarioId
+                    },
+                    new SqlParameter()
+                    {
                         ParameterName = "@Nombre",
                         SqlDbType= System.Data.SqlDbType.VarChar,
                         Direction = System.Data.ParameterDirection.Input,
