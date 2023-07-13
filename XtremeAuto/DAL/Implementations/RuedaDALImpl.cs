@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +13,37 @@ namespace DAL.Implementations
 {
     public class RuedaDALImpl : IRuedaDAL
     {
-        private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
+        private XtremeAutoNetCoreContext _xtremeAutoNetCoreContext;
         private UnidadDeTrabajo<Ruedum> unidad;
 
         public bool Add(Ruedum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_AddRueda] @Nombre, @Precio";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Nombre",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Precio",
+                        SqlDbType= System.Data.SqlDbType.Decimal,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Precio
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -46,40 +60,60 @@ namespace DAL.Implementations
 
         public async Task<Ruedum> Get(int id)
         {
-            Ruedum product;
+            Ruedum rueda = null;
             using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
             {
-                product = await unidad.genericDAL.Get(id);
+                rueda = await unidad.genericDAL.Get(id);
             }
-            return product;
+            return rueda;
         }
 
         public async Task<IEnumerable<Ruedum>> GetAll()
         {
-            IEnumerable<Ruedum> products;
-            using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
+            List<Ruedum> ruedas = new List<Ruedum>();
+            List<sp_GetAllRuedas_Result> resultado;
+
+            string sql = "[dbo].[sp_GetAllRuedas]";
+            XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+            resultado = await xtremeAutoNetCoreContext.sp_GetAllRuedas_Results
+                        .FromSqlRaw(sql)
+                        .ToListAsync();
+            foreach (var item in resultado)
             {
-                products = await unidad.genericDAL.GetAll();
+                ruedas.Add(
+                    new Ruedum
+                    {
+                        RuedaId = item.RuedaId,
+                        Nombre = item.Nombre,
+                        Precio= item.Precio
+                    }
+                    );
             }
-            return products;
+            return ruedas;
+
         }
 
         public bool Remove(Ruedum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_DeleteRueda] @RuedaID";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Remove(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@RuedaID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.RuedaId
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -98,22 +132,39 @@ namespace DAL.Implementations
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Ruedum>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_UpdateRueda] @RuedaID, @Nombre, @Precio";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Update(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@RuedaID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.RuedaId
+                    },
+                     new SqlParameter()
+                    {
+                        ParameterName = "@Nombre",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Precio",
+                        SqlDbType= System.Data.SqlDbType.Decimal,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Precio
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
-
-         
     }
 }

@@ -1,5 +1,7 @@
 ﻿using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +13,58 @@ namespace DAL.Implementations
 {
     public class TarjetaDALImpl : ITarjetaDAL
     {
-        private XtremeAutoNetCoreContext _XtremeAutoNetCoreContext;
+        private XtremeAutoNetCoreContext _xtremeAutoNetCoreContext;
         private UnidadDeTrabajo<Tarjetum> unidad;
 
         public bool Add(Tarjetum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_AddTarjeta] @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Add(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@UsuarioID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.UsuarioId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Nombre",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@NumeroDeTarjeta",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.NumeroDeTarjeta
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@CVV",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Cvv
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@FechaVencimiento",
+                        SqlDbType= System.Data.SqlDbType.DateTime,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.FechaVencimiento
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -46,40 +81,63 @@ namespace DAL.Implementations
 
         public async Task<Tarjetum> Get(int id)
         {
-            Tarjetum product;
+            Tarjetum tarjeta = null;
             using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
             {
-                product = await unidad.genericDAL.Get(id);
+                tarjeta = await unidad.genericDAL.Get(id);
             }
-            return product;
+            return tarjeta;
         }
 
         public async Task<IEnumerable<Tarjetum>> GetAll()
         {
-            IEnumerable<Tarjetum> products;
-            using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
+            List<Tarjetum> tarjetas = new List<Tarjetum>();
+            List<sp_GetAllTarjetas_Result> resultado;
+
+            string sql = "[dbo].[sp_GetAllTarjetas]";
+            XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+            resultado = await xtremeAutoNetCoreContext.sp_GetAllTarjetas_Results
+                        .FromSqlRaw(sql)
+                        .ToListAsync();
+            foreach (var item in resultado)
             {
-                products = await unidad.genericDAL.GetAll();
+                tarjetas.Add(
+                    new Tarjetum
+                    {
+                        TarjetaId = item.TarjetaId,
+                        UsuarioId = item.UsuarioId,
+                        Nombre = item.Nombre,
+                        NumeroDeTarjeta = item.NumeroDeTarjeta,
+                        Cvv = item.Cvv,
+                        FechaVencimiento = item.FechaVencimiento
+                    }
+                    );
             }
-            return products;
+            return tarjetas;
+
         }
 
         public bool Remove(Tarjetum entity)
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_DeleteTarjeta] @TarjetaID";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Remove(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@TarjetaID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.TarjetaId
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -98,18 +156,58 @@ namespace DAL.Implementations
         {
             try
             {
-                using (unidad = new UnidadDeTrabajo<Tarjetum>(new XtremeAutoNetCoreContext()))
+                string sql = "exec [dbo].[sp_UpdateTarjeta] @TarjetaID, @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento";
+                var param = new SqlParameter[]
                 {
-                    unidad.genericDAL.Update(entity);
-                    unidad.Complete();
-                }
-
-
+                    new SqlParameter()
+                    {
+                        ParameterName = "@TarjetaID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.TarjetaId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@UsuarioID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.UsuarioId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Nombre",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@NumeroDeTarjeta",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.NumeroDeTarjeta
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@CVV",
+                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Cvv
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@FechaVencimiento",
+                        SqlDbType= System.Data.SqlDbType.DateTime,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.FechaVencimiento
+                    }
+                };
+                XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
+                int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
