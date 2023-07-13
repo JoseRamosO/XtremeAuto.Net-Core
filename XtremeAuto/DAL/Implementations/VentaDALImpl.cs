@@ -23,6 +23,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_AddVenta] @UsuarioID,@CarroVendidoID,@Total,@Meses, @Intereses, @SaldoPendiente, @SaldoAbonado";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@UsuarioID",
@@ -75,6 +76,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -98,7 +100,9 @@ namespace DAL.Implementations
             Ventum venta = null;
             using (unidad = new UnidadDeTrabajo<Ventum>(new XtremeAutoNetCoreContext()))
             {
+
                 venta = await unidad.genericDAL.Get(id);
+
             }
             return venta;
         }
@@ -115,6 +119,7 @@ namespace DAL.Implementations
                         .ToListAsync();
             foreach (var item in resultado)
             {
+
                 ventas.Add(
                     new Ventum
                     {
@@ -128,6 +133,7 @@ namespace DAL.Implementations
                         SaldoAbonado = item.SaldoAbonado
                     }
                     );
+
             }
             return ventas;
 
@@ -140,6 +146,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_DeleteVenta] @VentaID";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@VentaID",
@@ -150,6 +157,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -172,7 +180,9 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_UpdateVenta] @VentaID, @VentaID, @UsuarioID, @Nombre, @NumeroDeVenta, @CVV, @FechaVencimiento";
+
+                string sql = "exec [dbo].[sp_UpdateVenta] @VentaID, @UsuarioID,@CarroVendidoID,@Total,@Meses, @Intereses, @SaldoPendiente, @SaldoAbonado";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
