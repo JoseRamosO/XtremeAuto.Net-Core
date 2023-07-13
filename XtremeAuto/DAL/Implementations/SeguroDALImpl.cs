@@ -23,6 +23,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_AddSeguro] @Nombre, @Plazo, @Precio";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@Nombre",
@@ -47,6 +48,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -70,7 +72,9 @@ namespace DAL.Implementations
             Seguro seguro = null;
             using (unidad = new UnidadDeTrabajo<Seguro>(new XtremeAutoNetCoreContext()))
             {
+
                 seguro = await unidad.genericDAL.Get(id);
+
             }
             return seguro;
         }
@@ -87,6 +91,7 @@ namespace DAL.Implementations
                         .ToListAsync();
             foreach (var item in resultado)
             {
+
                 seguros.Add(
                     new Seguro
                     {
@@ -96,6 +101,7 @@ namespace DAL.Implementations
                         Plazo = item.Plazo
                     }
                     );
+
             }
             return seguros;
 
@@ -108,6 +114,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_DeleteSeguro] @SeguroID";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@SeguroID",
@@ -118,6 +125,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -140,7 +148,9 @@ namespace DAL.Implementations
         {
             try
             {
+
                 string sql = "exec [dbo].[sp_UpdateSeguro] @SeguroID, @Nombre, @Plazo, @Precio";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -153,7 +163,9 @@ namespace DAL.Implementations
                     new SqlParameter()
                     {
                         ParameterName = "@Nombre",
+
                         SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Nombre
                     },

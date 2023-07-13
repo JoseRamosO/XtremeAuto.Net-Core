@@ -83,6 +83,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -106,7 +107,9 @@ namespace DAL.Implementations
             CarroModelo carroModelo = null;
             using (unidad = new UnidadDeTrabajo<CarroModelo>(new XtremeAutoNetCoreContext()))
             {
+
                 carroModelo = await unidad.genericDAL.Get(id);
+
             }
             return carroModelo;
         }
@@ -149,6 +152,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_DeleteCarroModelo] @CarroModeloID";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@CarroModeloID",
@@ -159,6 +163,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -181,7 +186,9 @@ namespace DAL.Implementations
         {
             try
             {
+
                 string sql = "exec [dbo].[sp_UpdateCarroModelo] @CarroModeloID, @Disponible, @Tipo, @Marca, @Modelo, @Descripcion, @Precio, @Imagen,@Cantidad";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -201,6 +208,7 @@ namespace DAL.Implementations
                     new SqlParameter()
                     {
                         ParameterName = "@Tipo",
+
                         SqlDbType= System.Data.SqlDbType.VarChar,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Tipo
@@ -208,7 +216,9 @@ namespace DAL.Implementations
                     new SqlParameter()
                     {
                         ParameterName = "@Marca",
+
                         SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Marca
                     },
@@ -216,6 +226,7 @@ namespace DAL.Implementations
                     {
                         ParameterName = "@Modelo",
                         SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Modelo
                     },

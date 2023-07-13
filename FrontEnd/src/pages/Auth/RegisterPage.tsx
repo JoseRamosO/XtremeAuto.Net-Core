@@ -4,6 +4,7 @@ import { UserModal } from '../../components/Modals/UserModal';
 import { Column, usePagination, useRowSelect, useTable } from 'react-table';
 import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
+import { MainAdminLayout } from "../theme/MainAdminLayout";
 
 interface ExampleObject {
   id: number,
@@ -47,11 +48,11 @@ export const RegisterPage = () => {
   const tableInstance = useTable({columns, data}, usePagination, useRowSelect)
   
   return (
-    <>
+    <MainAdminLayout>
       <UserModal tableInstance={tableInstance}/>
       {
         loadingUsers ? <p>Loading</p> : <DataTable tableInstance={tableInstance}/>
       }
-    </>
+    </MainAdminLayout>
   )
 }

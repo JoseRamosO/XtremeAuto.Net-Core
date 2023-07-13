@@ -23,6 +23,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_AddCarroVendido] @RuedaID, @ColorID, @CarroModeloID, @SeguroID, @PrecioTotal";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@RuedaID",
@@ -61,6 +62,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -84,7 +86,9 @@ namespace DAL.Implementations
             CarroVendido carroVendido = null;
             using (unidad = new UnidadDeTrabajo<CarroVendido>(new XtremeAutoNetCoreContext()))
             {
+
                 carroVendido = await unidad.genericDAL.Get(id);
+
             }
             return carroVendido;
         }
@@ -101,6 +105,7 @@ namespace DAL.Implementations
                         .ToListAsync();
             foreach (var item in resultado)
             {
+
                 carroVendidos.Add(
                     new CarroVendido
                     {
@@ -115,6 +120,7 @@ namespace DAL.Implementations
             }
             return carroVendidos;
 
+
         }
 
         public bool Remove(CarroVendido entity)
@@ -124,6 +130,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_DeleteCarroVendido] @CarroVendidoID";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@CarroVendidoID",
@@ -134,6 +141,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -156,7 +164,9 @@ namespace DAL.Implementations
         {
             try
             {
+
                 string sql = "exec [dbo].[sp_UpdateCarroVendido] @CarroVendidoID, @RuedaID, @ColorID, @CarroModeloID, @SeguroID, @PrecioTotal";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -201,6 +211,8 @@ namespace DAL.Implementations
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.PrecioTotal
                     }
+
+
 
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();

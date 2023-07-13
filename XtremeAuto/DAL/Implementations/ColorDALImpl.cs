@@ -23,6 +23,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_AddColor] @Nombre,@Imagen";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@Nombre",
@@ -40,6 +41,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -63,7 +65,9 @@ namespace DAL.Implementations
             Color color = null;
             using (unidad = new UnidadDeTrabajo<Color>(new XtremeAutoNetCoreContext()))
             {
+
                 color = await unidad.genericDAL.Get(id);
+
             }
             return color;
         }
@@ -80,6 +84,7 @@ namespace DAL.Implementations
                         .ToListAsync();
             foreach (var item in resultado)
             {
+
                 colores.Add(
                     new Color
                     {
@@ -88,9 +93,9 @@ namespace DAL.Implementations
                         Imagen= item.Imagen
                     }
                     );
+
             }
             return colores;
-
         }
 
         public bool Remove(Color entity)
@@ -100,6 +105,7 @@ namespace DAL.Implementations
                 string sql = "exec [dbo].[sp_DeleteColor] @ColorID";
                 var param = new SqlParameter[]
                 {
+
                     new SqlParameter()
                     {
                         ParameterName = "@ColorID",
@@ -110,6 +116,7 @@ namespace DAL.Implementations
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);
+
                 return true;
             }
             catch (Exception)
@@ -132,7 +139,9 @@ namespace DAL.Implementations
         {
             try
             {
+
                 string sql = "exec [dbo].[sp_UpdateColor] @ColorID, @Nombre,@Imagen";
+
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -142,10 +151,12 @@ namespace DAL.Implementations
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.ColorId
                     },
+
                      new SqlParameter()
                     {
                         ParameterName = "@Nombre",
                         SqlDbType= System.Data.SqlDbType.VarChar,
+
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Nombre
                     },

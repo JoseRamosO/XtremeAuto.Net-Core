@@ -15,6 +15,12 @@ export const HomePage = () => {
         <Button variant="outlined" color="error" component={RouterLink} to="/registrar">
             Registrar
         </Button>
+        <Button variant="outlined" color="error" component={RouterLink} to="/admin/usuarios">
+            Usuarios
+        </Button>
+        <Button variant="outlined" color="error" component={RouterLink} to="/admin/roles">
+            Roles
+        </Button>
     </div>
   )
 }
