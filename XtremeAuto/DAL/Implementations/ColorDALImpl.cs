@@ -20,7 +20,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_AddColor] @Nombre";
+                string sql = "exec [dbo].[sp_AddColor] @Nombre,@Imagen";
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -29,6 +29,13 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.VarChar,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Imagen",
+                        SqlDbType= System.Data.SqlDbType.Image,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Imagen
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
@@ -77,7 +84,8 @@ namespace DAL.Implementations
                     new Color
                     {
                         ColorId = item.ColorId,
-                        Nombre = item.Nombre
+                        Nombre = item.Nombre,
+                        Imagen= item.Imagen
                     }
                     );
             }
@@ -124,7 +132,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_UpdateColor] @ColorID, @Nombre";
+                string sql = "exec [dbo].[sp_UpdateColor] @ColorID, @Nombre,@Imagen";
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -140,6 +148,13 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.VarChar,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Nombre
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Imagen",
+                        SqlDbType= System.Data.SqlDbType.Image,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Imagen
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();

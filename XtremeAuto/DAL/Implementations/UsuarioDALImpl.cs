@@ -4,8 +4,10 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +22,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_AddUsuario] @Nombre,@Apellido, @Salario, @Cedula, @Email, @PasswordHash, @SecurityStamp,@Telefono,@Username";
+                string sql = "exec [dbo].[sp_AddUsuario] @Nombre,@Apellido, @Salario, @Cedula, @Email, @PasswordHash, @SecurityStamp,@Telefono,@Username,@RolID ,@LockoutEnabled,@FailedAttemptsCount,@LockoutEndDateUtc";
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -85,6 +87,34 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.VarChar,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Username
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@RolID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.RolId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@LockoutEnabled",
+                        SqlDbType= System.Data.SqlDbType.Bit,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.LockoutEnabled
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@FailedAttemptsCount",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.FailedAttemptsCount
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@LockoutEndDateUtc",
+                        SqlDbType= System.Data.SqlDbType.DateTime,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.LockoutEndDateUtc
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
@@ -144,7 +174,8 @@ namespace DAL.Implementations
                         Username = item.Username,
                         RolId = item.RolId,
                         LockoutEnabled = item.LockoutEnabled,
-                        FailedAttemptsCount = item.FailedAttemptsCount
+                        FailedAttemptsCount = item.FailedAttemptsCount,
+                        LockoutEndDateUtc = item.LockoutEndDateUtc
                     }
                     );
             }
@@ -191,7 +222,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_UpdateUsuario] @UsuarioID, @Nombre,@Apellido, @Salario, @Cedula, @Email, @PasswordHash, @SecurityStamp,@Telefono,@Username";
+                string sql = "exec [dbo].[sp_UpdateUsuario] @UsuarioID, @Nombre,@Apellido, @Salario, @Cedula, @Email, @PasswordHash, @SecurityStamp,@Telefono,@Username,@RolID ,@LockoutEnabled,@FailedAttemptsCount,@LockoutEndDateUtc";
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -256,7 +287,36 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.VarChar,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Username
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@RolID",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.RolId
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@LockoutEnabled",
+                        SqlDbType= System.Data.SqlDbType.Bit,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.LockoutEnabled
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@FailedAttemptsCount",
+                        SqlDbType= System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.FailedAttemptsCount
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@LockoutEndDateUtc",
+                        SqlDbType= System.Data.SqlDbType.DateTime,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.LockoutEndDateUtc
                     }
+
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
                 int resultado = xtremeAutoNetCoreContext.Database.ExecuteSqlRaw(sql, param);

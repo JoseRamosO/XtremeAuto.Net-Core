@@ -21,7 +21,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_AddCarroModelo] @Disponible, @Tipo, @Marca, @Modelo, @Descripcion, @Precio, @Cantidad";
+                string sql = "exec [dbo].[sp_AddCarroModelo] @Disponible, @Tipo, @Marca, @Modelo, @Descripcion, @Precio, @Imagen,@Cantidad";
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -65,6 +65,13 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.Decimal,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Precio
+                    },
+                     new SqlParameter()
+                    {
+                        ParameterName = "@Imagen",
+                        SqlDbType= System.Data.SqlDbType.Image,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Imagen
                     },
                     new SqlParameter()
                     {
@@ -126,6 +133,7 @@ namespace DAL.Implementations
                         Modelo = item.Modelo,
                         Descripcion = item.Descripcion,
                         Precio = item.Precio,
+                        Imagen= item.Imagen,
                         Cantidad = item.Cantidad
                     }
                     );
@@ -173,7 +181,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_UpdateCarroModelo] @CarroModeloID, @Disponible, @Tipo, @Marca, @Modelo, @Descripcion, @Precio, @Cantidad";
+                string sql = "exec [dbo].[sp_UpdateCarroModelo] @CarroModeloID, @Disponible, @Tipo, @Marca, @Modelo, @Descripcion, @Precio, @Imagen,@Cantidad";
                 var param = new SqlParameter[]
                 {
                     new SqlParameter()
@@ -224,6 +232,13 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.Decimal,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Precio
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@Imagen",
+                        SqlDbType= System.Data.SqlDbType.Image,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Imagen
                     },
                     new SqlParameter()
                     {
