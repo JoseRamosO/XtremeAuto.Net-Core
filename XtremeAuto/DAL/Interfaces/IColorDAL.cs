@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    internal interface IColorDAL: IDALGenerico<Color>
+    public interface IColorDAL: IDALGenerico<Color>
     {
     }
 }

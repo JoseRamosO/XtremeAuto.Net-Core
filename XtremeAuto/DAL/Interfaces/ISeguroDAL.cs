@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    internal interface ISeguroDAL: IDALGenerico<Seguro>
+    public interface ISeguroDAL: IDALGenerico<Seguro>
     {
     }
 }

@@ -20,7 +20,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_AddTarjeta] @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento";
+                string sql = "exec [dbo].[sp_AddTarjeta] @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento, @LockoutEnabled";
                 var param = new SqlParameter[]
                 {
 
@@ -58,6 +58,13 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.DateTime,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.FechaVencimiento
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@LockoutEnabled",
+                        SqlDbType= System.Data.SqlDbType.Bit,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.LockoutEnabled
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
@@ -114,7 +121,8 @@ namespace DAL.Implementations
                         Nombre = item.Nombre,
                         NumeroDeTarjeta = item.NumeroDeTarjeta,
                         Cvv = item.Cvv,
-                        FechaVencimiento = item.FechaVencimiento
+                        FechaVencimiento = item.FechaVencimiento,
+                        LockoutEnabled= item.LockoutEnabled
                     }
                     );
 
@@ -165,7 +173,7 @@ namespace DAL.Implementations
             try
             {
 
-                string sql = "exec [dbo].[sp_UpdateTarjeta] @TarjetaID, @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento";
+                string sql = "exec [dbo].[sp_UpdateTarjeta] @TarjetaID, @UsuarioID, @Nombre, @NumeroDeTarjeta, @CVV, @FechaVencimiento,@LockoutEnabled";
 
                 var param = new SqlParameter[]
                 {
@@ -216,6 +224,13 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.DateTime,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.FechaVencimiento
+                    },
+                    new SqlParameter()
+                    {
+                        ParameterName = "@LockoutEnabled",
+                        SqlDbType= System.Data.SqlDbType.Bit,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.LockoutEnabled
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
