@@ -20,7 +20,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_AddVenta] @UsuarioID,@CarroVendidoID,@Total,@Meses, @Intereses, @SaldoPendiente, @SaldoAbonado";
+                string sql = "exec [dbo].[sp_AddVenta] @UsuarioID,@CarroVendidoID,@Meses";
                 var param = new SqlParameter[]
                 {
 
@@ -40,38 +40,10 @@ namespace DAL.Implementations
                     },
                     new SqlParameter()
                     {
-                        ParameterName = "@Total",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.Total
-                    },
-                    new SqlParameter()
-                    {
                         ParameterName = "@Meses",
                         SqlDbType= System.Data.SqlDbType.Int,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Meses
-                    },
-                    new SqlParameter()
-                    {
-                        ParameterName = "@Intereses",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.Intereses
-                    },
-                    new SqlParameter()
-                    {
-                        ParameterName = "@SaldoPendiente",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.SaldoPendiente
-                    },
-                    new SqlParameter()
-                    {
-                        ParameterName = "@SaldoAbonado",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.SaldoAbonado
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
@@ -181,7 +153,7 @@ namespace DAL.Implementations
             try
             {
 
-                string sql = "exec [dbo].[sp_UpdateVenta] @VentaID, @UsuarioID,@CarroVendidoID,@Total,@Meses, @Intereses, @SaldoPendiente, @SaldoAbonado";
+                string sql = "exec [dbo].[sp_UpdateVenta] @VentaID, @UsuarioID,@CarroVendidoID, @Meses";
 
                 var param = new SqlParameter[]
                 {
@@ -208,38 +180,10 @@ namespace DAL.Implementations
                     },
                     new SqlParameter()
                     {
-                        ParameterName = "@Total",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.Total
-                    },
-                    new SqlParameter()
-                    {
                         ParameterName = "@Meses",
                         SqlDbType= System.Data.SqlDbType.Int,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Meses
-                    },
-                    new SqlParameter()
-                    {
-                        ParameterName = "@Intereses",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.Intereses
-                    },
-                    new SqlParameter()
-                    {
-                        ParameterName = "@SaldoPendiente",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.SaldoPendiente
-                    },
-                    new SqlParameter()
-                    {
-                        ParameterName = "@SaldoAbonado",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.SaldoAbonado
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
