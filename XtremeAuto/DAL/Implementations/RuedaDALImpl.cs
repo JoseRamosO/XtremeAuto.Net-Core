@@ -148,7 +148,7 @@ namespace DAL.Implementations
             try
             {
 
-                string sql = "exec [dbo].[sp_UpdateRueda] @RuedaID, @Nombre, @Precio, @Imagen";
+                string sql = "exec [dbo].[sp_UpdateRueda] @RuedaID, @Nombre, @Imagen, @Precio";
 
                 var param = new SqlParameter[]
                 {
@@ -170,19 +170,19 @@ namespace DAL.Implementations
                     },
                     new SqlParameter()
                     {
-
-                        ParameterName = "@Precio",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.Precio
-                    },
-                    new SqlParameter()
-                    {
                         ParameterName = "@Imagen",
                         SqlDbType= System.Data.SqlDbType.Image,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Imagen
 
+                    },
+                    new SqlParameter()
+                    {
+
+                        ParameterName = "@Precio",
+                        SqlDbType= System.Data.SqlDbType.Decimal,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value= entity.Precio
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();

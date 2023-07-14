@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    internal interface IRuedaDAL: IDALGenerico<Ruedum>
+    public interface IRuedaDAL: IDALGenerico<Ruedum>
     {
     }
 }

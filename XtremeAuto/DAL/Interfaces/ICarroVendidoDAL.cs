@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    internal interface ICarroVendidoDAL: IDALGenerico<CarroVendido>
+    public interface ICarroVendidoDAL: IDALGenerico<CarroVendido>
     {
     }
 }
