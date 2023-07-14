@@ -20,7 +20,7 @@ namespace DAL.Implementations
         {
             try
             {
-                string sql = "exec [dbo].[sp_AddCarroVendido] @RuedaID, @ColorID, @CarroModeloID, @SeguroID, @PrecioTotal";
+                string sql = "exec [dbo].[sp_AddCarroVendido] @RuedaID, @ColorID, @CarroModeloID, @SeguroID";
                 var param = new SqlParameter[]
                 {
 
@@ -51,13 +51,6 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.Int,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.SeguroId
-                    },
-                    new SqlParameter()
-                    {
-                        ParameterName = "@PrecioTotal",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.PrecioTotal
                     }
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
@@ -165,7 +158,7 @@ namespace DAL.Implementations
             try
             {
 
-                string sql = "exec [dbo].[sp_UpdateCarroVendido] @CarroVendidoID, @RuedaID, @ColorID, @CarroModeloID, @SeguroID, @PrecioTotal";
+                string sql = "exec [dbo].[sp_UpdateCarroVendido] @CarroVendidoID, @RuedaID, @ColorID, @CarroModeloID, @SeguroID";
 
                 var param = new SqlParameter[]
                 {
@@ -203,16 +196,7 @@ namespace DAL.Implementations
                         SqlDbType= System.Data.SqlDbType.Int,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.SeguroId
-                    },
-                    new SqlParameter()
-                    {
-                        ParameterName = "@PrecioTotal",
-                        SqlDbType= System.Data.SqlDbType.Decimal,
-                        Direction = System.Data.ParameterDirection.Input,
-                        Value= entity.PrecioTotal
                     }
-
-
 
                 };
                 XtremeAutoNetCoreContext xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
