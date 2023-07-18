@@ -26,3 +26,18 @@
 .global-loader p {
     text-align: center;
 }
+.utility-table {
+    border-radius: 10px;
+}
+.utility-table thead tr {
+    border-radius: 10px;--tw-bg-opacity: 1;
+    background-color: rgb(15 118 110 / var(--tw-bg-opacity));
+}
+.utility-table thead tr th {
+    color: #fff;
+    font-weight: bold;
+}
+
+.utility-pagination .css-1hskriy {
+    width: 300px;
+}

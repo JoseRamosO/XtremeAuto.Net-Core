@@ -17,7 +17,7 @@ interface InitialValuesType {
   salario: number;   
 }
 
-export const UserModal = ({ tableInstance }) => {
+export const ColoresModal = ({ tableInstance }) => {
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector( (state) => state.userInterface);
   const { selectedFlatRows, data, setData, setIsOpenAddEditModal, isOpenAddEditModal } = tableInstance;
@@ -96,10 +96,7 @@ export const UserModal = ({ tableInstance }) => {
         <Box className='global-modal'>
           <div className='modal-header'>
               <Typography id="transition-modal-title" variant="h6" component="h2">
-                Agregar UsuariMsasd
-                {
-                  selectedFlatRows.length === 1 ? 'Editar Usuario' : 'Agregar Usuario'
-                }
+                Agregar Usuario
               </Typography>
           </div>
           <div className='modal-body'>

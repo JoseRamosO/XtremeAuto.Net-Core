@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { usuarioSlice } from "./slices/usuarios/usuariosSlice";
 import { userInterface } from "./slices/userInterface/userInterface";
 import { rolSlice } from "./slices/roles/rolesSlice";
+import { colorSlice } from "./slices/colores/coloresSlice";
 
 export const store = configureStore({
   reducer: {
     usuarios: usuarioSlice.reducer,
     roles: rolSlice.reducer,
+    colores: colorSlice.reducer,
     userInterface: userInterface.reducer
   },
 });

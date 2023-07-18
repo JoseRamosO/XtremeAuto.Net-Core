@@ -63,7 +63,7 @@ export const DataTable = ({ tableInstance } ) => {
   }
 
   return (
-    <TableContainer>
+    <TableContainer className='utility-table'>
       <Table {...getTableProps()}>
         { headerGroups.map(headerGroup => (
           <TableHead {...headerGroup.getHeaderGroupProps()}>
@@ -118,6 +118,7 @@ export const DataTable = ({ tableInstance } ) => {
         ActionsComponent={ CustomPaginationActions  }
         nextIconButtonProps={{ disabled: canNextPage }}
         backIconButtonProps={{ disabled: canPreviousPage }}
+        className='utility-pagination'
       />
     </TableContainer>
   )
