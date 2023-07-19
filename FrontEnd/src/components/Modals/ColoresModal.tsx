@@ -17,7 +17,7 @@ interface InitialValuesType {
   salario: number;   
 }
 
-export const UserModal = ({ tableInstance }) => {
+export const ColoresModal = ({ tableInstance }) => {
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector( (state) => state.userInterface);
   const { selectedFlatRows, data, setData, setIsOpenAddEditModal, isOpenAddEditModal } = tableInstance;
@@ -77,20 +77,29 @@ export const UserModal = ({ tableInstance }) => {
   };
 
   return (
+
+    <div>
     <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
       open={ isModalOpen }
       onClose={() => dispatch(setToggleModal())}
-      className='duration-300 bg-opacity-60 bg-black'
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          timeout: 500,
+        },
+      }}
     >
       <Fade in={ isModalOpen }>
-        <Box className='global-modal rounded-xl'>
-          <div className="rounded-t-xl px-5 py-2 bg-teal-700 text-slate-50 text-center sm:text-left">
-            <h3 className="text-base font-semibold leading-6 text-slate-50" id="modal-title">Agregar Nuevo</h3>
-            <div className="mt-2">
-              <p className="text-sm text-slate-50">Estas agregando un nuevo usuario</p>
-            </div>
+        <Box className='global-modal'>
+          <div className='modal-header'>
+              <Typography id="transition-modal-title" variant="h6" component="h2">
+                Agregar Usuario
+              </Typography>
           </div>
-          <div className='modal-body p-5'>
+          <div className='modal-body'>
           <Formik
             enableReinitialize
             initialValues={ initFormValues }
@@ -228,17 +237,17 @@ export const UserModal = ({ tableInstance }) => {
                       </div>
                     </div>
                   </div>
-                <div className="px-0 py-3 sm:flex sm:flex-row-reverse">
-                  <button type='submit' className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Guardar Nuevo Usuario</button>
-                  <button onClick={ () => dispatch(setToggleModal()) } className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancelar</button>
+                <div>
+                  <Button type='submit' variant="contained" color="success" sx={{ mr: 2 }}>Guardar Nuevo Usuario</Button>
+                  <Button variant="outlined" color="error" onClick={ () => dispatch(setToggleModal()) }>Cancelar</Button>
                 </div>
               </form>
             )}
           </Formik>
           </div>
         </Box>
-        
       </Fade>
     </Modal>
+  </div>
   )
 }

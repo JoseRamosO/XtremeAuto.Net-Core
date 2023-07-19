@@ -7,7 +7,10 @@ interface roleType {
 
 interface rolesInitialValuesType {
     roles: roleType[],
-    loadingRoles: boolean
+    loadingRoles: boolean,
+    modalRolesOpen: boolean,
+    modalRolesLock: boolean,
+    modalRolesState: number
 }
 
 const initialState: rolesInitialValuesType = {
@@ -15,7 +18,10 @@ const initialState: rolesInitialValuesType = {
     rolId: 0,
     nombre: ''
   }],
-  loadingRoles: true
+  loadingRoles: true,
+  modalRolesOpen: false,
+  modalRolesLock: false,
+  modalRolesState: 0
 };
 
 export const rolSlice = createSlice({
@@ -29,7 +35,19 @@ export const rolSlice = createSlice({
       setLoadingRoles(state) {
         state.loadingRoles = true;
       },
+      setToggleModalRoles(state) {
+        state.modalRolesOpen = !state.modalRolesOpen;
+      },
+      setModalRolesLock(state) {
+        state.modalRolesLock = true
+      },
+      setModalRolesLockFalse(state) {
+        state.modalRolesLock = false
+      },
+      setModalRolesState(state, action) {
+        state.modalRolesState = action.payload;
+      },
     },
 });
   
-export const { setRoles, setLoadingRoles } = rolSlice.actions;
+export const { setRoles, setLoadingRoles, setToggleModalRoles, setModalRolesLock, setModalRolesLockFalse, setModalRolesState } = rolSlice.actions;

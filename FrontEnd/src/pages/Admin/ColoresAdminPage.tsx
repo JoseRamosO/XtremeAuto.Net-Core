@@ -5,50 +5,41 @@ import { Column, usePagination, useRowSelect, useTable } from 'react-table';
 import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
-import AddIcon from '@mui/icons-material/Add';
+import { Button } from "@mui/material";
+import { setToggleModal } from "../../store/slices/userInterface/userInterface";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
-import { setToggleModal } from "../../store/slices/userInterface/userInterface";
+import { obtenerColores } from "../../store/slices/colores/coloresThunk";
 
-interface usuarioType {
-  cedula: number;
-  nombre : string;
-  apellido : string;
-  username : string;
-  salario: number; 
+interface colorType {
+  colorId: number,
+  nombre: string,
+  imagen: string,
 }
 
-export const UsuariosPage = () => {
+export const ColoresAdminPage = () => {
   const dispatch = useAppDispatch();
-  const { users: data, loadingUsers } = useAppSelector( (state) => state.usuarios);
+  const { colores: data, loadingColores } = useAppSelector( (state) => state.colores);
 
   useEffect(() => {
-    if (loadingUsers){
-      dispatch(getAllUsers()); 
+    if (loadingColores){
+      dispatch(obtenerColores()); 
     } 
   }, [data])
   
-  const columns: Column<usuarioType>[] = useMemo(() => [
+  const columns: Column<colorType>[] = useMemo(() => [
     {
-      Header: 'Cedula',
-      accessor: "cedula" as keyof usuarioType,
+      Header: 'Color Id',
+      accessor: "colorId" as keyof colorType,
     },
     {
         Header: 'Nombre',
-        accessor: "nombre" as keyof usuarioType,
+        accessor: "nombre" as keyof colorType,
     },
     {
-        Header: 'Apellido',
-        accessor: "apellido" as keyof usuarioType,
-    },
-    {
-      Header: 'Username',
-      accessor: "username" as keyof usuarioType,
-    },
-    {
-      Header: 'Salario',
-      accessor: "salario" as keyof usuarioType,
-    }
+      Header: 'Imagen',
+      accessor: "imagen" as keyof colorType,
+  }
   ], [])
 
   const tableInstance = useTable({columns, data}, usePagination, useRowSelect)
@@ -58,9 +49,10 @@ export const UsuariosPage = () => {
       <UserModal tableInstance={tableInstance}/>
       <DeleteUserModal tableInstance={tableInstance}/>
       {
-        loadingUsers ? <GettingDataLoader/> : (
+        loadingColores ? <GettingDataLoader/> : (
           <>
-            <DataTable tableInstance={tableInstance} tableOwner='usuarios'/>
+                <Button variant="contained" color="success" onClick={() => dispatch(setToggleModal())}>Agregar Nuevo Rol</Button>
+                <DataTable tableInstance={tableInstance} tableOwner='colores'/>
           </>
          
         )

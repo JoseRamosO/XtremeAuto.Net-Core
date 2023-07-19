@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import { HomePage } from '../pages/PublicPages/HomePage'
 import { UsuariosPage } from '../pages/Admin/UsuariosPage'
 import { RolesAdminPage } from '../pages/Admin/RolesAdminPage'
+import { ColoresAdminPage } from '../pages/Admin/ColoresAdminPage'
 
 export const AppRouter = () => {
   return (
@@ -17,6 +18,7 @@ export const AppRouter = () => {
 
             <Route path="/admin/usuarios" element={<UsuariosPage />} />
             <Route path="/admin/roles" element={<RolesAdminPage />} />
+            <Route path="/admin/colores" element={<ColoresAdminPage />} />
       </Routes>
     </>
   )

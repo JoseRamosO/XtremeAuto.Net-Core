@@ -1,13 +1,12 @@
-import { Grid, Typography } from "@mui/material"
-import { PublicNavBar } from "../../components/Header/PublicNavBar"
+import { AdminSideBar } from "../../components/SideBar/AdminSideBar"
 
 export const MainAdminLayout = ({ children }) => {
   return (
-    <Grid>
-      <PublicNavBar/>
-      <Grid item sx={{ mx: 'auto', px: 5, pt: 5 }}>
+    <div className='flex'>
+      <AdminSideBar/>
+      <div className='h-screen flex-1 px-12 pt-8'>
         { children }
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   )
 }
