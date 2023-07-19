@@ -51,7 +51,7 @@ export const RegisterPage = () => {
     <MainAdminLayout>
       <UserModal tableInstance={tableInstance}/>
       {
-        loadingUsers ? <p>Loading</p> : <DataTable tableInstance={tableInstance}/>
+        loadingUsers ? <p>Loading</p> : <DataTable tableInstance={tableInstance} tableOwner='usuarios'/>
       }
     </MainAdminLayout>
   )

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import GroupIcon from '@mui/icons-material/Group';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import AdjustIcon from '@mui/icons-material/Adjust';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ export const AdminSideBar = () => {
         <div
           className={` ${
             open ? 'w-60' : 'w-20 '
-          } bg-teal-700 h-screen p-5 pt-8 relative duration-300`}
+          } bg-teal-700 p-5 pt-8 relative duration-300`}
         >
           <div
             className={`flex items-center justify-center text-slate-50 absolute cursor-pointer w-10 h-12 -right-6 top-7 bg-teal-700 rounded-r-full`}
@@ -41,10 +41,10 @@ export const AdminSideBar = () => {
                   Usuarios
                 </span>
               </li>
-              <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/usuarios') }>
-                <DirectionsCarIcon/>
+              <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/roles') }>
+                <AdjustIcon/>
                 <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
-                  Autos
+                  Roles
                 </span>
               </li>
               

@@ -1,15 +1,15 @@
-import { getAllUsers } from "../../store/slices/usuarios/usuariosThunk";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { UserModal } from '../../components/Modals/UserModal';
 import { Column, usePagination, useRowSelect, useTable } from 'react-table';
 import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
-import { Button } from "@mui/material";
-import { setToggleModal } from "../../store/slices/userInterface/userInterface";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerRoles } from "../../store/slices/roles/rolesThunk";
+import AddIcon from '@mui/icons-material/Add';
+import { setToggleModalRoles } from "../../store/slices/roles/rolesSlice";
+import { RolsModal } from "../../components/Modals/RolsModal";
 
 interface roleType {
     rolId: number,
@@ -41,15 +41,13 @@ export const RolesAdminPage = () => {
   
   return (
     <MainAdminLayout>
-      <UserModal tableInstance={tableInstance}/>
+      <RolsModal tableInstance={tableInstance}/>
       <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingRoles ? <GettingDataLoader/> : (
           <>
-                <Button variant="contained" color="success" onClick={() => dispatch(setToggleModal())}>Agregar Nuevo Rol</Button>
-                <DataTable tableInstance={tableInstance}/>
+            <DataTable tableInstance={tableInstance} tableOwner="roles"/>
           </>
-         
         )
       }
     </MainAdminLayout>

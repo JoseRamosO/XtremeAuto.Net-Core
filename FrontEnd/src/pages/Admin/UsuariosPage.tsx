@@ -60,16 +60,7 @@ export const UsuariosPage = () => {
       {
         loadingUsers ? <GettingDataLoader/> : (
           <>
-          <div className="flex mb-10">
-            <h1 className="origin-left font-medium text-3xl text-teal-700 mr-5">Panel Usuarios</h1>
-            <button onClick={() => dispatch(setToggleModal())} className="flex space-x-3 items-center px-4 py-2 bg-teal-500 hover:bg-teal-800 rounded-lg drop-shadow-md duration-300">
-              <AddIcon className="text-white"/>
-              <span className="text-white text-xl font-bold">Agregar Nuevo</span>
-            </button>
-          </div>
-
-                {/* <Button variant="contained" color="success" onClick={() => dispatch(setToggleModal())}></Button> */}
-                <DataTable tableInstance={tableInstance}/>
+            <DataTable tableInstance={tableInstance} tableOwner='usuarios'/>
           </>
          
         )

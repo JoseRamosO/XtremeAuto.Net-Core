@@ -52,7 +52,7 @@ export const ColoresAdminPage = () => {
         loadingColores ? <GettingDataLoader/> : (
           <>
                 <Button variant="contained" color="success" onClick={() => dispatch(setToggleModal())}>Agregar Nuevo Rol</Button>
-                <DataTable tableInstance={tableInstance}/>
+                <DataTable tableInstance={tableInstance} tableOwner='colores'/>
           </>
          
         )

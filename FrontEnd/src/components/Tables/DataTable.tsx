@@ -10,8 +10,10 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { setModalRolesLock, setModalRolesLockFalse, setModalRolesState, setToggleModalRoles } from "../../store/slices/roles/rolesSlice";
+import AddIcon from '@mui/icons-material/Add';
 
-export const DataTable = ({ tableInstance } ) => {
+export const DataTable = ({ tableInstance, tableOwner }) => {
   const dispatch = useAppDispatch();
   const { getTableProps, 
     getTableBodyProps, 
@@ -62,7 +64,39 @@ export const DataTable = ({ tableInstance } ) => {
     );
   }
 
+  const handleModalToOpenClick = ( modalType ) => {
+    switch (tableOwner) {
+      case 'roles':
+        dispatch(setModalRolesState(modalType))
+        dispatch(setToggleModalRoles())
+      break;
+      case 'usuarios':
+        dispatch(setToggleModal())
+      break;
+    }
+  }
+  const retornaPanelName = () => {
+    switch (tableOwner) {
+      case 'roles':
+       return 'Panel Roles';
+      break;
+      case 'usuarios':
+        return 'Panel Usuarios';
+      break;
+    }
+  }
+
+  
   return (
+    <>
+    <div className="flex mb-10">
+      <h1 className="origin-left font-medium text-3xl text-teal-700 mr-5">{ retornaPanelName() }</h1>
+      <button onClick={() => { toggleAllPageRowsSelected(false); handleModalToOpenClick(0)}} className="flex space-x-3 items-center px-4 py-2 bg-teal-500 hover:bg-teal-800 rounded-lg drop-shadow-md duration-300">
+        <AddIcon className="text-white"/>
+        <span className="text-white text-xl font-bold">Agregar Nuevo</span>
+      </button>
+    </div>
+    
     <TableContainer className='utility-table'>
       <Table {...getTableProps()}>
         { headerGroups.map(headerGroup => (
@@ -82,6 +116,7 @@ export const DataTable = ({ tableInstance } ) => {
         <TableBody {...getTableBodyProps()}>
           { page.map(row => {
             prepareRow(row)
+            
             return (
               <TableRow {...row.getRowProps()}>
                 { row.cells.map(cell => {
@@ -92,15 +127,15 @@ export const DataTable = ({ tableInstance } ) => {
                     )
                 })}
                 <TableCell>
-                  <Button sx={{ bgcolor: 'warning.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setToggleModal())} }>
+                  <a className='cursor-pointer rounded-lg p-3 text-slate-50 bg-orange-600 hover:bg-orange-700 mr-2' onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); handleModalToOpenClick(1); }}>
                     <EditIcon/>
-                  </Button>
-                  <Button sx={{ bgcolor: 'success.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setToggleModal())} }>
+                  </a>
+                  <a className='cursor-pointer rounded-lg p-3 text-slate-50 bg-green-600 hover:bg-green-700 mr-2' onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); handleModalToOpenClick(2); }}>
                     <VisibilityIcon/>
-                  </Button>
-                  <Button sx={{ bgcolor: 'error.main', color: 'white' }} onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); dispatch(setModalDeleteOpen())} }>
+                  </a>
+                  <a className='cursor-pointer rounded-lg p-3 text-slate-50 bg-red-600 hover:bg-red-700' onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); handleModalToOpenClick(3); }}>
                     <DeleteIcon/>
-                  </Button>
+                  </a>
                 </TableCell>
               </TableRow>
             )
@@ -121,5 +156,6 @@ export const DataTable = ({ tableInstance } ) => {
         className='utility-pagination'
       />
     </TableContainer>
+    </>
   )
 }
