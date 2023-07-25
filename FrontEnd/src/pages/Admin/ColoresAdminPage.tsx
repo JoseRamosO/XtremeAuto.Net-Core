@@ -10,6 +10,7 @@ import { setToggleModal } from "../../store/slices/userInterface/userInterface";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerColores } from "../../store/slices/colores/coloresThunk";
+import { ColoresModal } from "../../components/Modals/ColoresModal";
 
 interface colorType {
   colorId: number,
@@ -29,10 +30,6 @@ export const ColoresAdminPage = () => {
   
   const columns: Column<colorType>[] = useMemo(() => [
     {
-      Header: 'Color Id',
-      accessor: "colorId" as keyof colorType,
-    },
-    {
         Header: 'Nombre',
         accessor: "nombre" as keyof colorType,
     },
@@ -46,12 +43,11 @@ export const ColoresAdminPage = () => {
   
   return (
     <MainAdminLayout>
-      <UserModal tableInstance={tableInstance}/>
+      <ColoresModal tableInstance={tableInstance}/>
       <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingColores ? <GettingDataLoader/> : (
           <>
-                <Button variant="contained" color="success" onClick={() => dispatch(setToggleModal())}>Agregar Nuevo Rol</Button>
                 <DataTable tableInstance={tableInstance} tableOwner='colores'/>
           </>
          

@@ -11,6 +11,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { setModalRolesState, setToggleModalRoles } from "../../store/slices/roles/rolesSlice";
 import AddIcon from '@mui/icons-material/Add';
 import { setModalUsersState, setToggleModalUsers } from "../../store/slices/usuarios/usuariosSlice";
+import { setModalColoresState, setToggleModalColores } from "../../store/slices/colores/coloresSlice";
 
 export const DataTable = ({ tableInstance, tableOwner }) => {
   const dispatch = useAppDispatch();
@@ -73,6 +74,10 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
         dispatch(setModalUsersState(modalType))
         dispatch(setToggleModalUsers())
       break;
+      case 'colores':
+        dispatch(setModalColoresState(modalType))
+        dispatch(setToggleModalColores())
+      break;
     }
   }
   
@@ -83,6 +88,9 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
       break;
       case 'usuarios':
         return 'Panel Usuarios';
+      break;
+      case 'colores':
+        return 'Panel Colores';
       break;
     }
   }
@@ -123,7 +131,14 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
                 { row.cells.map(cell => {
                     return (
                       <TableCell {...cell.getCellProps()}>
-                        {cell.render('Cell')}
+                        {
+                          ( cell.column.id == 'imagen' ) ? (
+                           <img className="w-12 h-12 rounded-md" src={ `http://localhost:5088${cell.value }` }/>
+                          ) : (
+                            cell.render('Cell')
+                          )
+                        
+                        }
                       </TableCell>
                     )
                 })}

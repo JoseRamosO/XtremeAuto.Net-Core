@@ -76,3 +76,64 @@
 .main-public-header .header-logo {
     margin-right: 30px;
 }
+
+.image-uploader {
+    border: 2px dashed rgb(15 118 110 / var(--tw-bg-opacity));
+    height: 200px;
+    width: 330px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 300ms;
+}
+.image-uploader.image-uploader-active {
+    border: none;
+}
+.image-uploader:hover { 
+    background-color: red;
+    transition: all 300ms;
+}
+
+.image-uploader input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
+    border-radius: 20px;
+}
+.image-uploader .image-uploaded {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.image-uploader .image-uploaded img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+.image-uploader .image-uploaded button {
+    background-color: red;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    border-radius: 0 20px 0 20px;
+    padding: 10px;
+    transition: all 300ms;
+    z-index: 3;
+}
+.image-uploader .image-uploaded button:hover {
+    background-color: beige;
+    transition: all 300ms;
+}
+.image-uploader.image-looked input {
+    display: none;
+}
+
+.image-uploader.image-looked:hover,
+.image-uploader.image-looked {
+    background-color: none; 
+    border: none;
+}

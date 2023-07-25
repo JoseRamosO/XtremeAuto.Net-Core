@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import GroupIcon from '@mui/icons-material/Group';
 import AdjustIcon from '@mui/icons-material/Adjust';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate } from 'react-router-dom';
 
@@ -45,6 +46,12 @@ export const AdminSideBar = () => {
                 <AdjustIcon/>
                 <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                   Roles
+                </span>
+              </li>
+              <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/colores') }>
+                <ColorLensIcon/>
+                <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                  Colores
                 </span>
               </li>
               
