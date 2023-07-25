@@ -1,9 +1,27 @@
+using Entities.Entities;
+using Entities.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+#region Connection String
+builder.Services.AddDbContext<XtremeAutoNetCoreContext>(options =>
+                        options.UseSqlServer(
+                            builder
+                            .Configuration
+                            .GetConnectionString("DefaultConnection")));
+
+string connString = builder
+                            .Configuration
+                            .GetConnectionString("DefaultConnection");
+
+Util.ConnectionString = connString;
+
+#endregion
 
 // Add services to the container.
 
