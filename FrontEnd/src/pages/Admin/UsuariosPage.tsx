@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { setToggleModal } from "../../store/slices/userInterface/userInterface";
+import { obtenerRoles } from "../../store/slices/roles/rolesThunk";
 
 interface usuarioType {
   cedula: number;
@@ -24,7 +25,8 @@ export const UsuariosPage = () => {
 
   useEffect(() => {
     if (loadingUsers){
-      dispatch(getAllUsers()); 
+      dispatch(getAllUsers());
+      dispatch(obtenerRoles());  
     } 
   }, [data])
   

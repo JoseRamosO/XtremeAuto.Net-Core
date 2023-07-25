@@ -9,7 +9,9 @@ interface currentUserType {
 interface usuariosInitialValuesType {
     currentUser: currentUserType,
     users: [],
-    loadingUsers: boolean
+    loadingUsers: boolean,
+    modalUsersOpen: boolean,
+    modalUsersState: number
 }
 
 const initialState: usuariosInitialValuesType = {
@@ -19,7 +21,9 @@ const initialState: usuariosInitialValuesType = {
         rol: 0,
     },
     users: [],
-    loadingUsers: true
+    loadingUsers: true,
+    modalUsersOpen: false,
+    modalUsersState: 0
 };
 
 export const usuarioSlice = createSlice({
@@ -36,7 +40,13 @@ export const usuarioSlice = createSlice({
       setLoadingUsers(state) {
         state.loadingUsers = true;
       },
+      setToggleModalUsers(state) {
+        state.modalUsersOpen = !state.modalUsersOpen;
+      },
+      setModalUsersState(state, action) {
+        state.modalUsersState = action.payload;
+      },
     },
 });
   
-export const { setCurrentUser, setUsers, setLoadingUsers } = usuarioSlice.actions;
+export const { setCurrentUser, setUsers, setLoadingUsers, setToggleModalUsers, setModalUsersState } = usuarioSlice.actions;
