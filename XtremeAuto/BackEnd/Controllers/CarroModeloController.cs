@@ -1,4 +1,5 @@
-﻿using BackEnd.Helpers;
+﻿using System.Drawing;
+using BackEnd.Helpers;
 using BackEnd.Models;
 using DAL.Implementations;
 using DAL.Interfaces;
@@ -100,28 +101,14 @@ namespace BackEnd.Controllers
 
         // POST api/<CarroModeloController>
         [HttpPost]
-        public JsonResult Post([FromBody] CarroModeloModel carroModelo)
+        public JsonResult Post([FromForm] CarroModeloModel carroModelo)
         {
-            //try
-            //{
-            //    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "hola.png");
 
-            //    using (Stream stream = new FileStream(path, FileMode.Create))
-            //    {
-            //        carroModelo.FormFile.CopyTo(stream);
-            //    }
-            //    carroModelo.Imagen = path;
-                
-
-            //}
-            //catch (Exception)
-            //{
-            //    return new JsonResult(carroModelo);
-            //}
-            return new JsonResult(carroModeloDAL.Add(Convertir(carroModelo)));
-            //string imageSaved = ImagenesUploader.uploadImage(carroModel.Imagen);
-            //carroModeloDAL.Add(Convertir(carroModel));
+            //carroModelo.Imagen = ImagenesUploader.uploadImage(carroModelo.FormFile);
+            carroModeloDAL.Add(Convertir(carroModelo));
+            return new JsonResult(carroModelo);
         }
+
 
         #endregion
 
