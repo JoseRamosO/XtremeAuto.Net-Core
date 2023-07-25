@@ -69,7 +69,7 @@ namespace DAL.Implementations
                      new SqlParameter()
                     {
                         ParameterName = "@Imagen",
-                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        SqlDbType= System.Data.SqlDbType.NVarChar,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Imagen
                     },
@@ -247,7 +247,7 @@ namespace DAL.Implementations
                     new SqlParameter()
                     {
                         ParameterName = "@Imagen",
-                        SqlDbType= System.Data.SqlDbType.VarChar,
+                        SqlDbType= System.Data.SqlDbType.NVarChar,
                         Direction = System.Data.ParameterDirection.Input,
                         Value= entity.Imagen
                     },
