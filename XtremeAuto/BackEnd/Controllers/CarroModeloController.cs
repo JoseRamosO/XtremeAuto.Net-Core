@@ -1,4 +1,5 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Helpers;
+using BackEnd.Models;
 using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
@@ -14,6 +15,7 @@ namespace BackEnd.Controllers
     {
 
         private ICarroModeloDAL carroModeloDAL;
+        private ImagenesUploader ImagenesUploader;
 
         private CarroModeloModel Convertir(CarroModelo carroModelo)
         {
@@ -55,6 +57,7 @@ namespace BackEnd.Controllers
 
         public CarroModeloController()
         {
+            ImagenesUploader = new ImagenesUploader();
             carroModeloDAL = new CarroModeloDALImpl();
 
         }
@@ -99,9 +102,25 @@ namespace BackEnd.Controllers
         [HttpPost]
         public JsonResult Post([FromBody] CarroModeloModel carroModelo)
         {
+            //try
+            //{
+            //    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "hola.png");
 
-            carroModeloDAL.Add(Convertir(carroModelo));
-            return new JsonResult(carroModelo);
+            //    using (Stream stream = new FileStream(path, FileMode.Create))
+            //    {
+            //        carroModelo.FormFile.CopyTo(stream);
+            //    }
+            //    carroModelo.Imagen = path;
+                
+
+            //}
+            //catch (Exception)
+            //{
+            //    return new JsonResult(carroModelo);
+            //}
+            return new JsonResult(carroModeloDAL.Add(Convertir(carroModelo)));
+            //string imageSaved = ImagenesUploader.uploadImage(carroModel.Imagen);
+            //carroModeloDAL.Add(Convertir(carroModel));
         }
 
         #endregion

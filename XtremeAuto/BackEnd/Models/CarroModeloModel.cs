@@ -1,5 +1,7 @@
-﻿namespace BackEnd.Models
+﻿using BackEnd.Models;
+namespace BackEnd.Models
 {
+
     public class CarroModeloModel
     {
         public int CarroModeloId { get; set; }
@@ -9,7 +11,8 @@
         public string Modelo { get; set; } = null!;
         public string Descripcion { get; set; } = null!;
         public decimal Precio { get; set; }
-        public byte[] Imagen { get; set; } = null!;
+        public byte[]? Imagen { get; set; } = null!;
         public int Cantidad { get; set; }
+        public IFormFile FormFile { get; set; }
     }
 }
