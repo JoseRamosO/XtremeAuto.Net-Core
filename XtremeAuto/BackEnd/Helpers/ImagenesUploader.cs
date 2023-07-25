@@ -12,14 +12,23 @@ namespace BackEnd.Helpers
 
             try
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", uploadImage.FileName);
+                string parentFolderName = "assets";
+                DateTime currentDate = DateTime.Now;
+                string formattedDate = currentDate.ToString("yyyyMMdd");
 
-                using (Stream stream = new FileStream(path, FileMode.Create))
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", parentFolderName, formattedDate );
+                string finalFolderPath = Path.Combine(folderPath, uploadImage.FileName);
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                using (Stream stream = new FileStream(finalFolderPath, FileMode.Create))
                 {
                     uploadImage.CopyTo(stream);
+                    return "/assets/" + formattedDate + "/" + uploadImage.FileName;
                 }
-                return "http://localhost:5088/" + uploadImage.FileName;
-
+               
             }
             catch (Exception)
             {

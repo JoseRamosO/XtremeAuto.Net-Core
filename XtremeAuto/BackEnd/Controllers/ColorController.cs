@@ -102,8 +102,13 @@ namespace BackEnd.Controllers
 
         // PUT api/<ColorController>/5
         [HttpPut]
-        public JsonResult Put([FromBody] ColorModel color)
+        public JsonResult Put([FromForm] ColorModel color)
         {
+            if (color.FormFile != null)
+            {
+                color.Imagen = ImagenesUploader.uploadImage(color.FormFile);
+
+            }
             colorDAL.Update(Convertir(color));
             return new JsonResult(color);
         }

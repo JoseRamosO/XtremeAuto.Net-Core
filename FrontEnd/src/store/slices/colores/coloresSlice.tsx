@@ -8,12 +8,16 @@ interface colorType {
 
 interface coloresInitialValuesType {
     colores: colorType[],
-    loadingColores: boolean
+    loadingColores: boolean,
+    modalColoresOpen: boolean,
+    modalColoresState: number
 }
 
 const initialState: coloresInitialValuesType = {
     colores: [],
-    loadingColores: true
+    loadingColores: true,
+    modalColoresOpen: false,
+    modalColoresState: 0
 };
 
 export const colorSlice = createSlice({
@@ -24,10 +28,16 @@ export const colorSlice = createSlice({
         state.colores = action.payload;
         state.loadingColores = false;
       },
-      setLoadingRoles(state) {
+      setLoadingColores(state) {
         state.loadingColores = true;
+      },
+      setToggleModalColores(state) {
+        state.modalColoresOpen = !state.modalColoresOpen;
+      },
+      setModalColoresState(state, action) {
+        state.modalColoresState = action.payload;
       },
     },
 });
   
-export const { setColores, setLoadingRoles } = colorSlice.actions;
+export const { setColores, setLoadingColores, setToggleModalColores, setModalColoresState } = colorSlice.actions;
