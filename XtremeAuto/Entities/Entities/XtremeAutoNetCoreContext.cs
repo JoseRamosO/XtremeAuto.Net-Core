@@ -45,8 +45,8 @@ namespace Entities.Entities
 
                 //optionsBuilder.UseSqlServer("Server=DESKTOP-FQEJS1P\\SQLEXPRESS;Database=XtremeAutoNetCore;Integrated Security=True;Trusted_Connection=True;");
 
-                //optionsBuilder.UseSqlServer("Server=DESKTOP-FQEJS1P\\SQLEXPRESS;Database=XtremeAutoNetCore;Integrated Security=True;Trusted_Connection=True;");
-                optionsBuilder.UseSqlServer("Server=.;Database=XtremeAutoNetCore;User Id=SA;Password=Mg110101;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-FQEJS1P\\SQLEXPRESS;Database=XtremeAutoNetCore2;Integrated Security=True;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Server=.;Database=XtremeAutoNetCore;User Id=SA;Password=Mg110101;");
                 //optionsBuilder.UseSqlServer("Server=THE-DARKNIGHT\\SQLEXPRESS;Database=XtremeAutoNetCore;Integrated Security=True;Trusted_Connection=True;");
 
             }
