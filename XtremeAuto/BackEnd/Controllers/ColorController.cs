@@ -1,4 +1,5 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Helpers;
+using BackEnd.Models;
 using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
@@ -14,6 +15,7 @@ namespace BackEnd.Controllers
     {
 
         private IColorDAL colorDAL;
+        private ImagenesUploader ImagenesUploader;
 
         private ColorModel Convertir(Color color)
         {
@@ -44,7 +46,7 @@ namespace BackEnd.Controllers
         public ColorController()
         {
             colorDAL = new ColorDALImpl();
-
+            ImagenesUploader = new ImagenesUploader();
         }
 
         #endregion
@@ -85,9 +87,10 @@ namespace BackEnd.Controllers
 
         // POST api/<ColorController>
         [HttpPost]
-        public JsonResult Post([FromBody] ColorModel color)
+        public JsonResult Post([FromForm] ColorModel color)
         {
 
+            color.Imagen = ImagenesUploader.uploadImage(color.FormFile);
             colorDAL.Add(Convertir(color));
             return new JsonResult(color);
         }
