@@ -1,7 +1,5 @@
 import { useAppDispatch } from "../../hooks/reduxHooks";
-import { Table, Button, TableCell, TableContainer, TableHead, TableRow, TableBody, TablePagination, TableFooter, Box} from '@mui/material';
-import {  setModalDeleteOpen, setToggleModal } from "../../store/slices/userInterface/userInterface";
-
+import { Table, TableCell, TableContainer, TableHead, TableRow, TableBody, TablePagination, Box} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
@@ -10,8 +8,9 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { setModalRolesLock, setModalRolesLockFalse, setModalRolesState, setToggleModalRoles } from "../../store/slices/roles/rolesSlice";
+import { setModalRolesState, setToggleModalRoles } from "../../store/slices/roles/rolesSlice";
 import AddIcon from '@mui/icons-material/Add';
+import { setModalUsersState, setToggleModalUsers } from "../../store/slices/usuarios/usuariosSlice";
 
 export const DataTable = ({ tableInstance, tableOwner }) => {
   const dispatch = useAppDispatch();
@@ -71,10 +70,12 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
         dispatch(setToggleModalRoles())
       break;
       case 'usuarios':
-        dispatch(setToggleModal())
+        dispatch(setModalUsersState(modalType))
+        dispatch(setToggleModalUsers())
       break;
     }
   }
+  
   const retornaPanelName = () => {
     switch (tableOwner) {
       case 'roles':

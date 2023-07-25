@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { setCurrentUser, setLoadingUsers, setUsers } from "./usuariosSlice";
+import { setCurrentUser, setLoadingUsers, setToggleModalUsers, setUsers } from "./usuariosSlice";
 import { baseApi } from "../../../api/apiConfig";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -71,6 +71,7 @@ const registrarUsuario = (usuario: usuarioType) => {
 
 const eliminarUsuario = (idUsuarioEliminar) => {
     return async (dispatch: Dispatch) => {
+        
         await baseApi.delete(`/usuario/${ idUsuarioEliminar }`);
         dispatch(setLoadingUsers());
         const { data } = await baseApi.get('/usuario');
@@ -80,9 +81,39 @@ const eliminarUsuario = (idUsuarioEliminar) => {
     }
 };
 
+const agregarUsuarios = ( usuarioNuevo ) => {
+    return async (dispatch: Dispatch) => {
+        const usuarioParsed ={
+            nombre: usuarioNuevo.nombre, 
+            apellido: usuarioNuevo.apellido, 
+            salario: 0,
+            cedula: usuarioNuevo.cedula,
+            email: usuarioNuevo.email,
+            passwordHash: "string",
+            securityStamp: "string",
+            telefono:usuarioNuevo.telefono,
+            username: usuarioNuevo.username,
+            rolId: usuarioNuevo.rolId,
+            lockoutEnabled: true,
+            failedAttemptsCount: 0,
+            lockoutEndDateUtc: "2023-06-18T16:56:50.884Z"
+    }
+
+        const { data } = await baseApi.post("/usuario", usuarioParsed );
+        if (data) {
+            const { data } = await baseApi.get('/usuario');
+            dispatch(setLoadingUsers());
+            dispatch(setUsers(data));
+            toast.success('¡Usuario agregado con éxito!');
+            dispatch(setToggleModalUsers());
+        }
+    }
+};
+
 export {
     loginUsuario,
     registrarUsuario,
     getAllUsers,
-    eliminarUsuario
+    eliminarUsuario,
+    agregarUsuarios
 }
