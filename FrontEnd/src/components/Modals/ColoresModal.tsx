@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Box,  Modal, Fade, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { agregarRoles, editarRoles, eliminarRoles } from '../../store/slices/roles/rolesThunk';
 import { setToggleModalColores } from '../../store/slices/colores/coloresSlice';
 import { useState } from 'react';
 import { agregarColores, editarColores, eliminarColores } from '../../store/slices/colores/coloresThunk';

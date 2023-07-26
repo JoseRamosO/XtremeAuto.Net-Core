@@ -1,12 +1,33 @@
-// import { Link } from 'react-router-dom'
-import { PublicNavBar } from '../../components/Header/PublicNavBar'
-import { BrowserRouter as Router, Link as RouterLink } from 'react-router-dom';
-import Link from '@mui/material/Link';
-import { Button } from '@mui/material';
 import { MainPublicLayout } from '../theme/MainPublicLayout';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { GettingDataLoader } from '../../components/Loaders/GettingDataLoader';
+import { useEffect } from 'react';
+import { obtenerAutos } from '../../store/slices/autos/autosThunk';
 import { CardSaleHome } from '../../components/Cards/CardSaleHome';
 
 export const HomePage = () => {
+  const dispatch = useAppDispatch();
+  const { autos, loadingAutos } = useAppSelector( (state) => state.autos);
+
+  useEffect(() => {
+    if (loadingAutos){
+      dispatch(obtenerAutos()); 
+    } 
+  }, [autos])
+
+  const AutosRenderComponent = () => {
+    return (
+      <>
+        {
+          autos.map(( auto ) => (
+            <CardSaleHome key={ auto.carroModeloId } autoToRender={ auto }/>
+          ))
+        }
+      </>
+
+    )
+  }
+
   return (
     <MainPublicLayout>
       <div className='homepage-header bg-gradient-to-r from-slate-800 to-slate-900'>
@@ -24,12 +45,9 @@ export const HomePage = () => {
         <h1>AUTOS EN VENTA</h1>
         
           <div className="flex flex-wrap mt-9 cards-container">
-            <CardSaleHome/>
-            <CardSaleHome/>
-            <CardSaleHome/>
-            <CardSaleHome/>
-            <CardSaleHome/>
-            <CardSaleHome/>
+            {
+              loadingAutos ? <GettingDataLoader/> : <AutosRenderComponent/>
+            }
           </div>
       </div>
 

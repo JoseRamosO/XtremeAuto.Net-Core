@@ -12,6 +12,7 @@ import { setModalRolesState, setToggleModalRoles } from "../../store/slices/role
 import AddIcon from '@mui/icons-material/Add';
 import { setModalUsersState, setToggleModalUsers } from "../../store/slices/usuarios/usuariosSlice";
 import { setModalColoresState, setToggleModalColores } from "../../store/slices/colores/coloresSlice";
+import { setModalAutosState, setToggleModalAutos } from "../../store/slices/autos/autosSlice";
 
 export const DataTable = ({ tableInstance, tableOwner }) => {
   const dispatch = useAppDispatch();
@@ -78,6 +79,10 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
         dispatch(setModalColoresState(modalType))
         dispatch(setToggleModalColores())
       break;
+      case 'autos':
+        dispatch(setModalAutosState(modalType))
+        dispatch(setToggleModalAutos())
+      break;
     }
   }
   
@@ -91,6 +96,9 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
       break;
       case 'colores':
         return 'Panel Colores';
+      break;
+      case 'autos':
+        return 'Panel Autos';
       break;
     }
   }
