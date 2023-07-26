@@ -3,12 +3,14 @@ import { usuarioSlice } from "./slices/usuarios/usuariosSlice";
 import { userInterface } from "./slices/userInterface/userInterface";
 import { rolSlice } from "./slices/roles/rolesSlice";
 import { colorSlice } from "./slices/colores/coloresSlice";
+import { autosSlice } from "./slices/autos/autosSlice";
 
 export const store = configureStore({
   reducer: {
     usuarios: usuarioSlice.reducer,
     roles: rolSlice.reducer,
     colores: colorSlice.reducer,
+    autos: autosSlice.reducer,
     userInterface: userInterface.reducer
   },
 });

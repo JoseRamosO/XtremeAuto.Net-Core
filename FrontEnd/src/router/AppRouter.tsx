@@ -6,6 +6,7 @@ import { HomePage } from '../pages/PublicPages/HomePage'
 import { UsuariosPage } from '../pages/Admin/UsuariosPage'
 import { RolesAdminPage } from '../pages/Admin/RolesAdminPage'
 import { ColoresAdminPage } from '../pages/Admin/ColoresAdminPage'
+import { AutosAdminPage } from '../pages/Admin/AutosAdminPage'
 
 export const AppRouter = () => {
   return (
@@ -19,6 +20,9 @@ export const AppRouter = () => {
             <Route path="/admin/usuarios" element={<UsuariosPage />} />
             <Route path="/admin/roles" element={<RolesAdminPage />} />
             <Route path="/admin/colores" element={<ColoresAdminPage />} />
+            <Route path="/admin/autos" element={<AutosAdminPage />} />
+
+            
       </Routes>
     </>
   )
