@@ -14,6 +14,7 @@ interface autoType {
 
 interface coloresInitialValuesType {
     autos: autoType[],
+    autoSelected: autoType,
     loadingAutos: boolean,
     modalAutosOpen: boolean,
     modalAutosState: number
@@ -21,6 +22,17 @@ interface coloresInitialValuesType {
 
 const initialState: coloresInitialValuesType = {
     autos: [],
+    autoSelected: {
+      carroModeloId: 0,
+      disponible: false,
+      tipo: '',
+      marca: '',
+      modelo: '',
+      descripcion: '',
+      precio: 0,
+      imagen: '',
+      cantidad: 0
+    },
     loadingAutos: true,
     modalAutosOpen: false,
     modalAutosState: 0
@@ -33,6 +45,9 @@ export const autosSlice = createSlice({
       setAutos(state, action) {
         state.autos = action.payload;
         state.loadingAutos = false;
+      },
+      setAuto(state, action) {
+        state.autoSelected = action.payload;
       },
       setLoadingAutos(state) {
         state.loadingAutos = true;

@@ -156,6 +156,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .homepage-header .header-content {
     color: #fff;
@@ -187,3 +188,8 @@
 .cards-container .single-card { 
     max-width: 380px;
 }
+
+.cards-container .single-card .bg-card-image { 
+    background-image: url(https://t4.ftcdn.net/jpg/02/93/45/53/360_F_293455360_Wgg66dkVOAXPrczm01HWIeh0c3mGeub0.jpg);
+}
+

@@ -89,7 +89,7 @@ namespace BackEnd.Controllers
         [HttpGet("{id}")]
         public async Task<JsonResult> Get(int id)
         {
-            CarroModelo carroModelo = await carroModeloDAL.Get(id);
+            CarroModelo carroModelo = await carroModeloDAL.Get(1);
 
 
             return new JsonResult(Convertir(carroModelo));
