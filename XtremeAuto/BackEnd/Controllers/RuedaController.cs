@@ -1,8 +1,11 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Helpers;
+using BackEnd.Models;
 using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
+using BackEnd.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,6 +17,7 @@ namespace BackEnd.Controllers
     {
 
         private IRuedaDAL ruedaDAL;
+        private ImagenesUploader ImagenesUploader;
 
         private RuedaModel Convertir(Ruedum rueda)
         {
@@ -22,7 +26,8 @@ namespace BackEnd.Controllers
                 RuedaId = rueda.RuedaId,
                 Nombre = rueda.Nombre,
                 Precio = rueda.Precio,
-                Imagen = rueda.Imagen
+                Imagen = rueda.Imagen,
+                FormFile = null
 
             };
         }
@@ -46,7 +51,7 @@ namespace BackEnd.Controllers
         public RuedaController()
         {
             ruedaDAL = new RuedaDALImpl();
-
+            ImagenesUploader = new ImagenesUploader();
         }
 
         #endregion
@@ -87,9 +92,9 @@ namespace BackEnd.Controllers
 
         // POST api/<RuedaController>
         [HttpPost]
-        public JsonResult Post([FromBody] RuedaModel rueda)
+        public JsonResult Post([FromForm] RuedaModel rueda)
         {
-
+            rueda.Imagen = ImagenesUploader.uploadImage(rueda.FormFile);
             ruedaDAL.Add(Convertir(rueda));
             return new JsonResult(rueda);
         }
@@ -101,8 +106,13 @@ namespace BackEnd.Controllers
 
         // PUT api/<RuedaController>/5
         [HttpPut]
-        public JsonResult Put([FromBody] RuedaModel rueda)
+        public JsonResult Put([FromForm] RuedaModel rueda)
         {
+            if (rueda.FormFile != null)
+            {
+                rueda.Imagen = ImagenesUploader.uploadImage(rueda.FormFile);
+
+            }
             ruedaDAL.Update(Convertir(rueda));
             return new JsonResult(rueda);
         }

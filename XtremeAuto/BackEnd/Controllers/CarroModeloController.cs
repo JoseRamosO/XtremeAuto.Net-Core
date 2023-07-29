@@ -104,7 +104,7 @@ namespace BackEnd.Controllers
         public JsonResult Post([FromForm] CarroModeloModel carroModelo)
         {
 
-            //carroModelo.Imagen = ImagenesUploader.uploadImage(carroModelo.FormFile);
+            carroModelo.Imagen = ImagenesUploader.uploadImage(carroModelo.FormFile);
             carroModeloDAL.Add(Convertir(carroModelo));
             return new JsonResult(carroModelo);
         }
@@ -117,8 +117,13 @@ namespace BackEnd.Controllers
 
         // PUT api/<CarroModeloController>/5
         [HttpPut]
-        public JsonResult Put([FromBody] CarroModeloModel carroModelo)
+        public JsonResult Put([FromForm] CarroModeloModel carroModelo)
         {
+            if (carroModelo.FormFile != null)
+            {
+                carroModelo.Imagen = ImagenesUploader.uploadImage(carroModelo.FormFile);
+
+            }
             carroModeloDAL.Update(Convertir(carroModelo));
             return new JsonResult(carroModelo);
         }
