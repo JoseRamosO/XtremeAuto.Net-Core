@@ -5,26 +5,28 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BackEnd.Services;
-
+using Entities.Entities;
 
 namespace BackEnd.Services
 {
     public class JWTServiceManage : IJWTTokenServices
     {
         private readonly IConfiguration _configuration;
+        private XtremeAutoNetCoreContext _context;
 
         public JWTServiceManage(IConfiguration configuration)
         {
             _configuration = configuration;
+            _context= new XtremeAutoNetCoreContext();
         }
 
         public JWTTokens Authenticate(UsuarioModel usuario)
         {
 
-            //if (!_dbcontext.Users.Any(e => e.UserName == users.UserName && e.Password == users.Password))
-            //{
-            //    return null;
-            //}
+            if (!_context.Usuarios.Any(e => e.Username == usuario.Username && e.PasswordHash == usuario.PasswordHash))
+            {
+                return null;
+            }
 
             var tokenhandler = new JwtSecurityTokenHandler();
             var tkey = Encoding.UTF8.GetBytes("JNSJDNFJNSDJKBNWER7345BWSEHFB34023HUNSFD02SDF2");
