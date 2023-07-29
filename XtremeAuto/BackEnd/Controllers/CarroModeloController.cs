@@ -89,7 +89,7 @@ namespace BackEnd.Controllers
         [HttpGet("{id}")]
         public async Task<JsonResult> Get(int id)
         {
-            CarroModelo carroModelo = await carroModeloDAL.Get(1);
+            CarroModelo carroModelo = await carroModeloDAL.Get(id);
 
 
             return new JsonResult(Convertir(carroModelo));
@@ -119,6 +119,7 @@ namespace BackEnd.Controllers
         [HttpPut]
         public JsonResult Put([FromForm] CarroModeloModel carroModelo)
         {
+
             if (carroModelo.FormFile != null)
             {
                 carroModelo.Imagen = ImagenesUploader.uploadImage(carroModelo.FormFile);
