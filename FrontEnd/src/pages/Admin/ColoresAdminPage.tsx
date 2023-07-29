@@ -1,12 +1,8 @@
-import { getAllUsers } from "../../store/slices/usuarios/usuariosThunk";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { UserModal } from '../../components/Modals/UserModal';
 import { Column, usePagination, useRowSelect, useTable } from 'react-table';
 import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
-import { Button } from "@mui/material";
-import { setToggleModal } from "../../store/slices/userInterface/userInterface";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerColores } from "../../store/slices/colores/coloresThunk";
