@@ -56,8 +56,7 @@ export const AutosModal = ({ tableInstance }) => {
     
     descripcion: Yup.string()
     .required('Marca es requerido')
-    .min(2, 'Marca debe tener al menos 2 caracteres')
-    .max(20, 'Marca no debe tener mas de 20 caracteres'),
+    .min(2, 'Marca debe tener al menos 2 caracteres'),
 
     disponible: Yup.string().notOneOf(['unset'], 'Por Favor seleone'),
 

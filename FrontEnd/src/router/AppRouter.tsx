@@ -7,10 +7,13 @@ import { UsuariosPage } from '../pages/Admin/UsuariosPage'
 import { RolesAdminPage } from '../pages/Admin/RolesAdminPage'
 import { ColoresAdminPage } from '../pages/Admin/ColoresAdminPage'
 import { AutosAdminPage } from '../pages/Admin/AutosAdminPage'
+import { AutoPage } from '../pages/LoggedPages/AutoPage'
+import { ScrollTop } from '../pages/ScrollTop'
 
 export const AppRouter = () => {
   return (
     <>
+    <ScrollTop/>
       <ToastContainer />
       <Routes>
             <Route path="/" element={<HomePage />} />
@@ -22,7 +25,8 @@ export const AppRouter = () => {
             <Route path="/admin/colores" element={<ColoresAdminPage />} />
             <Route path="/admin/autos" element={<AutosAdminPage />} />
 
-            
+            <Route path="/ventas/auto/:autoId" element={<AutoPage />} />
+
       </Routes>
     </>
   )
