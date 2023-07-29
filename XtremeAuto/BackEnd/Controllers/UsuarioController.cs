@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,6 +24,7 @@ namespace BackEnd.Controllers
     {
 
         private IUsuarioDAL usuarioDAL;
+        private XtremeAutoNetCoreContext xtremeAutoNetCoreContext;
         private BcryptPasswordHelper BcryptPasswordHelper;
         private readonly JWTServiceManage _jwttokenservice;
         private readonly IConfiguration _configuration;
@@ -78,7 +81,7 @@ namespace BackEnd.Controllers
             BcryptPasswordHelper = new BcryptPasswordHelper();
             _jwttokenservice = new JWTServiceManage(_configuration);
             usuarioDAL = new UsuarioDALImpl();
-
+            xtremeAutoNetCoreContext = new XtremeAutoNetCoreContext();
         }
 
         #endregion
@@ -123,7 +126,9 @@ namespace BackEnd.Controllers
         [HttpPost]
         public JsonResult Post([FromBody] UsuarioModel usuario)
         {
-            usuario.PasswordHash = BcryptPasswordHelper.HashPassword(usuario.PasswordHash);
+            string[] array= BcryptPasswordHelper.HashPassword(usuario.PasswordHash);
+            usuario.PasswordHash = array[0];
+            usuario.SecurityStamp= array[1];
             usuarioDAL.Add(Convertir(usuario));
             return new JsonResult(usuario);
         }
@@ -164,6 +169,10 @@ namespace BackEnd.Controllers
         [Route("login")]
         public JsonResult Authenticate(UsuarioModel usuario)
         {
+            Usuario usuario2= xtremeAutoNetCoreContext.Usuarios.FirstOrDefault(u => u.Email == usuario.Email);
+            usuario.SecurityStamp = usuario2.SecurityStamp;
+            usuario.PasswordHash=BcryptPasswordHelper.HashPassword(usuario.PasswordHash, usuario.SecurityStamp);
+            usuario.Username= usuario2.Username;
             JWTTokens token = _jwttokenservice.Authenticate(usuario);
 
             if (token == null)

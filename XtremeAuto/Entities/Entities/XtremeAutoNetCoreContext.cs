@@ -58,7 +58,7 @@ namespace Entities.Entities
 
                 entity.Property(e => e.Descripcion).HasMaxLength(4000);
 
-                entity.Property(e => e.Imagen).HasColumnType("image");
+                entity.Property(e => e.Imagen).HasMaxLength(256);
 
                 entity.Property(e => e.Marca).HasMaxLength(60);
 
@@ -116,7 +116,7 @@ namespace Entities.Entities
 
                 entity.Property(e => e.ColorId).HasColumnName("ColorID");
 
-                entity.Property(e => e.Imagen).HasColumnType("image");
+                entity.Property(e => e.Imagen).HasMaxLength(256);
 
                 entity.Property(e => e.Nombre).HasMaxLength(30);
             });
@@ -137,7 +137,7 @@ namespace Entities.Entities
 
                 entity.Property(e => e.RuedaId).HasColumnName("RuedaID");
 
-                entity.Property(e => e.Imagen).HasColumnType("image");
+                entity.Property(e => e.Imagen).HasMaxLength(256);
 
                 entity.Property(e => e.Nombre).HasMaxLength(30);
 

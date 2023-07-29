@@ -6,6 +6,6 @@
         public string Nombre { get; set; } = null!;
         public string? Imagen { get; set; } = null!;
         public decimal Precio { get; set; }
-
+        public IFormFile? FormFile { get; set; }
     }
 }
