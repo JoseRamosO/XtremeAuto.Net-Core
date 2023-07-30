@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { setModalUsersState, setToggleModalUsers } from "../../store/slices/usuarios/usuariosSlice";
 import { setModalColoresState, setToggleModalColores } from "../../store/slices/colores/coloresSlice";
 import { setModalAutosState, setToggleModalAutos } from "../../store/slices/autos/autosSlice";
+import { setModalRuedasState, setToggleModalRuedas } from "../../store/slices/ruedas/ruedasSlice";
 
 export const DataTable = ({ tableInstance, tableOwner }) => {
   const dispatch = useAppDispatch();
@@ -83,6 +84,10 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
         dispatch(setModalAutosState(modalType))
         dispatch(setToggleModalAutos())
       break;
+      case 'ruedas':
+        dispatch(setModalRuedasState(modalType))
+        dispatch(setToggleModalRuedas())
+      break;
     }
   }
   
@@ -99,6 +104,9 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
       break;
       case 'autos':
         return 'Panel Autos';
+      break;
+      case 'ruedas':
+        return 'Panel Ruedas';
       break;
     }
   }

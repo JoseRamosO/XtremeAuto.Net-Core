@@ -7,6 +7,12 @@ import { UsuariosPage } from '../pages/Admin/UsuariosPage'
 import { RolesAdminPage } from '../pages/Admin/RolesAdminPage'
 import { ColoresAdminPage } from '../pages/Admin/ColoresAdminPage'
 import { AutosAdminPage } from '../pages/Admin/AutosAdminPage'
+//import { CarroVendidoAdminPage } from '../pages/Admin/CarroVendidoAdminPage'
+import { RuedasAdminPage } from '../pages/Admin/RuedasAdminPage'
+//import { SegurosAdminPage } from '../pages/Admin/SegurosAdminPage'
+//import { TarjetasAdminPage } from '../pages/Admin/TarjetasAdminPage'
+//import { TransaccionesAdminPage } from '../pages/Admin/TransaccionesAdminPage'
+//import { VentasAdminPage } from '../pages/Admin/VentasAdminPage'
 
 export const AppRouter = () => {
   return (
@@ -21,7 +27,8 @@ export const AppRouter = () => {
             <Route path="/admin/roles" element={<RolesAdminPage />} />
             <Route path="/admin/colores" element={<ColoresAdminPage />} />
             <Route path="/admin/autos" element={<AutosAdminPage />} />
-
+            <Route path="/admin/ruedas" element={<RuedasAdminPage />} />
+            
             
       </Routes>
     </>

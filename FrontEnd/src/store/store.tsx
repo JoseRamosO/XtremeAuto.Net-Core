@@ -4,6 +4,7 @@ import { userInterface } from "./slices/userInterface/userInterface";
 import { rolSlice } from "./slices/roles/rolesSlice";
 import { colorSlice } from "./slices/colores/coloresSlice";
 import { autosSlice } from "./slices/autos/autosSlice";
+import { ruedasSlice } from "./slices/ruedas/ruedasSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     roles: rolSlice.reducer,
     colores: colorSlice.reducer,
     autos: autosSlice.reducer,
+    ruedas: ruedasSlice.reducer,
     userInterface: userInterface.reducer
   },
 });
