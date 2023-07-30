@@ -14,11 +14,6 @@ import { setModalUsersState, setToggleModalUsers } from "../../store/slices/usua
 import { setModalColoresState, setToggleModalColores } from "../../store/slices/colores/coloresSlice";
 import { setModalAutosState, setToggleModalAutos } from "../../store/slices/autos/autosSlice";
 import { setModalRuedasState, setToggleModalRuedas } from "../../store/slices/ruedas/ruedasSlice";
-import { setModalSegurosState, setToggleModalSeguros } from "../../store/slices/seguros/segurosSlice";
-import { setModalTransaccionesState, setToggleModalTransacciones } from "../../store/slices/transacciones/transaccionesSlice";
-import { setModalTarjetasState, setToggleModalTarjetas } from "../../store/slices/tarjetas/tarjetasSlice";
-import { setModalCarroVendidosState, setToggleModalCarroVendidos } from "../../store/slices/carrovendidos/carrovendidosSlice";
-import { setModalVentasState, setToggleModalVentas } from "../../store/slices/ventas/ventasSlice";
 
 export const DataTable = ({ tableInstance, tableOwner }) => {
   const dispatch = useAppDispatch();
@@ -93,26 +88,6 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
         dispatch(setModalRuedasState(modalType))
         dispatch(setToggleModalRuedas())
       break;
-      case 'carrovendidos':
-        dispatch(setModalCarroVendidosState(modalType))
-        dispatch(setToggleModalCarroVendidos())
-      break;
-      case 'seguros':
-        dispatch(setModalSegurosState(modalType))
-        dispatch(setToggleModalSeguros())
-      break;
-      case 'transacciones':
-        dispatch(setModalTransaccionesState(modalType))
-        dispatch(setToggleModalTransacciones())
-      break;
-      case 'tarjetas':
-        dispatch(setModalTarjetasState(modalType))
-        dispatch(setToggleModalTarjetas())
-      break;
-      case 'ventas':
-        dispatch(setModalVentasState(modalType))
-        dispatch(setToggleModalVentas())
-      break;
     }
   }
   
@@ -132,21 +107,6 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
       break;
       case 'ruedas':
         return 'Panel Ruedas';
-      break;
-      case 'carrovendidos':
-        return 'Panel Carro Vendidos';
-      break;
-      case 'seguros':
-        return 'Panel Seguros';
-      break;
-      case 'tarjetas':
-        return 'Panel Tarjetas';
-      break;
-      case 'transacciones':
-        return 'Panel Transacciones';
-      break;
-      case 'ventas':
-        return 'Panel Ventas';
       break;
     }
   }

@@ -5,11 +5,6 @@ import { rolSlice } from "./slices/roles/rolesSlice";
 import { colorSlice } from "./slices/colores/coloresSlice";
 import { autosSlice } from "./slices/autos/autosSlice";
 import { ruedasSlice } from "./slices/ruedas/ruedasSlice";
-import { carrovendidoSlice} from "./slices/carrovendidos/carrovendidosSlice";
-import { seguroSlice } from "./slices/seguros/segurosSlice";
-import { tarjetaSlice } from "./slices/tarjetas/tarjetasSlice";
-import { transaccionSlice } from "./slices/transacciones/transaccionesSlice";
-import { ventaSlice } from "./slices/ventas/ventasSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,11 +13,6 @@ export const store = configureStore({
     colores: colorSlice.reducer,
     autos: autosSlice.reducer,
     ruedas: ruedasSlice.reducer,
-    carrovendidos: carrovendidoSlice.reducer,
-    seguros: seguroSlice.reducer,
-    tarjetas: tarjetaSlice.reducer,
-    transacciones: transaccionSlice.reducer,
-    ventas: ventaSlice.reducer,
     userInterface: userInterface.reducer
   },
 });
