@@ -16,9 +16,11 @@ import { RuedasAdminPage } from '../pages/Admin/RuedasAdminPage'
 //import { AutoPage } from '../pages/LoggedPages/AutoPage'
 //import { ScrollTop } from '../pages/ScrollTop'
 
+
 export const AppRouter = () => {
   return (
     <>
+    <ScrollTop/>
       <ToastContainer />
       <Routes>
             <Route path="/" element={<HomePage />} />
@@ -31,7 +33,6 @@ export const AppRouter = () => {
             <Route path="/admin/autos" element={<AutosAdminPage />} />
 
             <Route path="/admin/ruedas" element={<RuedasAdminPage />} />
-
 
 
       </Routes>

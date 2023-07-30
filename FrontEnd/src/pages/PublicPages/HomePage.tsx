@@ -15,6 +15,24 @@ export const HomePage = () => {
     } 
   }, [autos])
 
+
+  function getLastItemByCarroModeloId(array) {
+    if (!Array.isArray(array) || array.length === 0) {
+      return null;
+    }
+  
+    return array.reduce((lastItem, currentItem) => {
+      if (!lastItem || currentItem.carroModeloId > lastItem.carroModeloId) {
+        return currentItem;
+      } else {
+        return lastItem;
+      }
+    });
+  }
+
+  const lastItem = getLastItemByCarroModeloId(autos);
+  console.log();
+
   const AutosRenderComponent = () => {
     return (
       <>
@@ -32,11 +50,13 @@ export const HomePage = () => {
     <MainPublicLayout>
       <div className='homepage-header bg-gradient-to-r from-slate-800 to-slate-900'>
         <div className='homepgape-header-wrapper'>
-          <div className='header-content'>
-            <h1>Lorem ipsum dolor sit amet, consectetur</h1>
+          <div className='header-content animate__animated animate__fadeIn'>
+            <h1 className='bg-cyan-600 rounded-lg px-3 py-1'>{ lastItem?.marca }</h1>
+            <p>{ lastItem?.tipo }</p>
+            <p>{ lastItem?.modelo }</p>
           </div>
-          <div className='header-image'>
-            <img src={require('../../assets/car-home.png')}/>
+          <div className='header-image max-w-2xl animate__animated animate__bounceInRight'>
+            <img src={ `http://localhost:5088${lastItem?.imagen}` }/>
           </div>
         </div>
       </div>
