@@ -13,6 +13,8 @@ import { RuedasAdminPage } from '../pages/Admin/RuedasAdminPage'
 //import { TarjetasAdminPage } from '../pages/Admin/TarjetasAdminPage'
 //import { TransaccionesAdminPage } from '../pages/Admin/TransaccionesAdminPage'
 //import { VentasAdminPage } from '../pages/Admin/VentasAdminPage'
+//import { AutoPage } from '../pages/LoggedPages/AutoPage'
+//import { ScrollTop } from '../pages/ScrollTop'
 
 export const AppRouter = () => {
   return (
@@ -27,9 +29,11 @@ export const AppRouter = () => {
             <Route path="/admin/roles" element={<RolesAdminPage />} />
             <Route path="/admin/colores" element={<ColoresAdminPage />} />
             <Route path="/admin/autos" element={<AutosAdminPage />} />
+
             <Route path="/admin/ruedas" element={<RuedasAdminPage />} />
-            
-            
+
+
+
       </Routes>
     </>
   )
