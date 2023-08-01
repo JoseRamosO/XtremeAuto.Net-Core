@@ -9,8 +9,8 @@ export const CardSaleHome = ({ autoToRender }) => {
     return (
     <div className='w-full single-card'>
         <article className='overflow-hidden rounded-lg shadow-lg'>
-            <div className='block h-auto w-full bg-gradient-to-r from-slate-800 to-slate-900'>
-                <img  src={ `http://localhost:5088${imagen}` }/>
+            <div className='block h-auto w-full bg-gradient-to-r from-slate-800 to-slate-900 bg-card-image px-2 py-5'>
+                <img className='max-w-xs m-auto' src={ `http://localhost:5088${imagen}` }/>
             </div>
 
             <header className='flex flex-col p-2 md:p-4'>
@@ -26,7 +26,7 @@ export const CardSaleHome = ({ autoToRender }) => {
             </div>
 
             <footer className='flex items-center leading-none p-2 md:p-4'>
-                <a className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold' onClick={ () =>  navigate(`/admin/usuarios/${ carroModeloId }`) }>Comprar Auto</a>
+                <a className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold' onClick={ () =>  navigate(`/sales/auto/${ carroModeloId }`) }>Comprar Auto</a>
                 <p className='text-grey-darker text-sm ml-4'><span className='font-bold'>{ cantidad } </span> Disponibles</p>
             </footer>
         </article>

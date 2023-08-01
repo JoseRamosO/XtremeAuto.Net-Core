@@ -1,10 +1,6 @@
 import { useState } from 'react';
-import GroupIcon from '@mui/icons-material/Group';
-import AdjustIcon from '@mui/icons-material/Adjust';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import { useNavigate } from 'react-router-dom';
+import { ColorLens, Group, Adjust, KeyboardArrowLeft, DirectionsCar, TireRepair } from '@mui/icons-material';
 
 export const AdminSideBar = () => {
     const [open, setOpen] = useState(false);
@@ -19,7 +15,7 @@ export const AdminSideBar = () => {
             className={`flex items-center justify-center text-slate-50 absolute cursor-pointer w-10 h-12 -right-6 top-7 bg-teal-700 rounded-r-full`}
             onClick={() => setOpen(!open)}
           >
-            <KeyboardArrowLeftIcon className={` ${!open && 'rotate-180'}`}/>
+            <KeyboardArrowLeft className={` ${!open && 'rotate-180'}`}/>
           </div>
           <div className='flex gap-x-4 items-center'>
             <img
@@ -38,27 +34,59 @@ export const AdminSideBar = () => {
           </div>
           <ul className='pt-10'>
             <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/autos') }>
-              <DirectionsCarIcon/>
+              <DirectionsCar/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Autos
               </span>
             </li>
             <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/usuarios') }>
-              <GroupIcon/>
+              <Group/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Usuarios
               </span>
             </li>
             <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/roles') }>
-              <AdjustIcon/>
+              <Adjust/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Roles
               </span>
             </li>
+
             <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/colores') }>
-              <ColorLensIcon/>
+              <ColorLens/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Colores
+              </span>
+            </li>
+
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/ruedas') }>
+              <TireRepair/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Ruedas
+              </span>
+            </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/ruedas') }>
+              <TireRepair/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Ruedas
+              </span>
+            </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/seguros') }>
+              <TireRepair/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Seguros
+              </span>
+            </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/transacciones') }>
+              <TireRepair/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Transacciones
+              </span>
+            </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/tarjetas') }>
+              <TireRepair/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Tarjetas
               </span>
             </li>
           </ul>

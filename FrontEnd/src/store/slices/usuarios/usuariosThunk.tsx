@@ -1,9 +1,9 @@
-import { Dispatch } from "redux";
-import { setCurrentUser, setLoadingUsers, setToggleModalUsers, setUsers } from "./usuariosSlice";
-import { baseApi } from "../../../api/apiConfig";
+import { Dispatch } from 'redux';
+import { setCurrentUser, setLoadingUsers, setToggleModalUsers, setUsers } from './usuariosSlice';
+import { baseApi } from '../../../api/apiConfig';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { setModalDeleteOpen, setToggleModal } from "../userInterface/userInterface";
+import { setModalDeleteOpen, setToggleModal } from '../userInterface/userInterface';
 
 
 interface usuarioType {
@@ -18,13 +18,39 @@ interface usuarioType {
     salario: number;   
 }
 
-const loginUsuario = () => {
+const loginUsuario = ({ correo, password }) => {
     return async (dispatch: Dispatch) => {
+
+        const usuarioParsed = {
+            nombre: '', 
+            apellido: '', 
+            salario: 0,
+            cedula: '',
+            email: correo,
+            passwordHash: password,
+            securityStamp: '',
+            telefono: '',
+            username: '',
+            rolId: 0,
+            lockoutEnabled: true,
+            failedAttemptsCount: 0,
+            lockoutEndDateUtc: '2023-06-18T16:56:50.884Z'
+    }
+
+    const { data } = await baseApi.post('/usuario/login', usuarioParsed);
+
+    if(data.authState) {
+        console.log(data.currentUser.nombre)
         dispatch(setCurrentUser({
-            nombre: 'Jose Mauricio Granados M',
-            email: 'mgranadosmunoz@gmail.com',
-            rol: 1,
+            nombre: data.currentUser.nombre,
+            email: data.currentUser.email,
+            rol: data.currentUser.rolId,
+            token: data.token,
+            status: 'authenticated'
         }))
+    } else {
+        toast.error('¡Correo Eléctronico o contraseña Incorrectos!');
+    }
     };
 };
 
@@ -43,17 +69,17 @@ const registrarUsuario = (usuario: usuarioType) => {
                 salario: 0,
                 cedula: usuario.cedula,
                 email: usuario.email,
-                passwordHash: "string",
-                securityStamp: "string",
+                passwordHash: 'string',
+                securityStamp: 'string',
                 telefono:usuario.telefono,
                 username: usuario.username,
                 rolId: usuario.rolId,
                 lockoutEnabled: true,
                 failedAttemptsCount: 0,
-                lockoutEndDateUtc: "2023-06-18T16:56:50.884Z"
+                lockoutEndDateUtc: '2023-06-18T16:56:50.884Z'
         }
         
-        const { data } = await baseApi.post("/usuario", usuarioParsed);
+        const { data } = await baseApi.post('/usuario', usuarioParsed);
         
         if(data.status === 409){
             toast.warn('¡Correo Electronico en uso!')
@@ -89,17 +115,17 @@ const agregarUsuarios = ( usuarioNuevo ) => {
             salario: 0,
             cedula: usuarioNuevo.cedula,
             email: usuarioNuevo.email,
-            passwordHash: "string",
-            securityStamp: "string",
+            passwordHash: 'string',
+            securityStamp: 'string',
             telefono:usuarioNuevo.telefono,
             username: usuarioNuevo.username,
             rolId: usuarioNuevo.rolId,
             lockoutEnabled: true,
             failedAttemptsCount: 0,
-            lockoutEndDateUtc: "2023-06-18T16:56:50.884Z"
+            lockoutEndDateUtc: '2023-06-18T16:56:50.884Z'
     }
 
-        const { data } = await baseApi.post("/usuario", usuarioParsed );
+        const { data } = await baseApi.post('/usuario', usuarioParsed );
         if (data) {
             const { data } = await baseApi.get('/usuario');
             dispatch(setLoadingUsers());

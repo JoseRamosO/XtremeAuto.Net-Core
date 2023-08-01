@@ -4,6 +4,8 @@ interface currentUserType {
     nombre: string;
     email: string;
     rol: number;
+    token: string;
+    status: string;
 }
 
 interface usuariosInitialValuesType {
@@ -19,6 +21,8 @@ const initialState: usuariosInitialValuesType = {
         nombre: '',
         email: '',
         rol: 0,
+        token: '',
+        status: 'checking', // 'not-authenticated', 'authenticated'
     },
     users: [],
     loadingUsers: true,
