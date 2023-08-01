@@ -9,12 +9,12 @@ import { ColoresAdminPage } from '../pages/Admin/ColoresAdminPage'
 import { AutosAdminPage } from '../pages/Admin/AutosAdminPage'
 //import { CarroVendidoAdminPage } from '../pages/Admin/CarroVendidoAdminPage'
 import { RuedasAdminPage } from '../pages/Admin/RuedasAdminPage'
-//import { SegurosAdminPage } from '../pages/Admin/SegurosAdminPage'
-//import { TarjetasAdminPage } from '../pages/Admin/TarjetasAdminPage'
-//import { TransaccionesAdminPage } from '../pages/Admin/TransaccionesAdminPage'
+import { SegurosAdminPage } from '../pages/Admin/SegurosAdminPage'
+import { TarjetasAdminPage } from '../pages/Admin/TarjetasAdminPage'
+import { TransaccionesAdminPage } from '../pages/Admin/TransaccionesAdminPage'
 //import { VentasAdminPage } from '../pages/Admin/VentasAdminPage'
-//import { AutoPage } from '../pages/LoggedPages/AutoPage'
-//import { ScrollTop } from '../pages/ScrollTop'
+import { AutoPage } from '../pages/LoggedPages/AutoPage'
+import { ScrollTop } from '../pages/ScrollTop'
 
 
 export const AppRouter = () => {
@@ -26,14 +26,15 @@ export const AppRouter = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registrar" element={<RegisterPage />} />
-
+            
             <Route path="/admin/usuarios" element={<UsuariosPage />} />
             <Route path="/admin/roles" element={<RolesAdminPage />} />
             <Route path="/admin/colores" element={<ColoresAdminPage />} />
             <Route path="/admin/autos" element={<AutosAdminPage />} />
-
+            <Route path="/admin/seguros" element={<SegurosAdminPage />} />
             <Route path="/admin/ruedas" element={<RuedasAdminPage />} />
-
+            <Route path="/admin/transacciones" element={<TransaccionesAdminPage />} />
+            <Route path="/admin/tarjetas" element={<TarjetasAdminPage />} />
 
       </Routes>
     </>

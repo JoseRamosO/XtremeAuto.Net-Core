@@ -61,6 +61,30 @@ export const AdminSideBar = () => {
                 Colores
               </span>
             </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/ruedas') }>
+              <ColorLensIcon/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Ruedas
+              </span>
+            </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/seguros') }>
+              <ColorLensIcon/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Seguros
+              </span>
+            </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/transacciones') }>
+              <ColorLensIcon/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Transacciones
+              </span>
+            </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/tarjetas') }>
+              <ColorLensIcon/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Tarjetas
+              </span>
+            </li>
           </ul>
         </div>
     );
