@@ -126,9 +126,8 @@ namespace BackEnd.Controllers
         [HttpPost]
         public JsonResult Post([FromBody] UsuarioModel usuario)
         {
-            string[] array= BcryptPasswordHelper.HashPassword(usuario.PasswordHash);
-            usuario.PasswordHash = array[0];
-            usuario.SecurityStamp= array[1];
+            string passwordEncrypted = BcryptPasswordHelper.HashPassword(usuario.PasswordHash);
+            usuario.PasswordHash = passwordEncrypted;
             usuarioDAL.Add(Convertir(usuario));
             return new JsonResult(usuario);
         }
@@ -169,15 +168,11 @@ namespace BackEnd.Controllers
         [Route("login")]
         public JsonResult Authenticate(UsuarioModel usuario)
         {
-            Usuario usuario2= xtremeAutoNetCoreContext.Usuarios.FirstOrDefault(u => u.Email == usuario.Email);
-            usuario.SecurityStamp = usuario2.SecurityStamp;
-            usuario.PasswordHash=BcryptPasswordHelper.HashPassword(usuario.PasswordHash, usuario.SecurityStamp);
-            usuario.Username= usuario2.Username;
             JWTTokens token = _jwttokenservice.Authenticate(usuario);
 
             if (token == null)
             {
-                return new JsonResult(new { Message = "Correo Eléctronico o contraseña Incorrectos" });
+                return new JsonResult(new { authState = false, Message = "Correo Eléctronico o contraseña Incorrectos" });
             }
 
             return new JsonResult(token);

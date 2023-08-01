@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { LoginPage } from '../pages/Auth/LoginPage'
 import { RegisterPage } from '../pages/Auth/RegisterPage'
 import { ToastContainer } from 'react-toastify'
@@ -7,14 +7,18 @@ import { UsuariosPage } from '../pages/Admin/UsuariosPage'
 import { RolesAdminPage } from '../pages/Admin/RolesAdminPage'
 import { ColoresAdminPage } from '../pages/Admin/ColoresAdminPage'
 import { AutosAdminPage } from '../pages/Admin/AutosAdminPage'
-//import { CarroVendidoAdminPage } from '../pages/Admin/CarroVendidoAdminPage'
 import { RuedasAdminPage } from '../pages/Admin/RuedasAdminPage'
-//import { SegurosAdminPage } from '../pages/Admin/SegurosAdminPage'
-//import { TarjetasAdminPage } from '../pages/Admin/TarjetasAdminPage'
-//import { TransaccionesAdminPage } from '../pages/Admin/TransaccionesAdminPage'
-//import { VentasAdminPage } from '../pages/Admin/VentasAdminPage'
+import { AutoPage } from '../pages/LoggedPages/AutoPage'
+import { useCheckAuth } from '../hooks/useCheckAuth'
+import { AdminRoutes } from '../pages/Admin/routes/AdminRoutes'
 
 export const AppRouter = () => {
+    const status = useCheckAuth();
+    
+    // if (status === 'checking') {
+    //   return <GettingDataLoader/>
+    // }
+    
   return (
     <>
       <ToastContainer />
@@ -22,15 +26,21 @@ export const AppRouter = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registrar" element={<RegisterPage />} />
-
-            <Route path="/admin/usuarios" element={<UsuariosPage />} />
-            <Route path="/admin/roles" element={<RolesAdminPage />} />
-            <Route path="/admin/colores" element={<ColoresAdminPage />} />
-            <Route path="/admin/autos" element={<AutosAdminPage />} />
-            <Route path="/admin/ruedas" element={<RuedasAdminPage />} />
-            
-            
+            {
+              (status === 'authenticated') && <Route path="/admin/*" element={<AdminRoutes/>}/>
+            }
+            <Route path="/sales/auto/:autoId" element={<AutoPage />} />
+            <Route path="/*" element={ <Navigate to='/login'/> }/>
       </Routes>
+
+      {/* <Routes>
+      {
+        (status === 'authenticated')
+        ? <Route path="/*" element={<JournalRoutes/>}/>
+        : <Route path="/auth/*" element={<AuthRoutes/>}/>
+      }
+      <Route path="/*" element={ <Navigate to='/auth/login'/> }/>
+    </Routes> */}
     </>
   )
 }

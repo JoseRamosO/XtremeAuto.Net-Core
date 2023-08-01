@@ -156,6 +156,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .homepage-header .header-content {
     color: #fff;
@@ -180,10 +181,42 @@
     font-weight: 600;
     line-height: normal;
 }
-
 .cards-container {
     gap: 30px;
 }
 .cards-container .single-card { 
     max-width: 380px;
+}
+.cards-container .single-card .bg-card-image { 
+    background-image: url(https://t4.ftcdn.net/jpg/02/93/45/53/360_F_293455360_Wgg66dkVOAXPrczm01HWIeh0c3mGeub0.jpg);
+}
+.back-cta {
+    border: 2px solid white;
+    border-radius: 15px;
+    width: 54px;
+    display: flex;
+    top: -45px;
+    position: relative;
+}
+.back-cta:hover {
+    background-color: #fff;
+    color: #000;
+}
+.auto-page-colores {
+    display: flex;
+    gap: 10px;
+}
+.auto-page-colores img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+.option-selector {
+    border: 3px solid black;
+    border-radius: 50px;
+    transition: all 300ms;
+}
+.option-selector.selected {
+    border: 3px solid yellow;
+    transition: all 300ms;
 }
