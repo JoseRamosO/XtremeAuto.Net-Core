@@ -16,10 +16,10 @@ export const AdminRoutes = () => {
         <Route path="/roles" element={<RolesAdminPage />} />
         <Route path="/colores" element={<ColoresAdminPage />} />
         <Route path="/autos" element={<AutosAdminPage />} />
-        <Route path="/admin/seguros" element={<SegurosAdminPage />} />
-          <Route path="/admin/ruedas" element={<RuedasAdminPage />} />
-          <Route path="/admin/transacciones" element={<TransaccionesAdminPage />} />
-          <Route path="/admin/tarjetas" element={<TarjetasAdminPage />} />
+        <Route path="/seguros" element={<SegurosAdminPage />} />
+        <Route path="/ruedas" element={<RuedasAdminPage />} />
+        <Route path="/transacciones" element={<TransaccionesAdminPage />} />
+        <Route path="/tarjetas" element={<TarjetasAdminPage />} />
 
         <Route path="/*" element={ <Navigate to="/"/> }/>
     </Routes>
