@@ -4,6 +4,9 @@ import { RolesAdminPage } from '../RolesAdminPage'
 import { ColoresAdminPage } from '../ColoresAdminPage'
 import { AutosAdminPage } from '../AutosAdminPage'
 import { RuedasAdminPage } from '../RuedasAdminPage'
+import { SegurosAdminPage } from '../SegurosAdminPage'
+import { TransaccionesAdminPage } from '../TransaccionesAdminPage'
+import { TarjetasAdminPage } from '../TarjetasAdminPage'
 
 export const AdminRoutes = () => {
   return (
@@ -13,7 +16,10 @@ export const AdminRoutes = () => {
         <Route path="/roles" element={<RolesAdminPage />} />
         <Route path="/colores" element={<ColoresAdminPage />} />
         <Route path="/autos" element={<AutosAdminPage />} />
-        <Route path="/ruedas" element={<RuedasAdminPage />} />
+        <Route path="/admin/seguros" element={<SegurosAdminPage />} />
+          <Route path="/admin/ruedas" element={<RuedasAdminPage />} />
+          <Route path="/admin/transacciones" element={<TransaccionesAdminPage />} />
+          <Route path="/admin/tarjetas" element={<TarjetasAdminPage />} />
 
         <Route path="/*" element={ <Navigate to="/"/> }/>
     </Routes>
