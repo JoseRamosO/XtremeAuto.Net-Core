@@ -8,6 +8,8 @@ import { ruedasSlice } from "./slices/ruedas/ruedasSlice";
 import { seguroSlice } from "./slices/seguros/segurosSlice";
 import { tarjetaSlice } from "./slices/tarjetas/tarjetasSlice";
 import { transaccionSlice } from "./slices/transacciones/transaccionesSlice";
+import { carrovendidoSlice } from "./slices/carrovendidos/carrovendidosSlice";
+import { ventaSlice } from "./slices/ventas/ventasSlice";
 
 export const store = configureStore({
   reducer: {
