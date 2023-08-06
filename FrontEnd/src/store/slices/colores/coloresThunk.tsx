@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 const obtenerColores = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/Color');
+        console.log(data);
         dispatch(setColores(data));
     }
 };

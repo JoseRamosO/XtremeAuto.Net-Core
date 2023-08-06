@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const obtenerVentas = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/Venta');
+        console.log(data)
         dispatch(setVentas(data));
     }
 };

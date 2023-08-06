@@ -135,8 +135,8 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                             <option value="0">Seleccione Venta</option>
                                                             {
                                                                 
-                                                                ventas.map(({ VentaId}) => (
-                                                                    <option key={ VentaId } value={ VentaId }>{ VentaId }</option>
+                                                                ventas.map(({ VentaId, meses }) => (
+                                                                    <option key={ VentaId } value={ VentaId }>{ meses }</option>
                                                                 ))
                                                             }
                                                         </select>

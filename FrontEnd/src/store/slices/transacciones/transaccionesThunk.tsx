@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const obtenerTransacciones = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/Transaccion');
+        console.log(data)
         dispatch(setTransacciones(data));
     }
 };

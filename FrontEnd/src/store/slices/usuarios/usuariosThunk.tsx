@@ -57,6 +57,7 @@ const loginUsuario = ({ correo, password }) => {
 const getAllUsers = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/usuario');
+        console.log(data)
         dispatch(setUsers(data));
     }
 };
