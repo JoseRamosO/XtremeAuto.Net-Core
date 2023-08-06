@@ -6,6 +6,8 @@ import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerTransacciones } from "../../store/slices/transacciones/transaccionesThunk";
+import { obtenerTarjetas } from "../../store/slices/tarjetas/tarjetasThunk";
+import { obtenerVentas } from "../../store/slices/ventas/ventasThunk";
 import { TransaccionesModal } from "../../components/Modals/TransaccionesModal";
 
 interface transaccionType {
@@ -26,10 +28,17 @@ export const TransaccionesAdminPage = () => {
   useEffect(() => {
     if (loadingTransacciones){
       dispatch(obtenerTransacciones()); 
+      dispatch(obtenerVentas()); 
+      dispatch(obtenerTarjetas()); 
     } 
   }, [data])
 
   const columns: Column<transaccionType>[] = useMemo(() => [
+    
+    {
+      Header: 'Transaccion ID',
+      accessor: "transaccionId" as keyof transaccionType,
+    },
     {
       Header: 'Venta ID',
       accessor: "ventaId" as keyof transaccionType,

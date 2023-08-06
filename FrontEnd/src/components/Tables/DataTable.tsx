@@ -14,6 +14,7 @@ import { setModalUsersState, setToggleModalUsers } from "../../store/slices/usua
 import { setModalColoresState, setToggleModalColores } from "../../store/slices/colores/coloresSlice";
 import { setModalAutosState, setToggleModalAutos } from "../../store/slices/autos/autosSlice";
 import { setModalRuedasState, setToggleModalRuedas } from "../../store/slices/ruedas/ruedasSlice";
+import { setModalTransaccionesState, setToggleModalTransacciones } from "../../store/slices/transacciones/transaccionesSlice";
 
 export const DataTable = ({ tableInstance, tableOwner }) => {
   const dispatch = useAppDispatch();
@@ -88,6 +89,10 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
         dispatch(setModalRuedasState(modalType))
         dispatch(setToggleModalRuedas())
       break;
+      case 'transacciones':
+        dispatch(setModalTransaccionesState(modalType))
+        dispatch(setToggleModalTransacciones())
+      break;
     }
   }
   
@@ -106,7 +111,7 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
         return 'Panel Autos';
       break;
       case 'ruedas':
-        return 'Panel Ruedas';
+        return 'Panel Transacciones';
       break;
     }
   }
