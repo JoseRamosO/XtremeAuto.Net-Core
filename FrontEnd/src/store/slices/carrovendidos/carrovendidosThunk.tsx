@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const obtenerCarroVendidos = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/CarroVendido');
+        console.log(data);
         dispatch(setCarroVendidos(data));
     }
 };
