@@ -12,11 +12,12 @@ import { TransaccionesAdminPage } from '../pages/Admin/TransaccionesAdminPage'
 import { AutoPage } from '../pages/LoggedPages/AutoPage'
 import { useCheckAuth } from '../hooks/useCheckAuth'
 import { AdminRoutes } from '../pages/Admin/routes/AdminRoutes'
+import { UserLoggedRoutes } from '../pages/LoggedPages/routes/UserLoggedRoutes'
 
 export const AppRouter = () => {
-    const status = useCheckAuth();
+    const currentUsuarioStatus = useCheckAuth();
     
-    // if (status === 'checking') {
+    // if (currentUsuarioStatus === 'checking') {
     //   return <GettingDataLoader/>
     // }
     
@@ -28,9 +29,11 @@ export const AppRouter = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registrar" element={<RegisterPage />} />
             {
-              (status === 'authenticated') && <Route path="/admin/*" element={<AdminRoutes/>}/>
+              (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 3) && <Route path="/admin/*" element={<AdminRoutes/>}/>
             }
-            <Route path="/sales/auto/:autoId" element={<AutoPage />} />
+            {
+              (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 5) && <Route path="/user/*" element={<UserLoggedRoutes/>}/>
+            }
             <Route path="/*" element={ <Navigate to='/login'/> }/>
       </Routes>
 

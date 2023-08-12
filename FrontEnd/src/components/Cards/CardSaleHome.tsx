@@ -26,7 +26,7 @@ export const CardSaleHome = ({ autoToRender }) => {
             </div>
 
             <footer className='flex items-center leading-none p-2 md:p-4'>
-                <a className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold' onClick={ () =>  navigate(`/sales/auto/${ carroModeloId }`) }>Comprar Auto</a>
+                <a className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold' onClick={ () =>  navigate(`/user/sales/auto/${ carroModeloId }`) }>Comprar Auto</a>
                 <p className='text-grey-darker text-sm ml-4'><span className='font-bold'>{ cantidad } </span> Disponibles</p>
             </footer>
         </article>

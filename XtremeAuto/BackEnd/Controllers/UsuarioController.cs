@@ -117,6 +117,7 @@ namespace BackEnd.Controllers
             return new JsonResult(usuario);
 
         }
+
         #endregion
 
         #region Agregar
@@ -176,6 +177,22 @@ namespace BackEnd.Controllers
             }
 
             return new JsonResult(token);
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost("validateUserToken/{currentToken}")]
+        public JsonResult validateUserToken(string currentToken)
+        {
+            //Boolean token = _jwttokenservice.ValidateToken(currentToken);
+
+            //if (token == null)
+            //{
+            //    return new JsonResult(new { authState = false, Message = "Correo Eléctronico o contraseña Incorrectos" });
+            //}
+            bool validToken = _jwttokenservice.ValidateToken(currentToken);
+
+            return new JsonResult(validToken);
         }
 
     }

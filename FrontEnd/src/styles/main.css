@@ -174,12 +174,16 @@
     width: 100%;
     margin-top: -55px;
 }
-.main-content h1 { 
+.main-content h1,
+.main-content h2 { 
     font-family: Montserrat;
     font-size: 28px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+}
+.main-content h2 {
+    font-size: 22px;
 }
 .cards-container {
     gap: 30px;
@@ -215,8 +219,10 @@
     border: 3px solid black;
     border-radius: 50px;
     transition: all 300ms;
+    cursor: pointer;
+    padding: 5px;
 }
 .option-selector.selected {
-    border: 3px solid yellow;
+    border: 3px solid #3e6ae1;
     transition: all 300ms;
 }

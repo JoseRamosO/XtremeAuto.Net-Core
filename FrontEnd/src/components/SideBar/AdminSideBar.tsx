@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ColorLens, Group, Adjust, KeyboardArrowLeft, DirectionsCar, TireRepair } from '@mui/icons-material';
+import { ColorLens, Group, Adjust, KeyboardArrowLeft, DirectionsCar, TireRepair, CreditCard, Paid, Shield, ExitToApp } from '@mui/icons-material';
 
 export const AdminSideBar = () => {
     const [open, setOpen] = useState(false);
@@ -66,21 +66,27 @@ export const AdminSideBar = () => {
               </span>
             </li>
             <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/seguros') }>
-              <TireRepair/>
+              <Shield/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Seguros
               </span>
             </li>
             <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/transacciones') }>
-              <TireRepair/>
+              <Paid/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Transacciones
               </span>
             </li>
             <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/tarjetas') }>
-              <TireRepair/>
+              <CreditCard/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Tarjetas
+              </span>
+            </li>
+            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/') }>
+              <ExitToApp/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Log Out
               </span>
             </li>
           </ul>

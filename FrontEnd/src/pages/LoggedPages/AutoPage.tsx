@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { obtenerColores } from "../../store/slices/colores/coloresThunk";
 import { obtenerRuedas } from "../../store/slices/ruedas/ruedasThunk";
-
+import { obtenerSeguros } from "../../store/slices/seguros/segurosThunk";
+import { agregarCarroVendidos } from "../../store/slices/carrovendidos/carrovendidosThunk";
 
 interface autoType {
     carroModeloId: number,
@@ -26,27 +27,56 @@ export const AutoPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { autos, loadingAutos } = useAppSelector( (state) => state.autos);
-    const { colores } = useAppSelector( (state) => state.colores);
-    const { ruedas } = useAppSelector( (state) => state.ruedas);
+    const { colores, loadingColores } = useAppSelector( (state) => state.colores);
+    const { ruedas, loadingRuedas } = useAppSelector( (state) => state.ruedas);
+    const { seguros, loadingSeguros } = useAppSelector( (state) => state.seguros);
     const [autoSelected, setAutoSelected] = useState<autoType>();
     const [colorSelected, setColorSelected] = useState<number>(0);
     const [ruedaSelected, setRuedaSelected] = useState<number>(0);
+    const [seguroSelectedState, setSeguroSelectedState] = useState<number>(0);
     const [precioFinal, setPrecioFinal] = useState<number>(0);
 
     useEffect(() => {
         if (loadingAutos){
           dispatch(obtenerAutos());
-          dispatch(obtenerColores());
-          dispatch(obtenerRuedas());
         } 
-        setAutoSelected(autos.find(auto => auto.carroModeloId == autoId ))
-        setPrecioFinal(autoSelected?.precio ? autoSelected?.precio : 0)
+        if ( loadingColores ) {
+          dispatch(obtenerColores());
+        }
+        if ( loadingRuedas ) {
+          dispatch(obtenerRuedas());
+        }
+        if ( loadingSeguros ) {
+          dispatch(obtenerSeguros());
+        }
+        const autoSeleccionado = autos.find(auto => auto.carroModeloId == autoId);
+        setAutoSelected(autoSeleccionado);
+        setPrecioFinal(autoSeleccionado?.precio ? autoSeleccionado?.precio : 0);
+
     }, [autos])
 
     const updatePreciosRuedas = (rueda) => {
-      setPrecioFinal(autoSelected?.precio + rueda.precio);
+      setPrecioFinal(precioFinal + rueda.precio);
       setRuedaSelected(rueda.ruedaId)
+    }
+
+    const seguroSelected = (seguroId, precio) => {
+      setPrecioFinal(precioFinal + precio);
+      setSeguroSelectedState(seguroId);
     } 
+
+
+    const compraConfirmadaAuto = () => {
+      const carrovendidoParsed ={
+        ruedaId: ruedaSelected,
+        colorId: colorSelected,
+        carroModeloId: autoSelected?.carroModeloId,
+        seguroId: seguroSelectedState,
+        precioTotal: precioFinal,  
+      }
+      dispatch(agregarCarroVendidos(carrovendidoParsed));
+      console.log(carrovendidoParsed);
+    }
    
   return (
     <MainPublicLayout>
@@ -68,12 +98,13 @@ export const AutoPage = () => {
       </div>
 
       <div className='main-content'>
-        <h1>{ autoSelected?.marca } | { autoSelected?.tipo }</h1>
+        <h1>Descripción del vehiculo</h1>
         <p>{ autoSelected?.descripcion }</p>
         <p>{ autoSelected?.disponible }</p>
-        <p>{ autoSelected?.modelo }</p>
-        <p>{ autoSelected?.precio }</p>
-        <h1 className="mt-5">Seleccione el color</h1>
+        <p className="mt-4"><b>Modelo: </b>{ autoSelected?.modelo }</p>
+        <p><b>Precio Inicial: </b>{ autoSelected?.precio }</p>
+
+        <h2 className="mt-5">Pintura</h2>
         <div className="auto-page-colores mt-2">
           {
             colores.map((color) => (
@@ -83,7 +114,7 @@ export const AutoPage = () => {
             ))
           }
         </div>
-        <h1 className="mt-5">Tipo Rueda</h1>
+        <h2 className="mt-5">Ruedas</h2>
         <div className="auto-page-colores mt-2">
         {
             ruedas.map((rueda) => (
@@ -93,8 +124,19 @@ export const AutoPage = () => {
             ))
           }
         </div>
-        <h1 className="mt-5 mb-10">PRECIO FINAL: ${ precioFinal }</h1>
-        <a className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold'>Confirmar su compra</a>
+        <h2 className="mt-5">Seguro</h2>
+        <div className="auto-page-colores mt-2 max-w-xs">
+          <select className={ 'bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400' }>
+          <option onClick={ () => seguroSelected(0, 0)}>Seleccione Seguro</option>
+            {
+              seguros.map(({ nombre, precio, plazo, seguroId }) => (
+                <option onClick={ () => seguroSelected(seguroId, precio) }key={ seguroId } value={ seguroId }>{ nombre } | ${ precio } | { plazo } meses</option>
+              ))
+            }
+          </select>
+        </div>
+        <h1 className="mt-10 mb-10"><span className="text-cyan-600">PRECIO FINAL:</span> ${ precioFinal }</h1>
+        <button onClick={ () => compraConfirmadaAuto() } className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold'>Confirmar su compra</button>
       </div>
     </MainPublicLayout>
   )

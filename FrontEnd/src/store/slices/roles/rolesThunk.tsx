@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 const obtenerRoles = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/rol');
-        console.log(data)
         dispatch(setRoles(data));
     }
 };
