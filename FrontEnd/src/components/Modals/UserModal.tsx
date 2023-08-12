@@ -5,7 +5,7 @@ import { setToggleModal } from "../../store/slices/userInterface/userInterface";
 import { Box, Backdrop, Button, Modal, Fade,Typography } from '@mui/material';
 import { agregarRoles, editarRoles, eliminarRoles } from '../../store/slices/roles/rolesThunk';
 import { setToggleModalUsers } from '../../store/slices/usuarios/usuariosSlice';
-import { agregarUsuarios } from '../../store/slices/usuarios/usuariosThunk';
+import { agregarUsuarios, editarUsuarios, eliminarUsuario } from '../../store/slices/usuarios/usuariosThunk';
 
 interface InitialValuesType {
   nombre : string;
@@ -16,6 +16,7 @@ interface InitialValuesType {
   username : string;
   telefono : number;
   salario: number;  
+  passwordHash: string;
 }
 
 
@@ -27,13 +28,14 @@ export const UserModal = ({ tableInstance }) => {
   
     const initFormValues: InitialValuesType = {
       nombre : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : 'Jose Mauricio',
-      apellido : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : 'Granados Mudoz',
-      cedula: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '305300042',
-      email : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : 'mgranadosmunoz@gmail.com',
-      rolId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '',
-      username : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : 'MauricioGrM',
-      telefono : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '83230353',
-      salario: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.nombre : '', 
+      apellido : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.apellido : 'Granados Mudoz',
+      cedula: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.cedula : '305300042',
+      email : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.email : 'mgranadosmunoz@gmail.com',
+      rolId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.rolId : 1,
+      username : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.username : 'MauricioGrM',
+      telefono : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.telefono : '83230353',
+      salario: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.salario : 3453, 
+      passwordHash: '', 
     }
 
     const validationSchema = Yup.object().shape({
@@ -118,15 +120,13 @@ export const UserModal = ({ tableInstance }) => {
                             initialValues={ initFormValues }
                             validationSchema={ validationSchema }
                             onSubmit={( usuario ) => {
-                                console.log(usuario)
                                 if (modalUsersState === 0) {
                                     dispatch(agregarUsuarios(usuario))
+                                } else if (modalUsersState === 1) {
+                                    dispatch(editarUsuarios({...usuario, usuarioId: selectedFlatRows[0].original.usuarioId}))
+                                } else {
+                                    dispatch(eliminarUsuario(selectedFlatRows[0].original.usuarioId))
                                 }
-                                // } else if (modalUsersState === 1) {
-                                //     dispatch(editarRoles({...selectedFlatRows[0].original, nombre }))
-                                // } else {
-                                //     dispatch(eliminarRoles(selectedFlatRows[0].original))
-                                // }
                             }}
                         >
                             {({ handleSubmit, handleChange, values, errors, touched }) => (
@@ -197,6 +197,37 @@ export const UserModal = ({ tableInstance }) => {
                                                 className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.apellido && touched.apellido) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                 />
                                                 { errors.apellido && touched.apellido && ( <span className="inline-flex text-sm text-red-700">{errors.apellido}</span> ) }
+                                            </div>
+                                            </div>
+
+                                            <div className="sm:col-span-3">
+                                            <label htmlFor="last-name" className={ `block text-sm font-medium leading-6${ (errors.salario && touched.salario) ? ' text-red-600' : ' text-gray-900' }` }>
+                                                Salario
+                                            </label>
+                                            <div className="mt-2">
+                                                <Field
+                                                type="number"
+                                                name="salario"
+                                                value={ values.salario || '' }
+                                                onChange={ handleChange }
+                                                className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.salario && touched.salario) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                />
+                                                { errors.salario && touched.salario && ( <span className="inline-flex text-sm text-red-700">{errors.salario}</span> ) }
+                                            </div>
+                                            </div>
+                                            <div className="sm:col-span-3">
+                                            <label htmlFor="last-name" className={ `block text-sm font-medium leading-6${ (errors.passwordHash && touched.passwordHash) ? ' text-red-600' : ' text-gray-900' }` }>
+                                                Password
+                                            </label>
+                                            <div className="mt-2">
+                                                <Field
+                                                type="text"
+                                                name="passwordHash"
+                                                value={ values.passwordHash || '' }
+                                                onChange={ handleChange }
+                                                className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.passwordHash && touched.passwordHash) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                />
+                                                { errors.passwordHash && touched.passwordHash && ( <span className="inline-flex text-sm text-red-700">{errors.passwordHash}</span> ) }
                                             </div>
                                             </div>
 

@@ -143,8 +143,18 @@ namespace BackEnd.Controllers
         [HttpPut]
         public JsonResult Put([FromBody] UsuarioModel usuario)
         {
-            usuarioDAL.Update(Convertir(usuario));
-            return new JsonResult(usuario);
+            if (string.IsNullOrEmpty(usuario.PasswordHash))
+            {
+                usuarioDAL.Update(Convertir(usuario));
+                return new JsonResult(usuario);
+            } else
+            {
+                string passwordEncrypted = BcryptPasswordHelper.HashPassword(usuario.PasswordHash);
+                usuario.PasswordHash = passwordEncrypted;
+                usuarioDAL.Update(Convertir(usuario));
+                return new JsonResult(usuario);
+            }
+
         }
         #endregion
 

@@ -7,7 +7,6 @@ import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 import AddIcon from '@mui/icons-material/Add';
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
-import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { setToggleModal } from "../../store/slices/userInterface/userInterface";
 import { obtenerRoles } from "../../store/slices/roles/rolesThunk";
 
@@ -58,7 +57,6 @@ export const UsuariosPage = () => {
   return (
     <MainAdminLayout>
       <UserModal tableInstance={tableInstance}/>
-      <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingUsers ? <GettingDataLoader/> : (
           <>

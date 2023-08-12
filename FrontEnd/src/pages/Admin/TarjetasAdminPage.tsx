@@ -4,7 +4,6 @@ import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
-import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerTarjetas } from "../../store/slices/tarjetas/tarjetasThunk";
 import { TarjetasModal } from "../../components/Modals/TarjetasModal";
 
@@ -61,7 +60,6 @@ export const TarjetasAdminPage = () => {
   return (
     <MainAdminLayout>
       <TarjetasModal tableInstance={tableInstance}/>
-      <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingTarjetas ? <GettingDataLoader/> : (
           <>

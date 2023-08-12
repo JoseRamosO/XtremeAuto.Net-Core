@@ -4,7 +4,6 @@ import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
-import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerAutos } from "../../store/slices/autos/autosThunk";
 import { AutosModal } from "../../components/Modals/AutosModal";
 
@@ -59,7 +58,6 @@ export const AutosAdminPage = () => {
     return (
       <MainAdminLayout>
         <AutosModal tableInstance={tableInstance}/>
-        <DeleteUserModal tableInstance={tableInstance}/>
         {
           loadingAutos ? <GettingDataLoader/> : (
             <>

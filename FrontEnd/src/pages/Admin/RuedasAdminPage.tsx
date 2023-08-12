@@ -4,7 +4,6 @@ import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
-import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerRuedas } from "../../store/slices/ruedas/ruedasThunk";
 import { RuedasModal } from "../../components/Modals/RuedasModal";
 
@@ -45,7 +44,6 @@ export const RuedasAdminPage = () => {
   return (
     <MainAdminLayout>
       <RuedasModal tableInstance={tableInstance}/>
-      <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingRuedas ? <GettingDataLoader/> : (
           <>
