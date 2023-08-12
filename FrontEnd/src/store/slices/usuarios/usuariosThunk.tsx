@@ -16,7 +16,22 @@ interface usuarioType {
     username : string;
     telefono : number;
     salario: number;   
+    passwordHash: string;
 }
+
+const getCurrentTimestamp = () => {
+    const now = new Date();
+    const year = now.getUTCFullYear();
+    const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(now.getUTCDate()).padStart(2, '0');
+    const hours = String(now.getUTCHours()).padStart(2, '0');
+    const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+    const milliseconds = String(now.getUTCMilliseconds()).padStart(3, '0');
+  
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+}  
+
 
 const loginUsuario = ({ correo, password }) => {
     return async (dispatch: Dispatch) => {
@@ -69,10 +84,11 @@ const getAllUsers = () => {
 
 const registrarUsuario = (usuario: usuarioType) => {
     return async (dispatch: Dispatch) => {
+        console.log('asd', usuario.passwordHash)
         const usuarioParsed ={
                 nombre: usuario.nombre, 
                 apellido: usuario.apellido, 
-                salario: 0,
+                salario: usuario.salario,
                 cedula: usuario.cedula,
                 email: usuario.email,
                 passwordHash: 'string',
@@ -105,11 +121,11 @@ const eliminarUsuario = (idUsuarioEliminar) => {
     return async (dispatch: Dispatch) => {
         
         await baseApi.delete(`/usuario/${ idUsuarioEliminar }`);
+        const { data:newData } = await baseApi.get('/usuario');
         dispatch(setLoadingUsers());
-        const { data } = await baseApi.get('/usuario');
-        dispatch(setUsers(data));
+        dispatch(setUsers(newData));
         toast.success('¡Usuario eliminado con éxito!');
-        dispatch(setModalDeleteOpen());
+        dispatch(setToggleModalUsers());
     }
 };
 
@@ -118,17 +134,17 @@ const agregarUsuarios = ( usuarioNuevo ) => {
         const usuarioParsed ={
             nombre: usuarioNuevo.nombre, 
             apellido: usuarioNuevo.apellido, 
-            salario: 0,
+            salario: usuarioNuevo.salario,
             cedula: usuarioNuevo.cedula,
             email: usuarioNuevo.email,
-            passwordHash: 'string',
-            securityStamp: 'string',
+            passwordHash: usuarioNuevo.passwordHash,
+            securityStamp: '',
             telefono:usuarioNuevo.telefono,
             username: usuarioNuevo.username,
             rolId: usuarioNuevo.rolId,
             lockoutEnabled: true,
             failedAttemptsCount: 0,
-            lockoutEndDateUtc: '2023-06-18T16:56:50.884Z'
+            lockoutEndDateUtc: getCurrentTimestamp()
     }
 
         const { data } = await baseApi.post('/usuario', usuarioParsed );
@@ -142,10 +158,42 @@ const agregarUsuarios = ( usuarioNuevo ) => {
     }
 };
 
+const editarUsuarios = ( usuarioActualizar ) => {
+    return async (dispatch: Dispatch) => {
+        const usuarioParsed ={
+            usuarioId: usuarioActualizar.usuarioId, 
+            nombre: usuarioActualizar.nombre, 
+            apellido: usuarioActualizar.apellido, 
+            salario: usuarioActualizar.salario,
+            cedula: usuarioActualizar.cedula,
+            email: usuarioActualizar.email,
+            passwordHash: usuarioActualizar.passwordHash,
+            securityStamp: '',
+            telefono:usuarioActualizar.telefono,
+            username: usuarioActualizar.username,
+            rolId: usuarioActualizar.rolId,
+            lockoutEnabled: true,
+            failedAttemptsCount: 0,
+            lockoutEndDateUtc: getCurrentTimestamp()
+        }
+        const { data } = await baseApi.put("/usuario", usuarioParsed );
+        console.log(usuarioActualizar)
+        
+        if (data) {
+            const { data:newData } = await baseApi.get('/usuario');
+            dispatch(setLoadingUsers());
+            dispatch(setUsers(newData));
+            toast.success('¡Usuario eliminado con éxito!');
+            dispatch(setToggleModalUsers());
+        }
+    }
+};
+
 export {
     loginUsuario,
     registrarUsuario,
     getAllUsers,
     eliminarUsuario,
-    agregarUsuarios
+    agregarUsuarios,
+    editarUsuarios
 }

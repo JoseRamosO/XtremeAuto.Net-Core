@@ -4,7 +4,6 @@ import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
-import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerTransacciones } from "../../store/slices/transacciones/transaccionesThunk";
 import { obtenerTarjetas } from "../../store/slices/tarjetas/tarjetasThunk";
 import { obtenerVentas } from "../../store/slices/ventas/ventasThunk";
@@ -74,7 +73,6 @@ export const TransaccionesAdminPage = () => {
   return (
     <MainAdminLayout>
       <TransaccionesModal tableInstance={tableInstance}/>
-      <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingTransacciones ? <GettingDataLoader/> : (
           <>

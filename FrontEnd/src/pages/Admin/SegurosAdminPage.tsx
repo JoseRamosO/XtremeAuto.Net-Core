@@ -4,7 +4,6 @@ import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
-import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerSeguros } from "../../store/slices/seguros/segurosThunk";
 import { SegurosModal } from "../../components/Modals/SegurosModal";
 
@@ -45,7 +44,6 @@ export const SegurosAdminPage = () => {
   return (
     <MainAdminLayout>
       <SegurosModal tableInstance={tableInstance}/>
-      <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingSeguros ? <GettingDataLoader/> : (
           <>

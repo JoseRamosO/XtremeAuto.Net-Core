@@ -5,7 +5,6 @@ import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
-import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerRoles } from "../../store/slices/roles/rolesThunk";
 import AddIcon from '@mui/icons-material/Add';
 import { setToggleModalRoles } from "../../store/slices/roles/rolesSlice";
@@ -42,7 +41,6 @@ export const RolesAdminPage = () => {
   return (
     <MainAdminLayout>
       <RolsModal tableInstance={tableInstance}/>
-      <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingRoles ? <GettingDataLoader/> : (
           <>

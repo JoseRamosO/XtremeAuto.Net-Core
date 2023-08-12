@@ -4,7 +4,6 @@ import { useEffect, useMemo } from 'react';
 import { DataTable } from '../../components/Tables/DataTable';
 import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
-import { DeleteUserModal } from "../../components/Modals/DeleteUserModal";
 import { obtenerColores } from "../../store/slices/colores/coloresThunk";
 import { ColoresModal } from "../../components/Modals/ColoresModal";
 
@@ -40,7 +39,6 @@ export const ColoresAdminPage = () => {
   return (
     <MainAdminLayout>
       <ColoresModal tableInstance={tableInstance}/>
-      <DeleteUserModal tableInstance={tableInstance}/>
       {
         loadingColores ? <GettingDataLoader/> : (
           <>
