@@ -226,3 +226,13 @@
     border: 3px solid #3e6ae1;
     transition: all 300ms;
 }
+
+.homepage-header.confirmation .header-image {
+    top: 207px;
+    position: relative;
+}
+
+.homepage-header.confirmation .text-header-con {
+    width: 655px;
+    font-weight: bold;
+}

@@ -26,8 +26,16 @@ export const CardSaleHome = ({ autoToRender }) => {
             </div>
 
             <footer className='flex items-center leading-none p-2 md:p-4'>
-                <a className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold' onClick={ () =>  navigate(`/user/sales/auto/${ carroModeloId }`) }>Comprar Auto</a>
-                <p className='text-grey-darker text-sm ml-4'><span className='font-bold'>{ cantidad } </span> Disponibles</p>
+                {
+                    cantidad > 0 ? (
+                        <>
+                            <a className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold' onClick={ () =>  navigate(`/user/sales/auto/${ carroModeloId }`) }>Comprar Auto</a>
+                            <p className='text-grey-darker text-sm ml-4'><span className='font-bold'>{ cantidad } </span> Disponibles</p>
+                        </>
+                    ) : (
+                        <p className='font-bold text-red-500 text-sm'>No disponible</p>
+                    )
+                }
             </footer>
         </article>
     </div>

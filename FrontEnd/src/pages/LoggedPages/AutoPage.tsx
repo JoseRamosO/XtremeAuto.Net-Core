@@ -75,7 +75,7 @@ export const AutoPage = () => {
         precioTotal: precioFinal,  
       }
       dispatch(agregarCarroVendidos(carrovendidoParsed));
-      console.log(carrovendidoParsed);
+      navigate(`/user/sales/auto/${ autoSelected?.carroModeloId }/confirmation`);
     }
    
   return (
