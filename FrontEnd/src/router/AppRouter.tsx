@@ -13,6 +13,7 @@ import { AutoPage } from '../pages/LoggedPages/AutoPage'
 import { useCheckAuth } from '../hooks/useCheckAuth'
 import { AdminRoutes } from '../pages/Admin/routes/AdminRoutes'
 import { UserLoggedRoutes } from '../pages/LoggedPages/routes/UserLoggedRoutes'
+import { ScrollToTop } from '../hooks/ScrollToTop'
 
 export const AppRouter = () => {
     const currentUsuarioStatus = useCheckAuth();
@@ -24,16 +25,19 @@ export const AppRouter = () => {
   return (
     <>
       <ToastContainer />
+      <ScrollToTop/>
       <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registrar" element={<RegisterPage />} />
-            {
+            {/* {
               (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 3) && <Route path="/admin/*" element={<AdminRoutes/>}/>
-            }
-            {
+            } */}
+            {/* {
               (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 5) && <Route path="/user/*" element={<UserLoggedRoutes/>}/>
-            }
+            } */}
+            <Route path="/user/*" element={<UserLoggedRoutes/>}/>
+            <Route path="/admin/*" element={<AdminRoutes/>}/>
             <Route path="/*" element={ <Navigate to='/login'/> }/>
       </Routes>
 
