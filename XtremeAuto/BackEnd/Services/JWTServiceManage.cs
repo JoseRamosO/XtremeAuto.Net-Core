@@ -23,6 +23,41 @@ namespace BackEnd.Services
             BcryptPasswordHelper = new BcryptPasswordHelper();
         }
 
+
+        public bool ValidateToken(string token)
+        {
+            try
+            {
+                var key = Encoding.UTF8.GetBytes(_configuration["JNSJDNFJNSDJKBNWER7345BWSEHFB34023HUNSFD02SDF2"]);
+                var tokenValidationParameters = new TokenValidationParameters
+                {
+                    //ValidateIssuerSigningKey = true,
+                    //IssuerSigningKey = Encoding.UTF8.GetBytes(builder.Configuration["JNSJDNFJNSDJKBNWER7345BWSEHFB34023HUNSFD02SDF2"]),
+                    //ValidateIssuer = false,    // Set to true if you want to validate the issuer
+                    //ValidateAudience = false,  // Set to true if you want to validate the audience
+                    //ClockSkew = TimeSpan.Zero   // Optional: set clock skew tolerance
+
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+
+                // Create a JWT token handler.
+                var tokenHandler = new JwtSecurityTokenHandler();
+
+                // Validate the token.
+                ClaimsPrincipal claimsPrincipal = tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public JWTTokens Authenticate(UsuarioModel usuario)
         {
 

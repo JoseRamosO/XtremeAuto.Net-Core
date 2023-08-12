@@ -40,7 +40,6 @@ const loginUsuario = ({ correo, password }) => {
     const { data } = await baseApi.post('/usuario/login', usuarioParsed);
 
     if(data.authState) {
-        console.log(data.currentUser.nombre)
         dispatch(setCurrentUser({
             nombre: data.currentUser.nombre,
             email: data.currentUser.email,
@@ -48,6 +47,13 @@ const loginUsuario = ({ correo, password }) => {
             token: data.token,
             status: 'authenticated'
         }))
+        localStorage.setItem('userLogginStatus', JSON.stringify({
+            nombre: data.currentUser.nombre,
+            email: data.currentUser.email,
+            rol: data.currentUser.rolId,
+            token: data.token,
+            status: 'authenticated'
+        }));
     } else {
         toast.error('¡Correo Eléctronico o contraseña Incorrectos!');
     }
@@ -57,7 +63,6 @@ const loginUsuario = ({ correo, password }) => {
 const getAllUsers = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/usuario');
-        console.log(data)
         dispatch(setUsers(data));
     }
 };

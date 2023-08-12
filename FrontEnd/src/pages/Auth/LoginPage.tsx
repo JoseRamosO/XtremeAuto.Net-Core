@@ -16,8 +16,11 @@ export const LoginPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (usuario.currentUser.status === 'authenticated') {
+    if (usuario.currentUser.status === 'authenticated' && usuario.currentUser.rol === 3) {
       navigate('/admin/usuarios');
+    }
+    if (usuario.currentUser.status === 'authenticated' && usuario.currentUser.rol === 5) {
+      navigate('/user');
     }
   }, [navigate, usuario.currentUser.status]);
 
