@@ -72,10 +72,6 @@
 .main-public-header .header-items {
     display: flex;
 }
-.main-public-header li {
-    color: #fff;
-    
-}
 .main-public-header .header-logo {
     margin-right: 30px;
 }
@@ -234,5 +230,12 @@
 
 .homepage-header.confirmation .text-header-con {
     width: 655px;
+    font-weight: bold;
+}
+.homepage-header.header-profile {
+    height: 260px;
+}
+.homepage-header.header-profile h1 {
+    width: 440px;
     font-weight: bold;
 }

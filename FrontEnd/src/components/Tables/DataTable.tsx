@@ -23,7 +23,7 @@ import { setModalVentasState, setToggleModalVentas } from "../../store/slices/ve
 
 
 
-export const DataTable = ({ tableInstance, tableOwner }) => {
+export const DataTable = ({ tableInstance, tableOwner, showLabel }) => {
   const dispatch = useAppDispatch();
   const { getTableProps, 
     getTableBodyProps, 
@@ -158,7 +158,9 @@ export const DataTable = ({ tableInstance, tableOwner }) => {
   return (
     <>
     <div className="flex mb-10">
-      <h1 className="origin-left font-medium text-3xl text-teal-700 mr-5">{ retornaPanelName() }</h1>
+      {
+        showLabel && <h1 className="origin-left font-medium text-3xl text-teal-700 mr-5">{ retornaPanelName() }</h1>
+      }
       <button onClick={() => { toggleAllPageRowsSelected(false); handleModalToOpenClick(0)}} className="flex space-x-3 items-center px-4 py-2 bg-teal-500 hover:bg-teal-800 rounded-lg drop-shadow-md duration-300">
         <AddIcon className="text-white"/>
         <span className="text-white text-xl font-bold">Agregar Nuevo</span>

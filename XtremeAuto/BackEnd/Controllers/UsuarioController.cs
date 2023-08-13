@@ -145,6 +145,8 @@ namespace BackEnd.Controllers
         {
             if (string.IsNullOrEmpty(usuario.PasswordHash))
             {
+                string passwordEncrypted = BcryptPasswordHelper.HashPassword("12345678");
+                usuario.PasswordHash = passwordEncrypted;
                 usuarioDAL.Update(Convertir(usuario));
                 return new JsonResult(usuario);
             } else

@@ -61,7 +61,7 @@ export const AutosAdminPage = () => {
         {
           loadingAutos ? <GettingDataLoader/> : (
             <>
-                  <DataTable tableInstance={tableInstance} tableOwner='autos'/>
+                  <DataTable tableInstance={tableInstance} tableOwner='autos' showLabel={ true }/>
             </>
            
           )

@@ -56,15 +56,29 @@ const loginUsuario = ({ correo, password }) => {
 
     if(data.authState) {
         dispatch(setCurrentUser({
+            UsuarioId: data.currentUser.usuarioId,
             nombre: data.currentUser.nombre,
+            apellido:  data.currentUser.apellido,
+            cedula:  data.currentUser.cedula,
             email: data.currentUser.email,
+            username: data.currentUser.username,
+            telefono: data.currentUser.telefono,
+            salario: data.currentUser.salario,  
+            passwordHash: data.currentUser.passwordHash,
             rol: data.currentUser.rolId,
             token: data.token,
             status: 'authenticated'
         }))
         localStorage.setItem('userLogginStatus', JSON.stringify({
+            UsuarioId: data.currentUser.usuarioId ,
             nombre: data.currentUser.nombre,
+            apellido:  data.currentUser.apellido,
+            cedula:  data.currentUser.cedula,
             email: data.currentUser.email,
+            username: data.currentUser.username,
+            telefono: data.currentUser.telefono,
+            salario: data.currentUser.salario,  
+            passwordHash: data.currentUser.passwordHash,
             rol: data.currentUser.rolId,
             token: data.token,
             status: 'authenticated'
@@ -84,7 +98,6 @@ const getAllUsers = () => {
 
 const registrarUsuario = (usuario: usuarioType) => {
     return async (dispatch: Dispatch) => {
-        console.log('asd', usuario.passwordHash)
         const usuarioParsed ={
                 nombre: usuario.nombre, 
                 apellido: usuario.apellido, 
@@ -177,17 +190,32 @@ const editarUsuarios = ( usuarioActualizar ) => {
             lockoutEndDateUtc: getCurrentTimestamp()
         }
         const { data } = await baseApi.put("/usuario", usuarioParsed );
-        console.log(usuarioActualizar)
+        console.log(usuarioParsed)
         
         if (data) {
             const { data:newData } = await baseApi.get('/usuario');
             dispatch(setLoadingUsers());
             dispatch(setUsers(newData));
-            toast.success('¡Usuario eliminado con éxito!');
+            toast.success('¡Usuario editado con éxito!');
             dispatch(setToggleModalUsers());
         }
     }
 };
+
+const onLogOutUser = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(setCurrentUser({
+            nombre: '',
+            email: '',
+            rol: 0,
+            token: '',
+            status: 'checking'
+        }))
+        localStorage.removeItem('userLogginStatus');
+    }
+}
+
+
 
 export {
     loginUsuario,
@@ -195,5 +223,6 @@ export {
     getAllUsers,
     eliminarUsuario,
     agregarUsuarios,
-    editarUsuarios
+    editarUsuarios,
+    onLogOutUser
 }

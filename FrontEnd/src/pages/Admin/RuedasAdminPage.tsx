@@ -47,7 +47,7 @@ export const RuedasAdminPage = () => {
       {
         loadingRuedas ? <GettingDataLoader/> : (
           <>
-                <DataTable tableInstance={tableInstance} tableOwner='ruedas'/>
+                <DataTable tableInstance={tableInstance} tableOwner='ruedas' showLabel={ true }/>
           </>
          
         )

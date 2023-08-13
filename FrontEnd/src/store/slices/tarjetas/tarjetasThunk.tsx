@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 const obtenerTarjetas = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/Tarjeta');
-        console.log(data);
         dispatch(setTarjetas(data));
     }
 };

@@ -43,14 +43,12 @@ const agregarCarroVendidos = ( carrovendidoNuevo ) => {
                 const { data: dataVentaAgregadas } = await baseApi.get('/Venta');
                 dispatch(setLoadingVentas());
                 dispatch(setVentas(dataVentaAgregadas));
-                toast.success('¡Venta agregado con éxito!');
             }else {
                 toast.error('¡Error agregando venta!')
             }
 
             dispatch(setLoadingCarroVendidos());
             dispatch(setCarroVendidos(data));
-            toast.success('¡CarroVendido agregado con éxito!');
             dispatch(setToggleModalCarroVendidos());
 
         }else {
