@@ -1,4 +1,4 @@
-import { Formik, Field } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -15,7 +15,7 @@ interface InitialValuesType {
     nombre: string,
     numeroDeTarjeta: string,
     cvv: string,
-    fechaVencimiento: string,
+    fechaVencimiento: Date,
     LockoutEnabled: boolean,
 }
 
@@ -191,11 +191,15 @@ export const TarjetasModal = ({ tableInstance }) => {
                                                         <Field
                                                         type="date"
                                                         name="fechaVencimiento"
-                                                        value={ values.fechaVencimiento || '' }
+                                                        value={values.fechaVencimiento ? new Date(values.fechaVencimiento).toISOString().substr(0, 10) : ''}
+                                                        
                                                         onChange={ handleChange }
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.fechaVencimiento && touched.fechaVencimiento) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
-                                                        { errors.fechaVencimiento && touched.fechaVencimiento && ( <span className="inline-flex text-sm text-red-700">{errors.fechaVencimiento}</span> ) }
+                                                        <ErrorMessage name="fechaVencimiento" component="span" className="inline-flex text-sm text-red-700" />
+
+
+
                                                     </div>
                                                 </div>
                                                 <div className="sm:col-span-3">

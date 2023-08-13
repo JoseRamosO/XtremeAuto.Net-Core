@@ -6,7 +6,7 @@ interface tarjetaType {
     nombre: string,
     numeroDeTarjeta: string,
     cvv: string,
-    fechaVencimiento: string,
+    fechaVencimiento: Date,
     LockoutEnabled: boolean,
 }
 

@@ -1,4 +1,4 @@
-import { Formik, Field } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -14,9 +14,9 @@ interface InitialValuesType {
     transaccionId: number,
     ventaId: string,
     tarjetaId: number,
-    fechaTransaccion: string,
-    fechaCorte: string,
-    intereses: number,
+    fechaTransaccion: Date,
+    fechaCorte: Date,
+    interesesMorosidad: number,
     pagado: boolean,
     precio: number,
 }
@@ -35,12 +35,11 @@ export const TransaccionesModal = ({ tableInstance }) => {
         tarjetaId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.tarjetaId : '',
         fechaTransaccion: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.fechaTransaccion : '',
         fechaCorte: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.fechaCorte : '',
-        //fechaTransaccion: selectedFlatRows.length === 1 ? format(new Date(selectedFlatRows[0].original.fechaTransaccion), 'yyyy-MM-dd') : '',
-        //fechaCorte: selectedFlatRows.length === 1 ? format(new Date(selectedFlatRows[0].original.fechaCorte), 'yyyy-MM-dd') : '',
-        intereses: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.intereses : '',
+        interesesMorosidad: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.interesesMorosidad : '',
         pagado: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.pagado : '',
         precio: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.precio : '',
     }
+    console.log(ventas);
 
     const validationSchema = Yup.object().shape({
 
@@ -97,19 +96,19 @@ export const TransaccionesModal = ({ tableInstance }) => {
                             initialValues={ initFormValues }
                             validationSchema={ validationSchema }
 
-                            onSubmit={({ ventaId, tarjetaId, fechaTransaccion, fechaCorte, intereses, pagado, precio }) => {
+                            onSubmit={({ ventaId, tarjetaId, fechaTransaccion, fechaCorte, interesesMorosidad, pagado, precio }) => {
                                 if (modalTransaccionesState === 0) {
                                     dispatch(agregarTransacciones({ 
                                       ventaId, 
                                       tarjetaId, 
                                       fechaTransaccion, 
                                       fechaCorte, 
-                                      intereses, 
+                                      interesesMorosidad, 
                                       pagado, 
                                       precio
                                      }))
                                 } else if (modalTransaccionesState === 1) {
-                                    dispatch(editarTransacciones({...selectedFlatRows[0].original, ventaId, tarjetaId, fechaTransaccion, fechaCorte, intereses, pagado, precio }))
+                                    dispatch(editarTransacciones({...selectedFlatRows[0].original, ventaId, tarjetaId, fechaTransaccion, fechaCorte, interesesMorosidad, pagado, precio }))
                                 } else {
                                     dispatch(eliminarTransacciones(selectedFlatRows[0].original))
                                 }
@@ -135,8 +134,8 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                             <option value="0">Seleccione Venta</option>
                                                             {
                                                                 
-                                                                ventas.map(({ VentaId, meses }) => (
-                                                                    <option key={ VentaId } value={ VentaId }>{ meses }</option>
+                                                                ventas.map(({ ventaId }) => (
+                                                                    <option key={ ventaId } value={ ventaId }>{ ventaId }</option>
                                                                 ))
                                                             }
                                                         </select>
@@ -191,11 +190,12 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                         <Field
                                                         type="date"
                                                         name="fechaTransaccion"
-                                                        value={ values.fechaTransaccion || '' }
+                                                        value={values.fechaTransaccion ? new Date(values.fechaTransaccion).toISOString().substr(0, 10) : ''}
                                                         onChange={ handleChange }
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.fechaTransaccion && touched.fechaTransaccion) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
-                                                        { errors.fechaTransaccion && touched.fechaTransaccion && ( <span className="inline-flex text-sm text-red-700">{errors.fechaTransaccion}</span> ) }
+                                                        <ErrorMessage name="fechaTransaccion" component="span" className="inline-flex text-sm text-red-700" />
+
                                                     </div>
                                                 </div>
                                                 <div className="sm:col-span-3">
@@ -206,26 +206,28 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                         <Field
                                                         type="date"
                                                         name="fechaCorte"
-                                                        value={ values.fechaCorte || '' }
+                                                        value={values.fechaCorte ? new Date(values.fechaCorte).toISOString().substr(0, 10) : ''}
                                                         onChange={ handleChange }
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.fechaCorte && touched.fechaCorte) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
-                                                        { errors.fechaCorte && touched.fechaCorte && ( <span className="inline-flex text-sm text-red-700">{errors.fechaCorte}</span> ) }
+                                                        
+                                                        <ErrorMessage name="fechaCorte" component="span" className="inline-flex text-sm text-red-700" />
+
                                                     </div>
                                                 </div>
                                                 <div className="sm:col-span-3">
-                                                    <label htmlFor="intereses" className={ `block text-sm font-medium leading-6${ (errors.intereses && touched.intereses) ? ' text-red-600' : ' text-gray-900' }` }>
-                                                    intereses
+                                                    <label htmlFor="interesesMorosidad" className={ `block text-sm font-medium leading-6${ (errors.interesesMorosidad && touched.interesesMorosidad) ? ' text-red-600' : ' text-gray-900' }` }>
+                                                    interesesMorosidad
                                                     </label>
                                                     <div className="mt-2">
                                                         <Field
                                                         type="number"
-                                                        name="intereses"
-                                                        value={ values.intereses || '' }
+                                                        name="interesesMorosidad"
+                                                        value={ values.interesesMorosidad || '' }
                                                         onChange={ handleChange }
-                                                        className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.intereses && touched.intereses) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                        className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.interesesMorosidad && touched.interesesMorosidad) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
-                                                        { errors.intereses && touched.intereses && ( <span className="inline-flex text-sm text-red-700">{errors.intereses}</span> ) }
+                                                        { errors.interesesMorosidad && touched.interesesMorosidad && ( <span className="inline-flex text-sm text-red-700">{errors.interesesMorosidad}</span> ) }
                                                     </div>
                                                 </div>
                                                 <div className="sm:col-span-3">

@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 const obtenerSeguros = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/Seguro');
-        console.log(data);
         dispatch(setSeguros(data));
     }
 };

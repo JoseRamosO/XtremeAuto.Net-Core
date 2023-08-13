@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 const obtenerRuedas = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/Rueda');
-        console.log(data);
         dispatch(setRuedas(data));
     }
 };
