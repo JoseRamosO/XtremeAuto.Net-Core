@@ -60,7 +60,7 @@ export const UsuariosPage = () => {
       {
         loadingUsers ? <GettingDataLoader/> : (
           <>
-            <DataTable tableInstance={tableInstance} tableOwner='usuarios'/>
+            <DataTable tableInstance={tableInstance} tableOwner='usuarios' showLabel={ true }/>
           </>
          
         )

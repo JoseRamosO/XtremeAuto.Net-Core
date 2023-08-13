@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ColorLens, Group, Adjust, KeyboardArrowLeft, DirectionsCar, TireRepair, CreditCard, Paid, Shield, ExitToApp } from '@mui/icons-material';
+import { useAppDispatch } from '../../hooks/reduxHooks';
+import { onLogOutUser } from '../../store/slices/usuarios/usuariosThunk';
 
 export const AdminSideBar = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const { pathname } = useLocation();
+
+    console.log(pathname)
     return (
         <div
           className={` ${
@@ -33,57 +39,57 @@ export const AdminSideBar = () => {
             </h1>
           </div>
           <ul className='pt-10'>
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/autos') }>
-              <DirectionsCar/>
-              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
-                Autos
-              </span>
-            </li>
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/usuarios') }>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/usuarios' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/usuarios') }>
               <Group/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Usuarios
               </span>
             </li>
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/roles') }>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/autos' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/autos') }>
+              <DirectionsCar/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Autos
+              </span>
+            </li>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/roles' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/roles') }>
               <Adjust/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Roles
               </span>
             </li>
 
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/colores') }>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/colores' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/colores') }>
               <ColorLens/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Colores
               </span>
             </li>
 
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/ruedas') }>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/ruedas' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/ruedas') }>
               <TireRepair/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Ruedas
               </span>
             </li>
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/seguros') }>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/seguros' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/seguros') }>
               <Shield/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Seguros
               </span>
             </li>
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/transacciones') }>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/transacciones' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/transacciones') }>
               <Paid/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Transacciones
               </span>
             </li>
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/admin/tarjetas') }>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/tarjetas' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/tarjetas') }>
               <CreditCard/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Tarjetas
               </span>
             </li>
-            <li className={'duration-300 hover:bg-teal-800 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'} onClick={ () =>  navigate('/') }>
+            <li onClick={ () => dispatch(onLogOutUser()) } className={'bg-red-800 duration-300 hover:bg-red-700 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center'}>
               <ExitToApp/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Log Out

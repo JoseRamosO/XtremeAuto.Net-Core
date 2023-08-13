@@ -47,7 +47,7 @@ export const SegurosAdminPage = () => {
       {
         loadingSeguros ? <GettingDataLoader/> : (
           <>
-                <DataTable tableInstance={tableInstance} tableOwner='seguros'/>
+                <DataTable tableInstance={tableInstance} tableOwner='seguros' showLabel={ true }/>
           </>
          
         )

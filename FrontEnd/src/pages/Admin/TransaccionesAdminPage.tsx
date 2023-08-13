@@ -76,7 +76,7 @@ export const TransaccionesAdminPage = () => {
       {
         loadingTransacciones ? <GettingDataLoader/> : (
           <>
-                <DataTable tableInstance={tableInstance} tableOwner='transacciones'/>
+                <DataTable tableInstance={tableInstance} tableOwner='transacciones' showLabel={ true }/>
           </>
          
         )

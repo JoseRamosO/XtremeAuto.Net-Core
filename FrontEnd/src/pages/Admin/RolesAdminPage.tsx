@@ -44,7 +44,7 @@ export const RolesAdminPage = () => {
       {
         loadingRoles ? <GettingDataLoader/> : (
           <>
-            <DataTable tableInstance={tableInstance} tableOwner="roles"/>
+            <DataTable tableInstance={tableInstance} tableOwner="roles" showLabel={ true }/>
           </>
         )
       }

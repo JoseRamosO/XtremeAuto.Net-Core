@@ -42,7 +42,7 @@ export const ColoresAdminPage = () => {
       {
         loadingColores ? <GettingDataLoader/> : (
           <>
-                <DataTable tableInstance={tableInstance} tableOwner='colores'/>
+                <DataTable tableInstance={tableInstance} tableOwner='colores' showLabel={ true }/>
           </>
          
         )

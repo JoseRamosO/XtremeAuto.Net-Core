@@ -63,7 +63,7 @@ export const TarjetasAdminPage = () => {
       {
         loadingTarjetas ? <GettingDataLoader/> : (
           <>
-                <DataTable tableInstance={tableInstance} tableOwner='tarjetas'/>
+                <DataTable tableInstance={tableInstance} tableOwner='tarjetas' showLabel={ true }/>
           </>
          
         )
