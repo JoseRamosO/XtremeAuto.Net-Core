@@ -20,7 +20,7 @@ const agregarTransacciones = ( transaccionNuevo ) => {
             tarjetaId: transaccionNuevo.tarjetaId,
             fechaTransaccion: transaccionNuevo.fechaTransaccion,
             fechaCorte: transaccionNuevo.fechaCorte,
-            intereses: transaccionNuevo.intereses,
+            interesesMorosidad: transaccionNuevo.interesesMorosidad,
             pagado: transaccionNuevo.pagado,
             precio: transaccionNuevo.precio, 
     }

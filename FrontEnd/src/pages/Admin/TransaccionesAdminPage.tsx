@@ -13,9 +13,9 @@ interface transaccionType {
   transaccionId: number,
   ventaId: string,
   tarjetaId: number,
-  fechaTransaccion: string,
-  fechaCorte: string,
-  intereses: number,
+  fechaTransaccion: Date,
+  fechaCorte: Date,
+  interesesMorosidad: number,
   pagado: boolean,
   precio: number,
 }
@@ -56,7 +56,7 @@ export const TransaccionesAdminPage = () => {
     },
     {
       Header: 'intereses',
-      accessor: "intereses" as keyof transaccionType,
+      accessor: "interesesMorosidad" as keyof transaccionType,
     },
     {
       Header: 'pagado',
