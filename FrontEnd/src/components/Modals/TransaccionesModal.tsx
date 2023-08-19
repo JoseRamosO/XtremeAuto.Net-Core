@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { agregarVentas, editarVentas, eliminarVentas } from '../../store/slices/ventas/ventasThunk';
 import { agregarTarjetas, editarTarjetas, eliminarTarjetas } from '../../store/slices/tarjetas/tarjetasThunk';
 import { agregarTransacciones, editarTransacciones, eliminarTransacciones } from '../../store/slices/transacciones/transaccionesThunk';
-//import { format } from 'date-fns';
+
 interface InitialValuesType {
     transaccionId: number,
     ventaId: string,
@@ -20,7 +20,9 @@ interface InitialValuesType {
     pagado: boolean,
     precio: number,
 }
-
+const stringToBoolean = (stringValue) => {
+    return stringValue === 'true'; // adjust the condition as needed
+  };
 export const TransaccionesModal = ({ tableInstance }) => {
     const dispatch = useAppDispatch();
     const { modalTransaccionesOpen, modalTransaccionesState } = useAppSelector( (state) => state.transacciones );
@@ -97,6 +99,7 @@ export const TransaccionesModal = ({ tableInstance }) => {
                             validationSchema={ validationSchema }
 
                             onSubmit={({ ventaId, tarjetaId, fechaTransaccion, fechaCorte, interesesMorosidad, pagado, precio }) => {
+                                pagado = stringToBoolean(pagado);  
                                 if (modalTransaccionesState === 0) {
                                     dispatch(agregarTransacciones({ 
                                       ventaId, 
@@ -169,9 +172,10 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                     </label>
                                                     <div className='mt-2'>
                                                         <select
-                                                            name='disponible'
+                                                            name='pagado'
                                                             value={ String(values.pagado)|| 'unset' }
                                                             onChange={ handleChange }
+                                                            disabled={(modalTransaccionesState === 2 || modalTransaccionesState === 3) ? true : false}
                                                             className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.pagado && touched.pagado) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         >
                                                             <option value='unset'>Seleccione si se pago</option>

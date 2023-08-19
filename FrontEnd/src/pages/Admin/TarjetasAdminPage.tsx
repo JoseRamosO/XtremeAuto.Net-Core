@@ -6,6 +6,7 @@ import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 import { obtenerTarjetas } from "../../store/slices/tarjetas/tarjetasThunk";
 import { TarjetasModal } from "../../components/Modals/TarjetasModal";
+import { getAllUsers } from "../../store/slices/usuarios/usuariosThunk";
 
 interface tarjetaType {
   tarjetaId: number,
@@ -24,6 +25,7 @@ export const TarjetasAdminPage = () => {
   useEffect(() => {
     if (loadingTarjetas){
       dispatch(obtenerTarjetas()); 
+      dispatch(getAllUsers()); 
     } 
   }, [data])
   
@@ -47,6 +49,10 @@ export const TarjetasAdminPage = () => {
     {
       Header: 'fecha Vencimiento',
       accessor: "fechaVencimiento" as keyof tarjetaType,
+    },
+    {
+      Header: 'Bloqueado',
+      accessor: "lockoutEnabled" as keyof tarjetaType,
     },
     {
       Header: 'usuario Id',
