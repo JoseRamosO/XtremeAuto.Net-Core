@@ -179,6 +179,7 @@ const stringToBoolean = (stringValue) => {
                                                             name='lockoutEnabled'
                                                             value={ String(values.lockoutEnabled)|| 'unset' }
                                                             onChange={ handleChange }
+                                                            disabled={(modalTarjetasState === 2 || modalTarjetasState === 3) ? true : false}
                                                             className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.lockoutEnabled && touched.lockoutEnabled) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         >
                                                             <option value='unset'>Seleccione si se bloqueo</option>
@@ -198,7 +199,7 @@ const stringToBoolean = (stringValue) => {
                                                         type="date"
                                                         name="fechaVencimiento"
                                                         value={values.fechaVencimiento ? new Date(values.fechaVencimiento).toISOString().substr(0, 10) : ''}
-                                                        
+                                                        disabled={(modalTarjetasState === 2 || modalTarjetasState === 3) ? true : false}
                                                         onChange={ handleChange }
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.fechaVencimiento && touched.fechaVencimiento) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
@@ -218,6 +219,7 @@ const stringToBoolean = (stringValue) => {
                                                 name="usuarioId"
                                                 defaultValue={ values.usuarioId || 0}
                                                 onChange={handleChange}
+                                                disabled={(modalTarjetasState === 2 || modalTarjetasState === 3) ? true : false}
                                                 className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.usuarioId && touched.usuarioId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                 >
                                                      <option value="0">Seleccione usuario</option>

@@ -126,24 +126,25 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                         <label htmlFor="ventaId" className="block text-sm font-medium leading-6 text-gray-900">
                                                             Venta
                                                         </label>
-                                                    <div className="mt-2">
-                                                        <select
-                                                        id="ventaId"
-                                                        name="ventaId"
-                                                        defaultValue={ values.ventaId || 0}
-                                                        onChange={handleChange}
-                                                        className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.ventaId && touched.ventaId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                                                        >
-                                                            <option value="0">Seleccione Venta</option>
-                                                            {
-                                                                
-                                                                ventas.map(({ ventaId }) => (
-                                                                    <option key={ ventaId } value={ ventaId }>{ ventaId }</option>
-                                                                ))
-                                                            }
-                                                        </select>
+                                                        <div className="mt-2">
+                                                            <select
+                                                            id="ventaId"
+                                                            name="ventaId"
+                                                            defaultValue={ values.ventaId || 0}
+                                                            onChange={handleChange}
+                                                            disabled={(modalTransaccionesState === 2 || modalTransaccionesState === 3) ? true : false}
+                                                            className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.ventaId && touched.ventaId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                            >
+                                                                <option value="0">Seleccione Venta</option>
+                                                                {
+                                                                    
+                                                                    ventas.map(({ ventaId }) => (
+                                                                        <option key={ ventaId } value={ ventaId }>{ ventaId }</option>
+                                                                    ))
+                                                                }
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 <div className="sm:col-span-3">
                                                     <label htmlFor="tarjetaId" className="block text-sm font-medium leading-6 text-gray-900">
                                                         Tarjeta
@@ -154,6 +155,7 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                     name="tarjetaId"
                                                     defaultValue={ values.tarjetaId || 0}
                                                     onChange={handleChange}
+                                                    disabled={(modalTransaccionesState === 2 || modalTransaccionesState === 3) ? true : false}
                                                     className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.tarjetaId && touched.tarjetaId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                     >
                                                         <option value="0">Seleccione Tarjeta</option>
@@ -196,6 +198,7 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                         name="fechaTransaccion"
                                                         value={values.fechaTransaccion ? new Date(values.fechaTransaccion).toISOString().substr(0, 10) : ''}
                                                         onChange={ handleChange }
+                                                        disabled={(modalTransaccionesState === 2 || modalTransaccionesState === 3) ? true : false}
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.fechaTransaccion && touched.fechaTransaccion) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
                                                         <ErrorMessage name="fechaTransaccion" component="span" className="inline-flex text-sm text-red-700" />
@@ -212,6 +215,7 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                         name="fechaCorte"
                                                         value={values.fechaCorte ? new Date(values.fechaCorte).toISOString().substr(0, 10) : ''}
                                                         onChange={ handleChange }
+                                                        disabled={(modalTransaccionesState === 2 || modalTransaccionesState === 3) ? true : false}
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.fechaCorte && touched.fechaCorte) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
                                                         
@@ -229,6 +233,7 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                         name="interesesMorosidad"
                                                         value={ values.interesesMorosidad || '' }
                                                         onChange={ handleChange }
+                                                        disabled={(modalTransaccionesState === 2 || modalTransaccionesState === 3) ? true : false}
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.interesesMorosidad && touched.interesesMorosidad) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
                                                         { errors.interesesMorosidad && touched.interesesMorosidad && ( <span className="inline-flex text-sm text-red-700">{errors.interesesMorosidad}</span> ) }
@@ -244,6 +249,7 @@ export const TransaccionesModal = ({ tableInstance }) => {
                                                         name="precio"
                                                         value={ values.precio || '' }
                                                         onChange={ handleChange }
+                                                        disabled={(modalTransaccionesState === 2 || modalTransaccionesState === 3) ? true : false}
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.precio && touched.precio) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
                                                         { errors.precio && touched.precio && ( <span className="inline-flex text-sm text-red-700">{errors.precio}</span> ) }

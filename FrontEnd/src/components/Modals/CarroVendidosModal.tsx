@@ -9,60 +9,34 @@ import { setToggleModalCarroVendidos } from '../../store/slices/carrovendidos/ca
 import { agregarCarroVendidos, editarCarroVendidos, eliminarCarroVendidos } from '../../store/slices/carrovendidos/carrovendidosThunk';
 
 interface InitialValuesType {
-  carroModeloId: number,
-  disponible: boolean,
-  tipo: string,
-  marca: string,
-  modelo: string,
-  descripcion: string,
-  precio: number,
-  imagen: string,
-  cantidad: number
+    carroVendidoId: number,
+    ruedaId: number,
+    colorId: number,
+    carroModeloId: number,
+    seguroId: number,
+    precioTotal: number,
 }
 
 export const CarroVendidosModal = ({ tableInstance }) => {
   const dispatch = useAppDispatch();
   const { modalCarroVendidosOpen, modalCarroVendidosState } = useAppSelector( (state) => state.carrovendidos );
   const { selectedFlatRows } = tableInstance;
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const { seguros } = useAppSelector( (state) => state.seguros);
+  const { ruedas } = useAppSelector( (state) => state.ruedas);
+  const { colores } = useAppSelector( (state) => state.colores);
+  const { autos } = useAppSelector( (state) => state.autos);
 
   const initFormValues: InitialValuesType = {
-      carroModeloId : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.carroModeloId : '',
-      disponible : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.disponible : 'unset',
-      tipo : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.tipo : '',
-      marca : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.marca : '',
-      modelo : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.modelo : '',
-      descripcion : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.descripcion : '',
-      precio : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.precio : '',
-      imagen : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.imagen : '',
-      cantidad : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.cantidad : ''
+      carroVendidoId : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.carroVendidoId : '',
+      ruedaId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.ruedaId : '',
+      colorId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.colorId : '',
+      carroModeloId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.carroModeloId : '',
+      seguroId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.seguroId : '',
+      precioTotal: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.precioTotal : '',
   }
 
   const validationSchema = Yup.object().shape({
-    marca: Yup.string()
-    .required('Marca es requerido')
-    .min(2, 'Marca debe tener al menos 2 caracteres')
-    .max(20, 'Marca no debe tener mas de 20 caracteres'),
-
-    tipo: Yup.string()
-    .required('Marca es requerido')
-    .min(2, 'Marca debe tener al menos 2 caracteres')
-    .max(20, 'Marca no debe tener mas de 20 caracteres'),
-
-    modelo: Yup.string()
-    .required('Marca es requerido')
-    .min(2, 'Marca debe tener al menos 2 caracteres')
-    .max(20, 'Marca no debe tener mas de 20 caracteres'),
     
-    descripcion: Yup.string()
-    .required('Marca es requerido')
-    .min(2, 'Marca debe tener al menos 2 caracteres'),
-
-    disponible: Yup.string().notOneOf(['unset'], 'Por Favor seleone'),
-
-    precio: Yup.number().typeError('Please enter a valid number').required('Required'),
-
-    cantidad: Yup.number().typeError('Please enter a valid number').required('Required'),
   });
 
 
@@ -119,11 +93,10 @@ export const CarroVendidosModal = ({ tableInstance }) => {
                       onSubmit={(autoNuevo) => {
                           if (modalCarroVendidosState === 0) {
                               dispatch(agregarCarroVendidos({ 
-                                ...autoNuevo,
-                                imagen: selectedImage
+                                ...autoNuevo
                                 }))
                           } else if (modalCarroVendidosState === 1) {
-                              dispatch(editarCarroVendidos({...selectedFlatRows[0].original, ...autoNuevo, FormFile: selectedImage }))
+                              dispatch(editarCarroVendidos({...selectedFlatRows[0].original, ...autoNuevo }))
                           } else {
                               dispatch(eliminarCarroVendidos(selectedFlatRows[0].original))
                           }
@@ -134,175 +107,114 @@ export const CarroVendidosModal = ({ tableInstance }) => {
                               <div className='space-y-12'>
                                   <div className='border-b border-gray-900/10 pb-12'>
                                       <div className='grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6'>
-                                        <div className='sm:col-span-3'>
-                                          <label htmlFor='marca' className={ `block text-sm font-medium leading-6${ (errors.marca && touched.marca) ? ' text-red-600' : ' text-gray-900' }` }>
-                                              Marca
-                                          </label>
-                                          <div className='mt-2'>
-                                              <Field
-                                              type='text'
-                                              name='marca'
-                                              value={ values.marca || '' }
-                                              onChange={ handleChange }
-                                              disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
-                                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.marca && touched.marca) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                                              />
-                                              { errors.marca && touched.marca && ( <span className='inline-flex text-sm text-red-700'>{errors.marca}</span> ) }
-                                          </div>
-                                        </div>
+                                        
 
                                         <div className='sm:col-span-3'>
-                                          <label htmlFor='tipo' className={ `block text-sm font-medium leading-6${ (errors.tipo && touched.tipo) ? ' text-red-600' : ' text-gray-900' }` }>
+                                          <label htmlFor='precioTotal' className={ `block text-sm font-medium leading-6${ (errors.precioTotal && touched.precioTotal) ? ' text-red-600' : ' text-gray-900' }` }>
                                               Tipo
                                           </label>
                                           <div className='mt-2'>
                                               <Field
-                                              type='text'
-                                              name='tipo'
-                                              value={ values.tipo || '' }
+                                              type='number'
+                                              name='precioTotal'
+                                              value={ values.precioTotal || '' }
                                               onChange={ handleChange }
                                               disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
-                                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.tipo && touched.tipo) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.precioTotal && touched.precioTotal) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                               />
-                                              { errors.tipo && touched.tipo && ( <span className='inline-flex text-sm text-red-700'>{errors.tipo}</span> ) }
+                                              { errors.precioTotal && touched.precioTotal && ( <span className='inline-flex text-sm text-red-700'>{errors.precioTotal}</span> ) }
                                           </div>
                                         </div>
-
-                                        <div className='sm:col-span-3'>
-                                          <label htmlFor='modelo' className={ `block text-sm font-medium leading-6${ (errors.modelo && touched.modelo) ? ' text-red-600' : ' text-gray-900' }` }>
-                                              Modelo
+                                        <div className="sm:col-span-3">
+                                         <label htmlFor="ruedaId" className="block text-sm font-medium leading-6 text-gray-900">
+                                         Rueda
                                           </label>
-                                          <div className='mt-2'>
-                                              <Field
-                                              type='text'
-                                              name='modelo'
-                                              value={ values.modelo || '' }
-                                              onChange={ handleChange }
-                                              disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
-                                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.modelo && touched.modelo) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                                              />
-                                              { errors.modelo && touched.modelo && ( <span className='inline-flex text-sm text-red-700'>{errors.modelo}</span> ) }
-                                          </div>
+                                                <div className="mt-2">
+                                                    <select
+                                                    id="ruedaId"
+                                                    name="ruedaId"
+                                                    defaultValue={ values.ruedaId || 0}
+                                                    onChange={handleChange}
+                                                    disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
+                                                    className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.ruedaId && touched.ruedaId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                    >
+                                                        <option value="0">Seleccione Rueda</option>
+                                                        {
+                                                            ruedas.map(({ ruedaId, nombre}) => (
+                                                                <option key={ ruedaId } value={ ruedaId }>{ nombre }</option>
+                                                            ))
+                                                        }
+                                                    </select>
+                                                </div>
                                         </div>
-
-                                        <div className='sm:col-span-3'>
-                                          <label htmlFor='precio' className={ `block text-sm font-medium leading-6${ (errors.precio && touched.precio) ? ' text-red-600' : ' text-gray-900' }` }>
-                                            Precio
+                                        <div className="sm:col-span-3">
+                                         <label htmlFor="colorId" className="block text-sm font-medium leading-6 text-gray-900">
+                                         Color
                                           </label>
-                                          <div className='mt-2'>
-                                              <Field
-                                              type='text'
-                                              name='precio'
-                                              value={ values.precio || '' }
-                                              onChange={ handleChange }
-                                              disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
-                                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.precio && touched.precio) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                                              />
-                                              { errors.precio && touched.precio && ( <span className='inline-flex text-sm text-red-700'>{errors.precio}</span> ) }
-                                          </div>
+                                                <div className="mt-2">
+                                                    <select
+                                                    id="colorId"
+                                                    name="colorId"
+                                                    defaultValue={ values.colorId || 0}
+                                                    onChange={handleChange}
+                                                    disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
+                                                    className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.colorId && touched.colorId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                    >
+                                                        <option value="0">Seleccione Color</option>
+                                                        {
+                                                            colores.map(({ colorId, nombre}) => (
+                                                                <option key={ colorId } value={ colorId }>{ nombre }</option>
+                                                            ))
+                                                        }
+                                                    </select>
+                                                </div>
                                         </div>
-
-                                        <div className='sm:col-span-3'>
-                                          <label htmlFor='cantidad' className={ `block text-sm font-medium leading-6${ (errors.cantidad && touched.cantidad) ? ' text-red-600' : ' text-gray-900' }` }>
-                                            Cantidad
+                                        <div className="sm:col-span-3">
+                                         <label htmlFor="carroModeloId" className="block text-sm font-medium leading-6 text-gray-900">
+                                         Carro Modelo
                                           </label>
-                                          <div className='mt-2'>
-                                              <Field
-                                              type='text'
-                                              name='cantidad'
-                                              value={ values.cantidad || '' }
-                                              onChange={ handleChange }
-                                              disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
-                                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.cantidad && touched.cantidad) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                                              />
-                                              { errors.cantidad && touched.cantidad && ( <span className='inline-flex text-sm text-red-700'>{errors.cantidad}</span> ) }
-                                          </div>
+                                                <div className="mt-2">
+                                                    <select
+                                                    id="carroModeloId"
+                                                    name="carroModeloId"
+                                                    defaultValue={ values.carroModeloId || 0}
+                                                    onChange={handleChange}
+                                                    disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
+                                                    className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.carroModeloId && touched.carroModeloId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                    >
+                                                        <option value="0">Seleccione Color</option>
+                                                        {
+                                                            autos.map(({ carroModeloId, modelo}) => (
+                                                                <option key={ carroModeloId } value={ carroModeloId }>{ modelo }</option>
+                                                            ))
+                                                        }
+                                                    </select>
+                                                </div>
                                         </div>
-
-                                        <div className='sm:col-span-3'>
-                                          <label htmlFor='disponible' className={ `block text-sm font-medium leading-6${ (errors.disponible && touched.disponible) ? ' text-red-600' : ' text-gray-900' }` }>
-                                            Disponible
+                                        <div className="sm:col-span-3">
+                                         <label htmlFor="seguroId" className="block text-sm font-medium leading-6 text-gray-900">
+                                         Seguro
                                           </label>
-                                          <div className='mt-2'>
-                                              <select
-                                                name='disponible'
-                                                value={ String(values.disponible)|| 'unset' }
-                                                onChange={ handleChange }
-                                                disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
-                                                className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.disponible && touched.disponible) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                                              >
-                                                <option value='unset'>Seleccione Disponibilidad</option>
-                                                <option value='true'>Disponible</option>
-                                                <option value='false'>No Disponible</option>
-                                              </select>
-                                              { errors.disponible && touched.disponible && ( <span className='inline-flex text-sm text-red-700'>{errors.disponible}</span> ) }
-                                          </div>
+                                                <div className="mt-2">
+                                                    <select
+                                                    id="seguroId"
+                                                    name="seguroId"
+                                                    defaultValue={ values.seguroId || 0}
+                                                    onChange={handleChange}
+                                                    disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
+                                                    className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.seguroId && touched.seguroId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                    >
+                                                        <option value="0">Seleccione Color</option>
+                                                        {
+                                                            seguros.map(({ seguroId, nombre}) => (
+                                                                <option key={ seguroId } value={ seguroId }>{ nombre }</option>
+                                                            ))
+                                                        }
+                                                    </select>
+                                                </div>
                                         </div>
+                                        
 
-                                        <div className='sm:col-span-3'>
-                                          <label htmlFor='descripcion' className={ `block text-sm font-medium leading-6${ (errors.descripcion && touched.descripcion) ? ' text-red-600' : ' text-gray-900' }` }>
-                                            Descripción
-                                          </label>
-                                          <div className='mt-2'>
-                                              <Field
-                                              as="textarea"
-                                              type='text'
-                                              name='descripcion'
-                                              value={ values.descripcion || '' }
-                                              onChange={ handleChange }
-                                              disabled={(modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ? true : false}
-                                              className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.descripcion && touched.descripcion) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
-                                              />
-                                              { errors.descripcion && touched.descripcion && ( <span className='inline-flex text-sm text-red-700'>{errors.descripcion}</span> ) }
-                                          </div>
-                                        </div>
-
-                                        <div className='sm:col-span-3'>
-                                          <label htmlFor='descripcion' className={ `block text-sm font-medium leading-6${ (errors.descripcion && touched.descripcion) ? ' text-red-600' : ' text-gray-900' }` }>
-                                            Imagen del auto
-                                          </label>
-                                        <div className={`mt-1 image-uploader${ selectedImage ? ' image-uploader-active' : ''} ${ ( !selectedImage && (modalCarroVendidosState === 2 || modalCarroVendidosState === 3 ) ? 'image-looked' : '') }`}>
-                                          <CloudUploadIcon/>
-                                          <input
-                                              type='file'
-                                              name='myImage'
-                                              onChange={(e) => {
-                                                if (!e.target.files) return;
-                                                console.log(e.target.files[0]);
-                                                setSelectedImage(e.target.files[0]);
-                                              }}
-                                            />
-                                            {selectedImage && (
-                                              <div className='image-uploaded'>
-                                                <img
-                                                  alt='not found'
-                                                  width={'250px'}
-                                                  src={URL.createObjectURL(selectedImage)}
-                                                />
-                                                <button onClick={() => setSelectedImage(null)}><DeleteIcon/></button>
-                                              </div>
-                                            )}
-                                            {(!selectedImage && modalCarroVendidosState === 1 ) && (
-                                              <div className='image-uploaded'>
-                                                <img
-                                                  alt='not found'
-                                                  width={'250px'}
-                                                  src={ `http://localhost:5088${values.imagen}` }
-                                                />
-                                                <button onClick={() => setSelectedImage(null)}><DeleteIcon/></button>
-                                              </div>
-                                            )}
-                                            {(!selectedImage && (modalCarroVendidosState === 2 || modalCarroVendidosState === 3) ) && (
-                                              <div className='image-uploaded'>
-                                                <img
-                                                  alt='not found'
-                                                  width={'250px'}
-                                                  src={ `http://localhost:5088${values.imagen}` }
-                                                />
-                                              </div>
-                                            )}
-                                        </div>
-                                        </div>
                                       </div>
                                   </div>
                               </div>
