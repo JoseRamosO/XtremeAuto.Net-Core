@@ -29,29 +29,29 @@ export const TarjetasAdminPage = () => {
   
   const columns: Column<tarjetaType>[] = useMemo(() => [
     {
+      Header: 'ID',
+      accessor: "tarjetaId" as keyof tarjetaType,
+  },
+    {
         Header: 'Nombre',
         accessor: "nombre" as keyof tarjetaType,
     },
     {
       Header: 'numero De Tarjeta',
       accessor: "numeroDeTarjeta" as keyof tarjetaType,
-  },
+    },
+      {
+        Header: 'cvv',
+        accessor: "cvv" as keyof tarjetaType,
+    },
     {
-      Header: 'cvv',
-      accessor: "cvv" as keyof tarjetaType,
-  },
-  {
-    Header: 'fecha Vencimiento',
-    accessor: "fechaVencimiento" as keyof tarjetaType,
-},
-{
-  Header: 'Lockout Enabled',
-  accessor: "lockoutEnabled" as keyof tarjetaType,
-},
-{
-  Header: 'usuario Id',
-  accessor: "usuarioId" as keyof tarjetaType,
-}
+      Header: 'fecha Vencimiento',
+      accessor: "fechaVencimiento" as keyof tarjetaType,
+    },
+    {
+      Header: 'usuario Id',
+      accessor: "usuarioId" as keyof tarjetaType,
+    }
 
   ], [])
 

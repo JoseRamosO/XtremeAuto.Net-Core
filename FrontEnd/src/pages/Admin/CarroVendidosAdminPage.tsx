@@ -27,6 +27,10 @@ export const CarroVendidosAdminPage = () => {
     useEffect(() => {
       if (loadingCarroVendidos){
         dispatch(obtenerCarroVendidos()); 
+        dispatch(obtenerAutos()); 
+        dispatch(obtenerColores()); 
+        dispatch(obtenerSeguros()); 
+        dispatch(obtenerRuedas()); 
       } 
     }, [data])
     

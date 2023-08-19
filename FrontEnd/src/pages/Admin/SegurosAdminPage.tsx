@@ -26,6 +26,10 @@ export const SegurosAdminPage = () => {
   
   const columns: Column<seguroType>[] = useMemo(() => [
     {
+      Header: 'ID',
+      accessor: "seguroId" as keyof seguroType,
+    },
+    {
         Header: 'Nombre',
         accessor: "nombre" as keyof seguroType,
     },

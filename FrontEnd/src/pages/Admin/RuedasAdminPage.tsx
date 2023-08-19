@@ -26,8 +26,12 @@ export const RuedasAdminPage = () => {
   
   const columns: Column<ruedaType>[] = useMemo(() => [
     {
-        Header: 'Nombre',
-        accessor: "nombre" as keyof ruedaType,
+      Header: 'ID',
+      accessor: "ruedaId" as keyof ruedaType,
+    },
+    {
+      Header: 'Nombre',
+      accessor: "nombre" as keyof ruedaType,
     },
     {
       Header: 'Precio',
