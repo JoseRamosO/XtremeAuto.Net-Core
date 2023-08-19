@@ -25,7 +25,7 @@ const initialState: rolesInitialValuesType = {
 };
 
 export const rolSlice = createSlice({
-    name: 'usuarios',
+    name: 'Roles',
     initialState,
     reducers: {
       setRoles(state, action) {

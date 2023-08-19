@@ -8,12 +8,15 @@ import { obtenerAutos } from "../../store/slices/autos/autosThunk";
 import { AutosModal } from "../../components/Modals/AutosModal";
 
 interface autoType {
+  carroModeloId: number,
+  disponible: boolean,
   tipo: string,
   marca: string,
   modelo: string,
+  descripcion: string,
   precio: number,
-  cantidad: number,
-  disponible: boolean
+  imagen: string,
+  cantidad: number
 }
 
 export const AutosAdminPage = () => {
@@ -28,6 +31,10 @@ export const AutosAdminPage = () => {
     
     const columns: Column<autoType>[] = useMemo(() => [
       {
+        Header: 'ID',
+        accessor: "carroModeloId" as keyof autoType,
+      },
+      {
         Header: 'Tipo',
         accessor: "tipo" as keyof autoType,
       },
@@ -38,6 +45,10 @@ export const AutosAdminPage = () => {
       {
         Header: 'Modelo',
         accessor: "modelo" as keyof autoType,
+      },
+      {
+        Header: 'Descripcion',
+        accessor: "descripcion" as keyof autoType,
       },
       {
         Header: 'Precio',

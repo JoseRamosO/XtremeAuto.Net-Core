@@ -20,7 +20,7 @@ const agregarTarjetas = ( tarjetaNuevo ) => {
             numeroDeTarjeta: tarjetaNuevo.numeroDeTarjeta,
             cvv: tarjetaNuevo.cvv,
             fechaVencimiento: tarjetaNuevo.fechaVencimiento,
-            LockoutEnabled: tarjetaNuevo.LockoutEnabled,
+            lockoutEnabled: tarjetaNuevo.lockoutEnabled,
     }
         const { data } = await baseApi.post("/Tarjeta", tarjetaParsed);
 

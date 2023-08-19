@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface tarjetaType {
+
     tarjetaId: number,
     usuarioId: number,
     nombre: string,
     numeroDeTarjeta: string,
     cvv: string,
     fechaVencimiento: Date,
-    LockoutEnabled: boolean,
+    lockoutEnabled: boolean,
 }
 
 interface tarjetasInitialValuesType {

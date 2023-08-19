@@ -5,6 +5,10 @@ interface ventaType {
     UsuarioId: number,
     CarroVendidoId: number,
     meses: number,
+    total: number,
+    intereses: number,
+    saldoPendiente: number,
+    saldoAbonado: number,
 }
 
 interface ventasInitialValuesType {

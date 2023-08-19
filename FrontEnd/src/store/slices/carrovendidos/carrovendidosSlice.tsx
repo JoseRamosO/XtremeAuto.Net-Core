@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface carrovendidoType {
-    carrovendidoId: number,
+  carroVendidoId: number,
     ruedaId: number,
     colorId: number,
     carroModeloId: number,

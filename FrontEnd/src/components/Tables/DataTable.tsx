@@ -207,7 +207,7 @@ export const DataTable = ({ tableInstance, tableOwner, showLabel }) => {
                   <a className='cursor-pointer rounded-lg p-3 text-slate-50 bg-orange-600 hover:bg-orange-700 mr-2' onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); handleModalToOpenClick(1); }}>
                     <EditIcon/>
                   </a>
-                  <a className='cursor-pointer rounded-lg p-3 text-slate-50 bg-green-600 hover:bg-green-700 mr-2' onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); handleModalToOpenClick(2); }}>
+                  <a  className='cursor-pointer rounded-lg p-3 text-slate-50 bg-green-600 hover:bg-green-700 mr-2' onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); handleModalToOpenClick(2); }}>
                     <VisibilityIcon/>
                   </a>
                   <a className='cursor-pointer rounded-lg p-3 text-slate-50 bg-red-600 hover:bg-red-700' onClick={() => { toggleAllPageRowsSelected(false); row.toggleRowSelected(); handleModalToOpenClick(3); }}>

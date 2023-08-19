@@ -18,7 +18,7 @@ interface tarjetaType {
   numeroDeTarjeta: string,
   cvv: string,
   fechaVencimiento: Date,
-  LockoutEnabled: boolean,
+  lockoutEnabled: boolean,
 }
 
 interface InitialValuesType {
@@ -107,7 +107,7 @@ export const UserProfile = () => {
 },
 {
   Header: 'Tarjeta Bloqueada',
-  accessor: "LockoutEnabled" as keyof tarjetaType,
+  accessor: "lockoutEnabled" as keyof tarjetaType,
 }
 
   ], []);

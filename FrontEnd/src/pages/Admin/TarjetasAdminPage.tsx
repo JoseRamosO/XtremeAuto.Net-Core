@@ -14,7 +14,7 @@ interface tarjetaType {
   numeroDeTarjeta: string,
   cvv: string,
   fechaVencimiento: Date,
-  LockoutEnabled: boolean,
+  lockoutEnabled: boolean,
 }
 
 export const TarjetasAdminPage = () => {
@@ -46,7 +46,7 @@ export const TarjetasAdminPage = () => {
 },
 {
   Header: 'Lockout Enabled',
-  accessor: "LockoutEnabled" as keyof tarjetaType,
+  accessor: "lockoutEnabled" as keyof tarjetaType,
 },
 {
   Header: 'usuario Id',

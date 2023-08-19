@@ -51,6 +51,12 @@ export const AdminSideBar = () => {
                 Autos
               </span>
             </li>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/carrovendidos' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/carrovendidos') }>
+              <DirectionsCar/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Carro Vendidos
+              </span>
+            </li>
             <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/roles' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/roles') }>
               <Adjust/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
