@@ -133,6 +133,7 @@ export const SegurosModal = ({ tableInstance }) => {
                                                         name="precio"
                                                         value={ values.precio || '' }
                                                         onChange={ handleChange }
+                                                        disabled={(modalSegurosState === 2 || modalSegurosState === 3) ? true : false}
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.precio && touched.precio) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
                                                         { errors.precio && touched.precio && ( <span className="inline-flex text-sm text-red-700">{errors.precio}</span> ) }
@@ -148,6 +149,7 @@ export const SegurosModal = ({ tableInstance }) => {
                                                         name="plazo"
                                                         value={ values.plazo || '' }
                                                         onChange={ handleChange }
+                                                        disabled={(modalSegurosState === 2 || modalSegurosState === 3) ? true : false}
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.plazo && touched.plazo) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
                                                         { errors.plazo && touched.plazo && ( <span className="inline-flex text-sm text-red-700">{errors.plazo}</span> ) }

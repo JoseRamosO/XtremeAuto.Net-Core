@@ -2,9 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface ventaType {
     ventaId: number,
-    UsuarioId: number,
-    CarroVendidoId: number,
+    usuarioId: number,
+    carroVendidoId: number,
     meses: number,
+    total: number,
+    intereses: number,
+    saldoPendiente: number,
+    saldoAbonado: number,
 }
 
 interface ventasInitialValuesType {

@@ -25,6 +25,10 @@ export const ColoresAdminPage = () => {
   
   const columns: Column<colorType>[] = useMemo(() => [
     {
+      Header: 'ID',
+      accessor: "colorId" as keyof colorType,
+  },
+    {
         Header: 'Nombre',
         accessor: "nombre" as keyof colorType,
     },

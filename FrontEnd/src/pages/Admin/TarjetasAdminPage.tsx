@@ -6,6 +6,7 @@ import { MainAdminLayout } from "../theme/MainAdminLayout";
 import { GettingDataLoader } from "../../components/Loaders/GettingDataLoader";
 import { obtenerTarjetas } from "../../store/slices/tarjetas/tarjetasThunk";
 import { TarjetasModal } from "../../components/Modals/TarjetasModal";
+import { getAllUsers } from "../../store/slices/usuarios/usuariosThunk";
 
 interface tarjetaType {
   tarjetaId: number,
@@ -14,7 +15,7 @@ interface tarjetaType {
   numeroDeTarjeta: string,
   cvv: string,
   fechaVencimiento: Date,
-  LockoutEnabled: boolean,
+  lockoutEnabled: boolean,
 }
 
 export const TarjetasAdminPage = () => {
@@ -24,10 +25,15 @@ export const TarjetasAdminPage = () => {
   useEffect(() => {
     if (loadingTarjetas){
       dispatch(obtenerTarjetas()); 
+      dispatch(getAllUsers()); 
     } 
   }, [data])
   
   const columns: Column<tarjetaType>[] = useMemo(() => [
+    {
+      Header: 'ID',
+      accessor: "tarjetaId" as keyof tarjetaType,
+  },
     {
         Header: 'Nombre',
         accessor: "nombre" as keyof tarjetaType,
@@ -35,23 +41,23 @@ export const TarjetasAdminPage = () => {
     {
       Header: 'numero De Tarjeta',
       accessor: "numeroDeTarjeta" as keyof tarjetaType,
-  },
+    },
+      {
+        Header: 'cvv',
+        accessor: "cvv" as keyof tarjetaType,
+    },
     {
-      Header: 'cvv',
-      accessor: "cvv" as keyof tarjetaType,
-  },
-  {
-    Header: 'fecha Vencimiento',
-    accessor: "fechaVencimiento" as keyof tarjetaType,
-},
-{
-  Header: 'Lockout Enabled',
-  accessor: "LockoutEnabled" as keyof tarjetaType,
-},
-{
-  Header: 'usuario Id',
-  accessor: "usuarioId" as keyof tarjetaType,
-}
+      Header: 'fecha Vencimiento',
+      accessor: "fechaVencimiento" as keyof tarjetaType,
+    },
+    {
+      Header: 'Bloqueado',
+      accessor: "lockoutEnabled" as keyof tarjetaType,
+    },
+    {
+      Header: 'usuario Id',
+      accessor: "usuarioId" as keyof tarjetaType,
+    }
 
   ], [])
 

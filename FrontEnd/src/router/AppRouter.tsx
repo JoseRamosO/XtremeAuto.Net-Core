@@ -9,6 +9,7 @@ import { ColoresAdminPage } from '../pages/Admin/ColoresAdminPage'
 import { AutosAdminPage } from '../pages/Admin/AutosAdminPage'
 import { RuedasAdminPage } from '../pages/Admin/RuedasAdminPage'
 import { TransaccionesAdminPage } from '../pages/Admin/TransaccionesAdminPage'
+import { CarroVendidosAdminPage } from '../pages/Admin/CarroVendidosAdminPage'
 import { AutoPage } from '../pages/LoggedPages/AutoPage'
 import { useCheckAuth } from '../hooks/useCheckAuth'
 import { AdminRoutes } from '../pages/Admin/routes/AdminRoutes'
@@ -34,7 +35,7 @@ export const AppRouter = () => {
               (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 1) && <Route path="/admin/*" element={<AdminRoutes/>}/>
             }
             {
-              (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 2) && <Route path="/user/*" element={<UserLoggedRoutes/>}/>
+              (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 3) && <Route path="/user/*" element={<UserLoggedRoutes/>}/>
             }
             <Route path="/*" element={ <Navigate to='/login'/> }/>
       </Routes>

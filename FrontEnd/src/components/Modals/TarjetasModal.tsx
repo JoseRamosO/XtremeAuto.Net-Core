@@ -16,7 +16,7 @@ interface InitialValuesType {
     numeroDeTarjeta: string,
     cvv: string,
     fechaVencimiento: Date,
-    LockoutEnabled: boolean,
+    lockoutEnabled: boolean,
 }
 
 export const TarjetasModal = ({ tableInstance }) => {
@@ -33,9 +33,11 @@ export const TarjetasModal = ({ tableInstance }) => {
         numeroDeTarjeta : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.numeroDeTarjeta : '',
         cvv : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.cvv : '',
         fechaVencimiento : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.fechaVencimiento : '',
-        LockoutEnabled : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.LockoutEnabled : '',
+        lockoutEnabled : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.lockoutEnabled : '',
     }
-
+const stringToBoolean = (stringValue) => {
+    return stringValue === 'true'; // adjust the condition as needed
+  };
     const validationSchema = Yup.object().shape({
       nombre: Yup.string()
       .required('Nombre es requerido')
@@ -94,7 +96,9 @@ export const TarjetasModal = ({ tableInstance }) => {
                             enableReinitialize
                             initialValues={ initFormValues }
                             validationSchema={ validationSchema }
-                            onSubmit={({ tarjetaId, usuarioId,nombre,numeroDeTarjeta,cvv, fechaVencimiento, LockoutEnabled }) => {
+                            
+                            onSubmit={({ tarjetaId, usuarioId,nombre,numeroDeTarjeta,cvv, fechaVencimiento, lockoutEnabled }) => {
+                                lockoutEnabled = stringToBoolean(lockoutEnabled);   
                                 if (modalTarjetasState === 0) {
                                     dispatch(agregarTarjetas({ 
                                         tarjetaId,
@@ -103,10 +107,10 @@ export const TarjetasModal = ({ tableInstance }) => {
                                         numeroDeTarjeta,
                                         cvv,
                                         fechaVencimiento,
-                                        LockoutEnabled
+                                        lockoutEnabled
                                      }))
                                 } else if (modalTarjetasState === 1) {
-                                    dispatch(editarTarjetas({...selectedFlatRows[0].original, usuarioId,nombre,numeroDeTarjeta,cvv, fechaVencimiento, LockoutEnabled }))
+                                    dispatch(editarTarjetas({...selectedFlatRows[0].original, usuarioId,nombre,numeroDeTarjeta,cvv, fechaVencimiento, lockoutEnabled }))
                                 } else {
                                     dispatch(eliminarTarjetas(selectedFlatRows[0].original))
                                 }
@@ -165,24 +169,27 @@ export const TarjetasModal = ({ tableInstance }) => {
                                                         { errors.cvv && touched.cvv && ( <span className="inline-flex text-sm text-red-700">{errors.cvv}</span> ) }
                                                     </div>
                                                 </div>
+
                                                 <div className='sm:col-span-3'>
-                                                    <label htmlFor='LockoutEnabled' className={ `block text-sm font-medium leading-6${ (errors.LockoutEnabled && touched.LockoutEnabled) ? ' text-red-600' : ' text-gray-900' }` }>
-                                                        Bloqueada
+                                                    <label htmlFor='lockoutEnabled' className={ `block text-sm font-medium leading-6${ (errors.lockoutEnabled && touched.lockoutEnabled) ? ' text-red-600' : ' text-gray-900' }` }>
+                                                        Bloqueado?
                                                     </label>
                                                     <div className='mt-2'>
                                                         <select
-                                                            name='LockoutEnabled'
-                                                            value={ String(values.LockoutEnabled)|| 'unset' }
+                                                            name='lockoutEnabled'
+                                                            value={ String(values.lockoutEnabled)|| 'unset' }
                                                             onChange={ handleChange }
-                                                            className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.LockoutEnabled && touched.LockoutEnabled) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                            disabled={(modalTarjetasState === 2 || modalTarjetasState === 3) ? true : false}
+                                                            className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.lockoutEnabled && touched.lockoutEnabled) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         >
-                                                            <option value='unset'>Seleccione si esta bloqeuado</option>
+                                                            <option value='unset'>Seleccione si se bloqueo</option>
                                                             <option value='true'>Bloqueado</option>
-                                                            <option value='false'>No bloqueado</option>
+                                                            <option value='false'>No Bloqueado</option>
                                                         </select>
-                                                        { errors.LockoutEnabled && touched.LockoutEnabled && ( <span className='inline-flex text-sm text-red-700'>{errors.LockoutEnabled}</span> ) }
+                                                        { errors.lockoutEnabled && touched.lockoutEnabled && ( <span className='inline-flex text-sm text-red-700'>{errors.lockoutEnabled}</span> ) }
                                                     </div>
                                                 </div>
+
                                                 <div className="sm:col-span-3">
                                                     <label htmlFor="fechaVencimiento" className={ `block text-sm font-medium leading-6${ (errors.fechaVencimiento && touched.fechaVencimiento) ? ' text-red-600' : ' text-gray-900' }` }>
                                                     fecha Corte
@@ -192,7 +199,7 @@ export const TarjetasModal = ({ tableInstance }) => {
                                                         type="date"
                                                         name="fechaVencimiento"
                                                         value={values.fechaVencimiento ? new Date(values.fechaVencimiento).toISOString().substr(0, 10) : ''}
-                                                        
+                                                        disabled={(modalTarjetasState === 2 || modalTarjetasState === 3) ? true : false}
                                                         onChange={ handleChange }
                                                         className={ `px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.fechaVencimiento && touched.fechaVencimiento) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                         />
@@ -212,6 +219,7 @@ export const TarjetasModal = ({ tableInstance }) => {
                                                 name="usuarioId"
                                                 defaultValue={ values.usuarioId || 0}
                                                 onChange={handleChange}
+                                                disabled={(modalTarjetasState === 2 || modalTarjetasState === 3) ? true : false}
                                                 className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.usuarioId && touched.usuarioId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                 >
                                                      <option value="0">Seleccione usuario</option>
