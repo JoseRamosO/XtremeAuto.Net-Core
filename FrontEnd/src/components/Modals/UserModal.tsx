@@ -229,7 +229,6 @@ export const UserModal = ({ tableInstance }) => {
                                                 />
                                                 { errors.passwordHash && touched.passwordHash && ( <span className="inline-flex text-sm text-red-700">{errors.passwordHash}</span> ) }
                                             </div>
-                                            </div>
 
                                             <div className="sm:col-span-4">
                                             <label htmlFor="last-name" className={ `block text-sm font-medium leading-6${ (errors.email && touched.email) ? ' text-red-600' : ' text-gray-900' }` }>
@@ -280,6 +279,7 @@ export const UserModal = ({ tableInstance }) => {
                                                 </select>
                                             </div>
                                             </div>
+                                        </div>
                                         </div>
                                         </div>
                                     </div>

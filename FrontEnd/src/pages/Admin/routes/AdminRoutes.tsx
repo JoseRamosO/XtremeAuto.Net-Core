@@ -8,6 +8,7 @@ import { SegurosAdminPage } from '../SegurosAdminPage'
 import { TransaccionesAdminPage } from '../TransaccionesAdminPage'
 import { TarjetasAdminPage } from '../TarjetasAdminPage'
 import { CarroVendidosAdminPage } from '../CarroVendidosAdminPage'
+import { VentasAdminPage } from '../VentasAdminPage'
 
 export const AdminRoutes = () => {
   return (
@@ -22,7 +23,7 @@ export const AdminRoutes = () => {
         <Route path="/ruedas" element={<RuedasAdminPage />} />
         <Route path="/transacciones" element={<TransaccionesAdminPage />} />
         <Route path="/tarjetas" element={<TarjetasAdminPage />} />
-
+        <Route path="/ventas" element={<VentasAdminPage />} />
         <Route path="/*" element={ <Navigate to="/"/> }/>
     </Routes>
   )

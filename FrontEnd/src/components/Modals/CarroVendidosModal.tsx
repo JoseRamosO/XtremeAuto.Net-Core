@@ -90,13 +90,13 @@ export const CarroVendidosModal = ({ tableInstance }) => {
                       enableReinitialize
                       initialValues={ initFormValues }
                       validationSchema={ validationSchema }
-                      onSubmit={(autoNuevo) => {
+                      onSubmit={(carrovendidoNuevo) => {
                           if (modalCarroVendidosState === 0) {
                               dispatch(agregarCarroVendidos({ 
-                                ...autoNuevo
+                                ...carrovendidoNuevo
                                 }))
                           } else if (modalCarroVendidosState === 1) {
-                              dispatch(editarCarroVendidos({...selectedFlatRows[0].original, ...autoNuevo }))
+                              dispatch(editarCarroVendidos({...selectedFlatRows[0].original, ...carrovendidoNuevo }))
                           } else {
                               dispatch(eliminarCarroVendidos(selectedFlatRows[0].original))
                           }
@@ -111,7 +111,7 @@ export const CarroVendidosModal = ({ tableInstance }) => {
 
                                         <div className='sm:col-span-3'>
                                           <label htmlFor='precioTotal' className={ `block text-sm font-medium leading-6${ (errors.precioTotal && touched.precioTotal) ? ' text-red-600' : ' text-gray-900' }` }>
-                                              Tipo
+                                              Precio Total
                                           </label>
                                           <div className='mt-2'>
                                               <Field

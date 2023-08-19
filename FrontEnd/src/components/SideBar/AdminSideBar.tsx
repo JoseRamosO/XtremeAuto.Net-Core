@@ -83,6 +83,12 @@ export const AdminSideBar = () => {
                 Seguros
               </span>
             </li>
+            <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/ventas' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/ventas') }>
+              <Shield/>
+              <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
+                Ventas
+              </span>
+            </li>
             <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/transacciones' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/transacciones') }>
               <Paid/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
