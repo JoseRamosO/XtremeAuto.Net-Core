@@ -43,7 +43,21 @@ const stringToBoolean = (stringValue) => {
       .required('Nombre es requerido')
       .min(2, 'Nombre debe tener al menos 2 caracteres')
       .max(20, 'Nombre no debe tener mas de 20 caracteres')
-      .matches(/^[a-zA-Z ]+$/, 'Nombre solo debe tener palabras y espacios')
+      .matches(/^[a-zA-Z ]+$/, 'Nombre solo debe tener palabras y espacios'),
+  
+      numeroDeTarjeta: Yup.string()
+      .required('Numero de Tarjeta es requerido')
+      .min(15, 'Numero de Tarjeta debe tener al menos 15 caracteres')
+      .max(30, 'Numero de Tarjeta no debe tener mas de 30 caracteres'),
+      usuarioId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+      cvv: Yup.string()
+      .required('cvv es requerido')
+      .min(3, 'cvv debe tener al menos 3 caracteres')
+      .max(4, 'cvv no debe tener mas de 4 caracteres'),
+      fechaVencimiento: Yup.date().required('Required'),
+      lockoutEnabled: Yup.string().notOneOf(['unset'], 'Por Favor seleccione'),
+
+
     });
 
     return (
