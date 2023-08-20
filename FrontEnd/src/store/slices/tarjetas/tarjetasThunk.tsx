@@ -23,7 +23,6 @@ const agregarTarjetas = ( tarjetaNuevo ) => {
             lockoutEnabled: tarjetaNuevo.lockoutEnabled,
     }
         const { data } = await baseApi.post("/Tarjeta", tarjetaParsed);
-
         if (data) {
             const { data } = await baseApi.get('/Tarjeta');
             dispatch(setLoadingTarjetas());

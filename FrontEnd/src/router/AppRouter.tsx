@@ -35,7 +35,7 @@ export const AppRouter = () => {
               (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 1) && <Route path="/admin/*" element={<AdminRoutes/>}/>
             }
             {
-              (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 3) && <Route path="/user/*" element={<UserLoggedRoutes/>}/>
+              (currentUsuarioStatus.status === 'authenticated' && currentUsuarioStatus.rol === 2) && <Route path="/user/*" element={<UserLoggedRoutes/>}/>
             }
             <Route path="/*" element={ <Navigate to='/login'/> }/>
       </Routes>

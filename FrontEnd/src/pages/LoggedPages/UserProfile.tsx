@@ -10,6 +10,7 @@ import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { editarUsuarios } from '../../store/slices/usuarios/usuariosThunk';
 import { setCurrentUser } from '../../store/slices/usuarios/usuariosSlice';
+import { TarjetasUsuarioModal } from '../../components/Modals/TarjetasUsuarioModal';
 
 interface tarjetaType {
   tarjetaId: number,
@@ -313,7 +314,7 @@ export const UserProfile = () => {
 
         <h1 className='mb-5'>Tarjertas Asociadas</h1>
         
-        <TarjetasModal tableInstance={tableInstance}/>
+        <TarjetasUsuarioModal tableInstance={tableInstance}/>
         {
           loadingTarjetas ? <GettingDataLoader/> : (
             <>
