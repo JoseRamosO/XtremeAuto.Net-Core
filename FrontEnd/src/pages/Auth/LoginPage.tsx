@@ -19,7 +19,7 @@ export const LoginPage = () => {
     if (usuario.currentUser.status === 'authenticated' && usuario.currentUser.rol === 1) {
       navigate('/admin/usuarios');
     }
-    if (usuario.currentUser.status === 'authenticated' && usuario.currentUser.rol === 3) {
+    if (usuario.currentUser.status === 'authenticated' && usuario.currentUser.rol === 2) {
       navigate('/user');
     }
   }, [navigate, usuario.currentUser.status]);

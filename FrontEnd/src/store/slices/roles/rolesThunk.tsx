@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 import { baseApi } from "../../../api/apiConfig";
 import { setLoadingRoles, setRoles, setToggleModalRoles } from "./rolesSlice";
 import { toast } from "react-toastify";
+import { store } from "../../store";
 
 const obtenerRoles = () => {
     return async (dispatch: Dispatch) => {

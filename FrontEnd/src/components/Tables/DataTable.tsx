@@ -49,7 +49,7 @@ export const DataTable = ({ tableInstance, tableOwner, showLabel }) => {
 
   const CustomPaginationActions = () =>  {
     const handleFirstPageButtonClick = () => {
-      onPageChange(0);
+      gotoPage(0)
     };
   
     const handleBackButtonClick = () => {

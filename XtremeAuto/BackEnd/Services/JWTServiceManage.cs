@@ -78,7 +78,7 @@ namespace BackEnd.Services
                         {
                     new Claim(ClaimTypes.Name, usuario.Username)
                         }),
-                        Expires = DateTime.UtcNow.AddMinutes(1),
+                        Expires = DateTime.UtcNow.AddMinutes(100),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tkey), SecurityAlgorithms.HmacSha256Signature)
                     };
                     var toekn = tokenhandler.CreateToken(ToeknDescp);

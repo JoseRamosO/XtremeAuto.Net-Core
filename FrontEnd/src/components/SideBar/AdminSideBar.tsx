@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ColorLens, Group, Adjust, KeyboardArrowLeft, DirectionsCar, TireRepair, CreditCard, Paid, Shield, ExitToApp } from '@mui/icons-material';
+import { Receipt, PointOfSale, ColorLens, Group, Adjust, KeyboardArrowLeft, DirectionsCar, TireRepair, CreditCard, Paid, Shield, ExitToApp } from '@mui/icons-material';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { onLogOutUser } from '../../store/slices/usuarios/usuariosThunk';
 
@@ -52,7 +52,7 @@ export const AdminSideBar = () => {
               </span>
             </li>
             <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/carrovendidos' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/carrovendidos') }>
-              <DirectionsCar/>
+              <PointOfSale/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Carro Vendidos
               </span>
@@ -84,7 +84,7 @@ export const AdminSideBar = () => {
               </span>
             </li>
             <li className={`duration-300 p-2 rounded-md cursor-pointer text-slate-50 text-sm items-center gap-x-4 flex items-center${ pathname === '/admin/ventas' ? ' bg-cyan-500' : ' hover:bg-teal-800'}`} onClick={ () =>  navigate('/admin/ventas') }>
-              <Shield/>
+              <Receipt/>
               <span className={`${!open && 'hidden'} text-white origin-left font-medium duration-300`}>
                 Ventas
               </span>

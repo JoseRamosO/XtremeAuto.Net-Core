@@ -22,6 +22,12 @@ interface autoType {
     cantidad: number
 }
 
+interface itemsAddedType { 
+  itemId: string,
+  nombre: string,
+  price: number,
+}
+
 export const AutoPage = () => {
     let { autoId = 0 } = useParams();
     const dispatch = useAppDispatch();
@@ -35,6 +41,7 @@ export const AutoPage = () => {
     const [ruedaSelected, setRuedaSelected] = useState<number>(0);
     const [seguroSelectedState, setSeguroSelectedState] = useState<number>(0);
     const [precioFinal, setPrecioFinal] = useState<number>(0);
+    const [itemsAdded, setItemsAdded] = useState<itemsAddedType[]>([]);
 
     useEffect(() => {
         if (loadingAutos){
@@ -52,18 +59,35 @@ export const AutoPage = () => {
         const autoSeleccionado = autos.find(auto => auto.carroModeloId == autoId);
         setAutoSelected(autoSeleccionado);
         setPrecioFinal(autoSeleccionado?.precio ? autoSeleccionado?.precio : 0);
+        priceUpdater(`Auto`, autoSeleccionado?.precio, `${ autoSeleccionado?.marca } ${ autoSeleccionado?.tipo }`)
 
     }, [autos])
 
     const updatePreciosRuedas = (rueda) => {
       setPrecioFinal(precioFinal + rueda.precio);
+      priceUpdater(`Rueda`, rueda.precio, rueda.nombre)
       setRuedaSelected(rueda.ruedaId)
     }
 
-    const seguroSelected = (seguroId, precio) => {
+    const seguroSelected = (seguroId, precio, nombre) => {
       setPrecioFinal(precioFinal + precio);
+      priceUpdater(`Seguro`, precio, nombre)
       setSeguroSelectedState(seguroId);
     } 
+
+
+    const priceUpdater = (itemId, price, nombre) => {
+      const itemIndex = itemsAdded.findIndex(el => el.itemId === itemId);
+      const updatedCheckout = [...itemsAdded];
+    
+      if (itemIndex === -1) {
+        updatedCheckout.push({ itemId, price, nombre});
+      } else {
+        updatedCheckout[itemIndex].price = price;
+        updatedCheckout[itemIndex].nombre = nombre;
+      }
+      setItemsAdded([...updatedCheckout]);
+    }
 
 
     const compraConfirmadaAuto = () => {
@@ -127,15 +151,23 @@ export const AutoPage = () => {
         <h2 className="mt-5">Seguro</h2>
         <div className="auto-page-colores mt-2 max-w-xs">
           <select className={ 'bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400' }>
-          <option onClick={ () => seguroSelected(0, 0)}>Seleccione Seguro</option>
+          <option onClick={ () => seguroSelected(0, 0, 'No Seguro Seleccionado')}>Seleccione Seguro</option>
             {
               seguros.map(({ nombre, precio, plazo, seguroId }) => (
-                <option onClick={ () => seguroSelected(seguroId, precio) }key={ seguroId } value={ seguroId }>{ nombre } | ${ precio } | { plazo } meses</option>
+                <option onClick={ () => seguroSelected(seguroId, precio, nombre) }key={ seguroId } value={ seguroId }>{ nombre } | ${ precio } | { plazo } meses</option>
               ))
             }
           </select>
         </div>
-        <h1 className="mt-10 mb-10"><span className="text-cyan-600">PRECIO FINAL:</span> ${ precioFinal }</h1>
+        <h1 className="mt-10 mb-1"><span className="text-cyan-600">PRECIO FINAL:</span> ${ itemsAdded.reduce((total, item) => total + item.price, 0) }</h1>
+        <ul className="mb-10">
+          {
+            itemsAdded.map(({ itemId, nombre, price }) => (
+              <li>- <span className="text-cyan-600 font-bold">{ itemId }: </span>{ nombre } | ${ price }</li>
+            ))
+          }
+        </ul>
+
         <button onClick={ () => compraConfirmadaAuto() } className='cursor-pointer bg-cyan-600 hover:bg-cyan-700 color-white text-white px-10 py-4 rounded-lg font-bold'>Confirmar su compra</button>
       </div>
     </MainPublicLayout>
