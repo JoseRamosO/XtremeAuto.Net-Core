@@ -38,7 +38,13 @@ export const VentasModal = ({ tableInstance }) => {
   }
 
   const validationSchema = Yup.object().shape({
-    
+    usuarioId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+    carroVendidoId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+    meses: Yup.number().required('Required'),
+    intereses: Yup.number().required('Required'),
+    total: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+    saldoPendiente: Yup.number().required('Required'),
+    saldoAbonado: Yup.number().required('Required'),
   });
 
 

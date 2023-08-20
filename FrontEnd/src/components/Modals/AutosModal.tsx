@@ -45,20 +45,20 @@ export const AutosModal = ({ tableInstance }) => {
     .max(20, 'Marca no debe tener mas de 20 caracteres'),
 
     tipo: Yup.string()
-    .required('Marca es requerido')
-    .min(2, 'Marca debe tener al menos 2 caracteres')
-    .max(20, 'Marca no debe tener mas de 20 caracteres'),
+    .required('Tipo es requerido')
+    .min(2, 'Tipo debe tener al menos 2 caracteres')
+    .max(20, 'Tipo no debe tener mas de 20 caracteres'),
 
     modelo: Yup.string()
-    .required('Marca es requerido')
-    .min(2, 'Marca debe tener al menos 2 caracteres')
-    .max(20, 'Marca no debe tener mas de 20 caracteres'),
+    .required('Modelo es requerido')
+    .min(2, 'Modelo debe tener al menos 2 caracteres')
+    .max(20, 'Modelo no debe tener mas de 20 caracteres'),
     
     descripcion: Yup.string()
-    .required('Marca es requerido')
-    .min(2, 'Marca debe tener al menos 2 caracteres'),
+    .required('Descripcion es requerido')
+    .min(2, 'Descripcion debe tener al menos 2 caracteres'),
 
-    disponible: Yup.string().notOneOf(['unset'], 'Por Favor seleone'),
+    disponible: Yup.string().notOneOf(['unset'], 'Por Favor seleccione'),
 
     precio: Yup.number().typeError('Please enter a valid number').required('Required'),
 

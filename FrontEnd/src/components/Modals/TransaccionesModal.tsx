@@ -44,7 +44,13 @@ export const TransaccionesModal = ({ tableInstance }) => {
     console.log(ventas);
 
     const validationSchema = Yup.object().shape({
-
+        ventaId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+        tarjetaId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+        interesesMorosidad: Yup.number().required('Required'),
+        precio: Yup.number().required('Required'),
+        fechaTransaccion: Yup.date().required('Required'),
+        fechaCorte: Yup.date().required('Required'),
+        pagado: Yup.string().notOneOf(['unset'], 'Por Favor seleccione'),
     });
 
     return (

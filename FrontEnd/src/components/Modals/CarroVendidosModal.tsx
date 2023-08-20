@@ -36,7 +36,11 @@ export const CarroVendidosModal = ({ tableInstance }) => {
   }
 
   const validationSchema = Yup.object().shape({
-    
+    ruedaId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+    colorId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+    carroModeloId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+    seguroId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+    precioTotal: Yup.number().required('Required'),
   });
 
 
