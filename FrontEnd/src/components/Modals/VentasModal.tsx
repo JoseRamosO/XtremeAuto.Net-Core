@@ -28,7 +28,7 @@ export const VentasModal = ({ tableInstance }) => {
 
   const initFormValues: InitialValuesType = {
     ventaId : selectedFlatRows.length === 1 ? selectedFlatRows[0].original.ventaId : '',
-    usuarioId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original. usuarioId : '',
+    usuarioId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.usuarioId : '',
     carroVendidoId: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.carroVendidoId : '',
     meses: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.meses : '',
     total: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.total : '',
@@ -38,7 +38,7 @@ export const VentasModal = ({ tableInstance }) => {
   }
 
   const validationSchema = Yup.object().shape({
-    usuarioId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
+    
     carroVendidoId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
     meses: Yup.number().required('Required'),
     intereses: Yup.number().required('Required'),
@@ -98,13 +98,13 @@ export const VentasModal = ({ tableInstance }) => {
                       enableReinitialize
                       initialValues={ initFormValues }
                       validationSchema={ validationSchema }
-                      onSubmit={(autoNuevo) => {
+                      onSubmit={(ventaNuevo) => {
                           if (modalVentasState === 0) {
                               dispatch(agregarVentas({ 
-                                ...autoNuevo
+                                ...ventaNuevo
                                 }))
                           } else if (modalVentasState === 1) {
-                              dispatch(editarVentas({...selectedFlatRows[0].original, ...autoNuevo }))
+                              dispatch(editarVentas({...selectedFlatRows[0].original, ...ventaNuevo }))
                           } else {
                               dispatch(eliminarVentas(selectedFlatRows[0].original))
                           }
@@ -204,14 +204,14 @@ export const VentasModal = ({ tableInstance }) => {
                                           </label>
                                                 <div className="mt-2">
                                                     <select
-                                                    id=" usuarioId"
-                                                    name=" usuarioId"
-                                                    defaultValue={ values. usuarioId || 0}
+                                                    id="usuarioId"
+                                                    name="usuarioId"
+                                                    defaultValue={ values.usuarioId || 0}
                                                     onChange={handleChange}
                                                     disabled={(modalVentasState === 2 || modalVentasState === 3) ? true : false}
-                                                    className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors. usuarioId && touched. usuarioId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
+                                                    className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.usuarioId && touched.usuarioId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                     >
-                                                        <option value="0">Seleccione Rueda</option>
+                                                        <option value="0">Seleccione Usuario</option>
                                                         {
                                                             users.map(({  usuarioId, nombre}) => (
                                                                 <option key={  usuarioId } value={  usuarioId }>{ nombre }</option>
@@ -233,7 +233,7 @@ export const VentasModal = ({ tableInstance }) => {
                                                     disabled={(modalVentasState === 2 || modalVentasState === 3) ? true : false}
                                                     className={ `bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ${ (errors.carroVendidoId && touched.carroVendidoId) ? ' text-red-900 placeholder-red-700 border border-red-500 focus:ring-red-500 focus:border-red-500' : 'ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400'}` }
                                                     >
-                                                        <option value="0">Seleccione Color</option>
+                                                        <option value="0">Seleccione Carro Vendido</option>
                                                         {
                                                             carrovendidos.map(({ carroVendidoId}) => (
                                                                 <option key={ carroVendidoId } value={ carroVendidoId }>{ carroVendidoId }</option>

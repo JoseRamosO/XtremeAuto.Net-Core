@@ -71,7 +71,7 @@ export const AutoPage = () => {
 
     const seguroSelected = (seguroId, precio, nombre) => {
       setPrecioFinal(precioFinal + precio);
-      priceUpdater(`Seguro`, precio, nombre)
+      priceUpdater(`Seguro`, precio, nombre);
       setSeguroSelectedState(seguroId);
     } 
 
@@ -151,10 +151,10 @@ export const AutoPage = () => {
         <h2 className="mt-5">Seguro</h2>
         <div className="auto-page-colores mt-2 max-w-xs">
           <select className={ 'bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400' }>
-          <option onClick={ () => seguroSelected(0, 0, 'No Seguro Seleccionado')}>Seleccione Seguro</option>
+          <option onChange={ () => seguroSelected(0, 0, 'No Seguro Seleccionado')}>Seleccione Seguro</option>
             {
               seguros.map(({ nombre, precio, plazo, seguroId }) => (
-                <option onClick={ () => seguroSelected(seguroId, precio, nombre) }key={ seguroId } value={ seguroId }>{ nombre } | ${ precio } | { plazo } meses</option>
+                <option onChange={ () => seguroSelected(seguroId, precio, nombre) }key={ seguroId } value={ seguroId }>{ nombre } | ${ precio } | { plazo } meses</option>
               ))
             }
           </select>

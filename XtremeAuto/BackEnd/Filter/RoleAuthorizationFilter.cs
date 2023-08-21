@@ -16,7 +16,7 @@ namespace BackEnd.Filter
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var currentUser = context.HttpContext.Items["CurrentUser"] as UsuarioModel; // Replace with your user model type
+            var currentUser = context.HttpContext.Items["CurrentUser"] as UsuarioModel; 
             if (currentUser == null || !_allowedRoles.Contains(currentUser.RolId))
             {
                 context.Result = new ForbidResult();

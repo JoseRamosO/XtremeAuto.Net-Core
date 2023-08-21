@@ -13,10 +13,11 @@ const obtenerVentas = () => {
 };
 
 const agregarVentas = ( ventaNuevo ) => {
+    console.log(ventaNuevo)
     return async (dispatch: Dispatch) => {
         const ventaParsed ={
-            UsuarioId: ventaNuevo.UsuarioId,
-            CarroVendidoId: ventaNuevo.CarroVendidoId,
+            UsuarioId: ventaNuevo.usuarioId,
+            CarroVendidoId: ventaNuevo.carroVendidoId,
             meses: ventaNuevo.meses,  
     }
         const { data } = await baseApi.post("/Venta", ventaParsed);
