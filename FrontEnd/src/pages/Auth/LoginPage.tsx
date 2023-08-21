@@ -19,7 +19,7 @@ export const LoginPage = () => {
     if (usuario.currentUser.status === 'authenticated' && usuario.currentUser.rol === 1) {
       navigate('/admin/usuarios');
     }
-    if (usuario.currentUser.status === 'authenticated' && usuario.currentUser.rol === 2) {
+    if (usuario.currentUser.status === 'authenticated' && usuario.currentUser.rol !== 1) {
       navigate('/user');
     }
   }, [navigate, usuario.currentUser.status]);
@@ -79,7 +79,7 @@ export const LoginPage = () => {
                         { errors.correo && touched.correo && ( <span className="inline-flex text-sm text-red-700">{errors.correo}</span> ) }
 
                         <Field
-                          type="text"
+                          type="password"
                           name="password"
                           value={ values.password || '' }
                           onChange={ handleChange }

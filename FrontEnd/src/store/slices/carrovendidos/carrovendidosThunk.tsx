@@ -30,7 +30,7 @@ const agregarCarroVendidos = ( carrovendidoNuevo ) => {
             const ventaParsed = {
                 VentaId: 0,
                 UsuarioId: 1,
-                CarroVendidoId: data[data.length - 1].carroVendidoId,
+                CarroVendidoId: 1,
                 Total: 0,
                 Meses: 3,
                 Intereses: 0,
