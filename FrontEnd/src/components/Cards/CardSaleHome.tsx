@@ -4,8 +4,6 @@ export const CardSaleHome = ({ autoToRender }) => {
     const navigate = useNavigate();
     const { marca, tipo, modelo, descripcion, precio, cantidad, carroModeloId, imagen } = autoToRender;
 
-    console.log(autoToRender)
-
     return (
     <div className='w-full single-card'>
         <article className='overflow-hidden rounded-lg shadow-lg'>

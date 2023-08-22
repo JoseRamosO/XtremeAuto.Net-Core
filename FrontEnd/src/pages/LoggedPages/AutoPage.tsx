@@ -40,7 +40,6 @@ export const AutoPage = () => {
     const [colorSelected, setColorSelected] = useState<number>(0);
     const [ruedaSelected, setRuedaSelected] = useState<number>(0);
     const [seguroSelectedState, setSeguroSelectedState] = useState<number>(0);
-    const [precioFinal, setPrecioFinal] = useState<number>(0);
     const [itemsAdded, setItemsAdded] = useState<itemsAddedType[]>([]);
 
     useEffect(() => {
@@ -58,21 +57,19 @@ export const AutoPage = () => {
         }
         const autoSeleccionado = autos.find(auto => auto.carroModeloId == autoId);
         setAutoSelected(autoSeleccionado);
-        setPrecioFinal(autoSeleccionado?.precio ? autoSeleccionado?.precio : 0);
         priceUpdater(`Auto`, autoSeleccionado?.precio, `${ autoSeleccionado?.marca } ${ autoSeleccionado?.tipo }`)
 
     }, [autos])
 
     const updatePreciosRuedas = (rueda) => {
-      setPrecioFinal(precioFinal + rueda.precio);
       priceUpdater(`Rueda`, rueda.precio, rueda.nombre)
       setRuedaSelected(rueda.ruedaId)
     }
 
-    const seguroSelected = (seguroId, precio, nombre) => {
-      setPrecioFinal(precioFinal + precio);
-      priceUpdater(`Seguro`, precio, nombre);
-      setSeguroSelectedState(seguroId);
+    const seguroSelected = (seguro) => {
+      const arraySeguro = seguro.split("-");
+      priceUpdater(`Seguro`, parseInt(arraySeguro[2]), arraySeguro[1]);
+      setSeguroSelectedState(parseInt(arraySeguro[0]));
     } 
 
 
@@ -96,10 +93,11 @@ export const AutoPage = () => {
         colorId: colorSelected,
         carroModeloId: autoSelected?.carroModeloId,
         seguroId: seguroSelectedState,
-        precioTotal: precioFinal,  
+        precioTotal: itemsAdded.reduce((total, item) => total + item.price, 0)
       }
+
       dispatch(agregarCarroVendidos(carrovendidoParsed));
-      navigate(`/user/sales/auto/${ autoSelected?.carroModeloId }/confirmation`);
+      // navigate(`/user/sales/auto/${ autoSelected?.carroModeloId }/confirmation`);
     }
    
   return (
@@ -132,7 +130,7 @@ export const AutoPage = () => {
         <div className="auto-page-colores mt-2">
           {
             colores.map((color) => (
-              <a className={ `option-selector${ color.colorId === colorSelected ? ' selected' : '' }` } onClick={ () =>  setColorSelected(color.colorId)}>
+              <a key={ color.colorId } className={ `option-selector${ color.colorId === colorSelected ? ' selected' : '' }` } onClick={ () =>  setColorSelected(color.colorId)}>
                 <img src={ `http://localhost:5088${color?.imagen}` }/>
               </a>
             ))
@@ -142,7 +140,7 @@ export const AutoPage = () => {
         <div className="auto-page-colores mt-2">
         {
             ruedas.map((rueda) => (
-              <a className={ `option-selector${ rueda.ruedaId === ruedaSelected ? ' selected' : '' }` } onClick={ () =>  updatePreciosRuedas(rueda)}>
+              <a key={ rueda.ruedaId } className={ `option-selector${ rueda.ruedaId === ruedaSelected ? ' selected' : '' }` } onClick={ () =>  updatePreciosRuedas(rueda)}>
                 <img src={ `http://localhost:5088${rueda?.imagen}` }/>
               </a>
             ))
@@ -150,11 +148,11 @@ export const AutoPage = () => {
         </div>
         <h2 className="mt-5">Seguro</h2>
         <div className="auto-page-colores mt-2 max-w-xs">
-          <select className={ 'bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400' }>
-          <option onChange={ () => seguroSelected(0, 0, 'No Seguro Seleccionado')}>Seleccione Seguro</option>
+          <select onChange={ (e) => seguroSelected(e.target.value) } className={ 'bg-white px-2 py-2 w-full block rounded outline-none focus:ring-2 ring-2 focus:ring-indigo-600 text-gray-900 ring-gray-300 placeholder:text-gray-400' }>
+          <option value={'0-Seguro no seleccionado-0'}>Seleccione Seguro</option>
             {
               seguros.map(({ nombre, precio, plazo, seguroId }) => (
-                <option onChange={ () => seguroSelected(seguroId, precio, nombre) }key={ seguroId } value={ seguroId }>{ nombre } | ${ precio } | { plazo } meses</option>
+                <option key={ seguroId } value={ `${seguroId}-${ nombre }-${ precio }` }>{ nombre } | ${ precio } | { plazo } meses</option>
               ))
             }
           </select>
@@ -163,7 +161,7 @@ export const AutoPage = () => {
         <ul className="mb-10">
           {
             itemsAdded.map(({ itemId, nombre, price }) => (
-              <li>- <span className="text-cyan-600 font-bold">{ itemId }: </span>{ nombre } | ${ price }</li>
+              <li key={ itemId }>- <span className="text-cyan-600 font-bold">{ itemId }: </span>{ nombre } | ${ price }</li>
             ))
           }
         </ul>

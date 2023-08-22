@@ -9,7 +9,6 @@ import { setLoadingVentas, setVentas } from "../ventas/ventasSlice";
 const obtenerCarroVendidos = () => {
     return async (dispatch: Dispatch) => {
         const { data } = await baseApi.get('/CarroVendido');
-        console.log(data);
         dispatch(setCarroVendidos(data));
     }
 };

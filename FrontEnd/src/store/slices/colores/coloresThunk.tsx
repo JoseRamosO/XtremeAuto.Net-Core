@@ -45,7 +45,6 @@ const editarColores = ({ colorId, nombre, imagen, FormFile }) => {
         if (FormFile) {
             colorFormData.append('FormFile', FormFile);
         }
-        console.log(colorFormData)
         
         const config = {
             headers: {
