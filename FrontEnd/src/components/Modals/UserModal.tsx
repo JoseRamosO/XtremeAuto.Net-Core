@@ -55,18 +55,18 @@ export const UserModal = ({ tableInstance }) => {
         .email('Dirección de email invalida')
         .required('Email es requerido'),
     
-        // password: Yup.string()
-        // .min(8, 'Contraseña debe de ser de al menos 8 caracteres de largo')
-        // .max(15, 'Contraseña no debe ser mayor a 15 caracteres de largo')
-        // .matches(
-        //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-        //   'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.'
-        // )
-        // .required('Contraseña Requerida'),
+         password: Yup.string()
+         .min(8, 'Contraseña debe de ser de al menos 8 caracteres de largo')
+         .max(15, 'Contraseña no debe ser mayor a 15 caracteres de largo')
+         .matches(
+           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+           'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.'
+        )
+         .required('Contraseña Requerida'),
     
-        // confirmPassword: Yup.string()
-        // .oneOf([Yup.ref('password')], 'Contraseñas deben coincidir')
-        // .required('Confirmar Contraseña es requerida')
+         confirmPassword: Yup.string()
+         .oneOf([Yup.ref('password')], 'Contraseñas deben coincidir')
+         .required('Confirmar Contraseña es requerida')
     });
     
     return (
