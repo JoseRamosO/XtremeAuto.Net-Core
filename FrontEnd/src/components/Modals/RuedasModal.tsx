@@ -147,7 +147,6 @@ export const RuedasModal = ({ tableInstance }) => {
                                                   name="myImage"
                                                   onChange={(e) => {
                                                     if (!e.target.files) return;
-                                                    console.log(e.target.files[0]);
                                                     setSelectedImage(e.target.files[0]);
                                                   }}
                                                 />

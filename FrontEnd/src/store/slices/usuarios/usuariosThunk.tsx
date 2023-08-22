@@ -190,7 +190,6 @@ const editarUsuarios = ( usuarioActualizar ) => {
             lockoutEndDateUtc: getCurrentTimestamp()
         }
         const { data } = await baseApi.put("/usuario", usuarioParsed );
-        console.log(usuarioParsed)
         
         if (data) {
             const { data:newData } = await baseApi.get('/usuario');

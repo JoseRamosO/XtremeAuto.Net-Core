@@ -10,7 +10,6 @@ export const AdminSideBar = () => {
     const dispatch = useAppDispatch();
     const { pathname } = useLocation();
 
-    console.log(pathname)
     return (
         <div
           className={` ${

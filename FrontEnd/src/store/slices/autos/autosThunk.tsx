@@ -60,8 +60,7 @@ const editarAuto = ({ carroModeloId, disponible, tipo, marca, modelo, imagen, de
         if (FormFile) {
             autoFormData.append('FormFile', FormFile);
         }
-        console.log(autoFormData)
-        
+                
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data',

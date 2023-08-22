@@ -2,8 +2,7 @@ import axios from "axios";
 import { store } from "../store/store";
 
 export const baseApi = axios.create({
-  baseURL: "http://localhost:5088/api",
-  timeout: 1000,
+  baseURL: "http://localhost:5088/api"
 });
 
 baseApi.interceptors.request.use(function (config) {

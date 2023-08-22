@@ -48,7 +48,6 @@ const editarRuedas = ({ ruedaId, nombre, imagen, precio, FormFile }) => {
         if (FormFile) {
             ruedaFormData.append('FormFile', FormFile);
         }
-        console.log(ruedaFormData)
         
         const config = {
             headers: {

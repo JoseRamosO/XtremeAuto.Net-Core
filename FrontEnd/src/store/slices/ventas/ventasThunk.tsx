@@ -13,7 +13,6 @@ const obtenerVentas = () => {
 };
 
 const agregarVentas = ( ventaNuevo ) => {
-    console.log(ventaNuevo)
     return async (dispatch: Dispatch) => {
         const ventaParsed ={
             UsuarioId: ventaNuevo.usuarioId,

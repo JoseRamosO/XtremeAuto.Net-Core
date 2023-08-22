@@ -41,8 +41,6 @@ export const TransaccionesModal = ({ tableInstance }) => {
         pagado: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.pagado : '',
         precio: selectedFlatRows.length === 1 ? selectedFlatRows[0].original.precio : '',
     }
-    console.log(ventas);
-
     const validationSchema = Yup.object().shape({
         ventaId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
         tarjetaId: Yup.number().min(1, 'Number must be higher than 0').required('Required'),
