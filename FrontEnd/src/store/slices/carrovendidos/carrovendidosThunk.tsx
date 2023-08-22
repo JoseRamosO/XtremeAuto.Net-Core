@@ -34,7 +34,7 @@ const agregarCarroVendidos = ( carrovendidoNuevo ) => {
                 UsuarioId: store.getState()?.usuarios.currentUser?.UsuarioId,
                 CarroVendidoId: lastAutoVendido[0].carroVendidoId,
                 Total: 0,
-                Meses: 0,
+                Meses: 12,
                 Intereses: 0,
                 SaldoPendiente: 0,
                 SaldoAbonado: 0,
