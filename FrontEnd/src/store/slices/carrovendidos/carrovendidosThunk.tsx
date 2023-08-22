@@ -3,6 +3,7 @@ import { baseApi } from "../../../api/apiConfig";
 import { setCarroVendidos, setLoadingCarroVendidos, setToggleModalCarroVendidos } from "./carrovendidosSlice";
 import { toast } from "react-toastify";
 import { setLoadingVentas, setVentas } from "../ventas/ventasSlice";
+import { store } from "../../store";
 
 
 
@@ -26,22 +27,29 @@ const agregarCarroVendidos = ( carrovendidoNuevo ) => {
 
         if (data) {
             const { data } = await baseApi.get('/CarroVendido');
+
+            const lastAutoVendido = data.slice(-1);
             const ventaParsed = {
                 VentaId: 0,
-                UsuarioId: 1,
-                CarroVendidoId: 1,
+                UsuarioId: store.getState()?.usuarios.currentUser?.UsuarioId,
+                CarroVendidoId: lastAutoVendido[0].carroVendidoId,
                 Total: 0,
-                Meses: 3,
+                Meses: 0,
                 Intereses: 0,
                 SaldoPendiente: 0,
                 SaldoAbonado: 0,
+
             }
+
             const { data: dataVenta } = await baseApi.post("/Venta", ventaParsed);
+
+            
 
             if (dataVenta) {
                 const { data: dataVentaAgregadas } = await baseApi.get('/Venta');
                 dispatch(setLoadingVentas());
                 dispatch(setVentas(dataVentaAgregadas));
+
             }else {
                 toast.error('¡Error agregando venta!')
             }

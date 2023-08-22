@@ -97,6 +97,7 @@ export const AutoPage = () => {
       }
 
       dispatch(agregarCarroVendidos(carrovendidoParsed));
+
       navigate(`/user/sales/auto/${ autoSelected?.carroModeloId }/confirmation`);
     }
    
